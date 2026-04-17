@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  /* CMP Brand — Dark Theme (primary) */
+  --color-navy: #1B3A5C;
+  --color-navy-light: #264D7A;
+  --color-navy-dark: #0F2640;
+  --color-blue: #2E75B6;
+  --color-blue-light: #4A90D9;
+  --color-teal: #00C7B7;
+  --color-teal-dark: #00A89A;
+
+  /* Light Theme */
+  --color-light-bg: #FFFFFF;
+  --color-light-surface: #F5F5F5;
+  --color-light-border: #D9D9D9;
+  --color-light-text: #1B3A5C;
+  --color-light-muted: #595959;
+
+  /* Typography */
+  --font-heading: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}

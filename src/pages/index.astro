@@ -1,0 +1,136 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/global.css';
+---
+
+<Base title="Cloud Minds Partners — Data Center Advisory">
+  <header class="bg-navy text-white">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <span class="text-xl font-heading font-bold tracking-tight">Cloud Minds Partners</span>
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#advisory" class="hover:text-teal transition-colors">Advisory</a>
+        <a href="#development" class="hover:text-teal transition-colors">Project Development</a>
+        <a href="#intelligence" class="hover:text-teal transition-colors">Intelligence</a>
+        <a href="#team" class="hover:text-teal transition-colors">Team</a>
+        <a href="#contact" class="hover:text-teal transition-colors">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="bg-navy text-white py-24 md:py-32">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-heading font-bold leading-tight mb-6">
+          Data Center Advisory<br />for Latin America
+        </h1>
+        <p class="text-lg md:text-xl text-blue-light max-w-2xl mx-auto mb-10">
+          Site selection, feasibility studies, and market intelligence
+          for data center development across Brazil, Chile, and Mexico.
+        </p>
+        <a href="#contact" class="inline-block bg-teal text-navy-dark font-semibold px-8 py-3 rounded-lg hover:bg-teal-dark transition-colors">
+          Get in Touch
+        </a>
+      </div>
+    </section>
+
+    <section class="py-20 bg-light-surface" id="advisory">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-heading font-bold text-center mb-16">What We Do</h2>
+        <div class="grid md:grid-cols-3 gap-10">
+          <div class="bg-white p-8 rounded-xl shadow-sm">
+            <div class="w-12 h-12 bg-blue/10 rounded-lg flex items-center justify-center mb-4">
+              <span class="text-blue text-xl font-bold">A</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Advisory</h3>
+            <p class="text-light-muted leading-relaxed">
+              Site selection, feasibility analysis, and market intelligence
+              tailored to LatAm regulatory and infrastructure realities.
+            </p>
+          </div>
+          <div class="bg-white p-8 rounded-xl shadow-sm" id="development">
+            <div class="w-12 h-12 bg-blue/10 rounded-lg flex items-center justify-center mb-4">
+              <span class="text-blue text-xl font-bold">P</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Project Development</h3>
+            <p class="text-light-muted leading-relaxed">
+              Co-development, technical due diligence, and financial modeling
+              for greenfield and brownfield data center projects.
+            </p>
+          </div>
+          <div class="bg-white p-8 rounded-xl shadow-sm" id="intelligence">
+            <div class="w-12 h-12 bg-blue/10 rounded-lg flex items-center justify-center mb-4">
+              <span class="text-blue text-xl font-bold">I</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-3">Intelligence</h3>
+            <p class="text-light-muted leading-relaxed">
+              Proprietary platforms: Site Selection Tool, Land Intel,
+              TestFit Pro, and Financial Model as productized capabilities.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-heading font-bold text-center mb-4">Our Platforms</h2>
+        <p class="text-light-muted text-center mb-16 max-w-2xl mx-auto">
+          Purpose-built tools for data center site intelligence in Latin America.
+        </p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <a href="https://dcplatformcmp.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
+            <h3 class="font-semibold mb-2">Site Selection Tool</h3>
+            <p class="text-sm text-light-muted">Multi-criteria scoring across 76+ cities in BR, CL, MX</p>
+          </a>
+          <a href="https://dcinsights.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
+            <h3 class="font-semibold mb-2">DC Insights</h3>
+            <p class="text-sm text-light-muted">Weekly newsletter on LatAm data center developments</p>
+          </a>
+          <a href="https://land-price-dashboard.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
+            <h3 class="font-semibold mb-2">Land Intel</h3>
+            <p class="text-sm text-light-muted">Land price intelligence across 25 markets</p>
+          </a>
+          <a href="https://dc-testfit-pro.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
+            <h3 class="font-semibold mb-2">TestFit Pro</h3>
+            <p class="text-sm text-light-muted">Data center test fit with 30+ reference presets</p>
+          </a>
+          <a href="https://atlas-dc-dashboard.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
+            <h3 class="font-semibold mb-2">Atlas Dashboard</h3>
+            <p class="text-sm text-light-muted">Client project tracking and milestone management</p>
+          </a>
+          <div class="block p-6 border border-light-border rounded-xl opacity-70">
+            <h3 class="font-semibold mb-2">Financial Model</h3>
+            <p class="text-sm text-light-muted">DC financial modeling and scenario analysis</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-light-surface" id="team">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-heading font-bold mb-4">Our Team</h2>
+        <p class="text-light-muted max-w-xl mx-auto">
+          Coming soon.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-20 bg-navy text-white" id="contact">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-heading font-bold mb-4">Let's Talk</h2>
+        <p class="text-blue-light mb-8">
+          Exploring a data center opportunity in Latin America?
+        </p>
+        <a href="mailto:e.abreu@cloudmindspartners.com" class="inline-block bg-teal text-navy-dark font-semibold px-8 py-3 rounded-lg hover:bg-teal-dark transition-colors">
+          e.abreu@cloudmindspartners.com
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-navy-dark text-white/60 py-6">
+    <div class="max-w-6xl mx-auto px-6 text-center text-sm">
+      &copy; 2026 Cloud Minds Partners. All rights reserved.
+    </div>
+  </footer>
+</Base>
