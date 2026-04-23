@@ -53,6 +53,10 @@ jobs:
             cp -R cmp-knowledge/people/photos/. cmp-website/public/people/photos/ || true
             echo "copied $(ls cmp-website/public/people/photos | wc -l) photo(s)"
           fi
+          echo "--- people/ tree ---"
+          find cmp-knowledge/people -type f | sort
+          echo "--- people/*.md content ---"
+          wc -l cmp-knowledge/people/*.md cmp-knowledge/people/advisors/*.md || true
 
       - name: Use Node 22
         uses: actions/setup-node@v4
