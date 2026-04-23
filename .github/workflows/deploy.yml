@@ -16,6 +16,9 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      # Surface the secret as an env var so expressions can gate on it
+      HAS_KNOWLEDGE_TOKEN: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN != '' }}
     steps:
       - name: Checkout cmp-website
         uses: actions/checkout@v4
@@ -23,11 +26,19 @@ jobs:
           path: cmp-website
 
       - name: Checkout cmp-knowledge (content source)
+        if: env.HAS_KNOWLEDGE_TOKEN == 'true'
         uses: actions/checkout@v4
         with:
           repository: Cloud-Minds-Partners/cmp-knowledge
           path: cmp-knowledge
           token: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN }}
+
+      - name: Warn when building without content source
+        if: env.HAS_KNOWLEDGE_TOKEN != 'true'
+        run: |
+          echo "::warning::CMP_KNOWLEDGE_READ_TOKEN not set — content collections will be empty."
+          echo "Set the repo secret to deploy published memos/radar/regwatch."
+          mkdir -p cmp-knowledge/knowledge/memos/published cmp-knowledge/knowledge/innovation-radar cmp-knowledge/knowledge/regwatch
 
       - name: Use Node 22
         uses: actions/setup-node@v4
