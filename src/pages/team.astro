@@ -1,0 +1,68 @@
+---
+import Base from "../layouts/Base.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Section from "../components/Section.astro";
+
+// Structural only — bios populated from cmp-knowledge/people/ in a follow-up.
+// Content loader deliberately deferred until bios are verified and staged.
+---
+
+<Base title="Team — Cloud Minds Partners">
+  <SiteHeader active="team" />
+
+  <main>
+    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-4">Team</div>
+        <h1 class="display-lg max-w-3xl">A small partnership. A wider bench.</h1>
+        <p class="lede mt-6 max-w-2xl">
+          Cloud Minds Partners is led by two partners in São Paulo, backed by
+          a bench of technical and commercial advisors in power, engineering,
+          capital markets, and regulatory practice.
+        </p>
+      </div>
+    </section>
+
+    <Section compact>
+      <div class="grid md:grid-cols-2 gap-px bg-[var(--color-rule)]">
+        <article class="bg-[var(--color-canvas)] p-10">
+          <div class="caption mb-3">Partner</div>
+          <h2 class="display text-2xl mb-2">Edgard Abreu</h2>
+          <p class="text-sm text-[var(--color-ink-muted)] mb-4">Founding partner. São Paulo.</p>
+          <p class="text-[var(--color-ink)] leading-relaxed">
+            Bio forthcoming.
+          </p>
+        </article>
+
+        <article class="bg-[var(--color-canvas)] p-10">
+          <div class="caption mb-3">Partner</div>
+          <h2 class="display text-2xl mb-2">Gustavo Costa</h2>
+          <p class="text-sm text-[var(--color-ink-muted)] mb-4">Partner. São Paulo.</p>
+          <p class="text-[var(--color-ink)] leading-relaxed">
+            Bio forthcoming.
+          </p>
+        </article>
+      </div>
+    </Section>
+
+    <Section eyebrow="Advisory bench" title="Advisors." tone="alt" compact>
+      <p class="max-w-2xl text-[var(--color-ink-muted)] leading-relaxed mb-10">
+        Our advisors work on engagement-specific mandates — power systems
+        design, environmental permitting, grid interconnection, project
+        finance, and regional commercial development. Full roster published
+        upon request.
+      </p>
+      <div class="grid md:grid-cols-3 gap-px bg-[var(--color-rule)]">
+        {["Power systems", "Environmental & permitting", "Project finance"].map((area) => (
+          <div class="bg-[var(--color-surface)] p-7">
+            <div class="caption mb-2">Domain</div>
+            <div class="display text-lg">{area}</div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  </main>
+
+  <SiteFooter />
+</Base>

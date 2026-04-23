@@ -1,0 +1,81 @@
+---
+interface Props {
+  /** which top-level section is active — drives underline treatment */
+  active?: "home" | "advisory" | "development" | "intelligence" | "platforms" | "team" | "contact";
+  /** optional sub-nav shown under the main bar (e.g. intelligence sub-sections) */
+  subnav?: Array<{ href: string; label: string; active?: boolean }>;
+}
+const { active = "home", subnav } = Astro.props;
+
+const primary = [
+  { href: "/advisory", label: "Advisory", key: "advisory" as const },
+  { href: "/development", label: "Development", key: "development" as const },
+  { href: "/intelligence", label: "Intelligence", key: "intelligence" as const },
+  { href: "/platforms", label: "Platforms", key: "platforms" as const },
+  { href: "/team", label: "Team", key: "team" as const },
+];
+
+const linkCls = (k: string) =>
+  active === k
+    ? "text-[var(--color-ink)] font-semibold"
+    : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]";
+---
+
+<header class="sticky top-0 z-40 border-b border-[var(--color-rule)] bg-[var(--color-canvas)]/90 backdrop-blur supports-[backdrop-filter]:bg-[var(--color-canvas)]/75">
+  <div class="max-w-[1200px] mx-auto px-6 flex items-center justify-between h-16">
+    <a href="/" class="group flex items-baseline gap-3 no-underline">
+      <span class="display text-lg text-[var(--color-ink)] tracking-tight">Cloud Minds Partners</span>
+      <span class="caption hidden md:inline text-[var(--color-ink-quiet)]">Data center advisory · LatAm</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-7 text-sm">
+      {primary.map((item) => (
+        <a href={item.href} class={`no-underline ${linkCls(item.key)}`}>
+          {item.label}
+        </a>
+      ))}
+      <a
+        href="/contact"
+        class={`no-underline border border-[var(--color-navy)] px-3.5 py-1.5 text-[var(--color-navy)] hover:bg-[var(--color-navy)] hover:text-[var(--color-canvas)] transition-colors ${active === "contact" ? "bg-[var(--color-navy)] text-[var(--color-canvas)]" : ""}`}
+      >
+        Contact
+      </a>
+    </nav>
+
+    <button
+      id="mobile-toggle"
+      class="md:hidden text-sm text-[var(--color-ink-muted)]"
+      aria-label="Menu"
+    >Menu</button>
+  </div>
+
+  <nav id="mobile-nav" class="md:hidden hidden border-t border-[var(--color-rule)] bg-[var(--color-canvas)]">
+    <div class="max-w-[1200px] mx-auto px-6 py-4 flex flex-col gap-3 text-sm">
+      {primary.map((item) => (
+        <a href={item.href} class={`no-underline ${linkCls(item.key)}`}>{item.label}</a>
+      ))}
+      <a href="/contact" class="no-underline text-[var(--color-navy)] font-semibold">Contact</a>
+    </div>
+  </nav>
+
+  {subnav && subnav.length > 0 && (
+    <div class="border-t border-[var(--color-rule)] bg-[var(--color-surface-alt)]">
+      <div class="max-w-[1200px] mx-auto px-6 h-11 flex items-center gap-6 text-xs overflow-x-auto">
+        {subnav.map((s) => (
+          <a
+            href={s.href}
+            class={`no-underline whitespace-nowrap ${s.active ? "text-[var(--color-navy)] font-semibold" : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"}`}
+          >
+            {s.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</header>
+
+<script>
+  const toggle = document.getElementById("mobile-toggle");
+  const nav = document.getElementById("mobile-nav");
+  toggle?.addEventListener("click", () => nav?.classList.toggle("hidden"));
+</script>

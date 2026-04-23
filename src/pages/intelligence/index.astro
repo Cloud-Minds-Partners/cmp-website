@@ -1,8 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
-import IntelHeader from "../../components/IntelHeader.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import Section from "../../components/Section.astro";
 import { getCollection } from "astro:content";
-import "../../styles/global.css";
 
 const memos = (await getCollection("memos", (m) => m.data.publish)).length;
 const radar = (await getCollection("radar", (r) => r.data.published)).length;
@@ -10,62 +11,95 @@ const regwatch = (await getCollection("regwatch", (r) => r.data.published)).leng
 ---
 
 <Base title="Intelligence — Cloud Minds Partners">
-  <IntelHeader active="index" />
+  <SiteHeader
+    active="intelligence"
+    subnav={[
+      { href: "/intelligence", label: "Overview", active: true },
+      { href: "/intelligence/memos", label: "Technical Memos" },
+      { href: "/intelligence/radar", label: "Innovation Radar" },
+      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
+    ]}
+  />
 
-  <main class="max-w-4xl mx-auto px-6 py-16">
-    <header class="mb-14">
-      <h1 class="text-4xl md:text-5xl font-heading font-bold text-light-text leading-tight">Intelligence</h1>
-      <p class="mt-5 text-lg text-light-muted max-w-2xl">
-        Three streams of published research covering data center development across
-        Latin America — each grounded in primary sources and peer-reviewed before release.
-      </p>
-    </header>
-
-    <div class="space-y-10">
-      <a
-        href="/intelligence/memos"
-        class="block p-8 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
-      >
-        <div class="flex items-start justify-between mb-3">
-          <h2 class="text-2xl font-heading font-semibold text-light-text">Technical Memos</h2>
-          <span class="text-sm text-light-muted tabular-nums">{memos} published</span>
-        </div>
-        <p class="text-light-muted leading-relaxed">
-          5-page technical briefs on regulatory, fiscal, and market developments in
-          LatAm data center markets. Each memo cites a minimum of three primary sources,
-          validated through an audit gate before publication.
+  <main>
+    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-4">03 / Intelligence</div>
+        <h1 class="display-lg max-w-3xl">Published research on Latin American data center markets.</h1>
+        <p class="lede mt-6 max-w-2xl">
+          Three streams. Each grounded in primary sources. Each peer-reviewed
+          before release. No hot takes, no press-release reshuffling.
         </p>
-      </a>
+      </div>
+    </section>
 
-      <a
-        href="/intelligence/radar"
-        class="block p-8 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
-      >
-        <div class="flex items-start justify-between mb-3">
-          <h2 class="text-2xl font-heading font-semibold text-light-text">Innovation Radar</h2>
-          <span class="text-sm text-light-muted tabular-nums">{radar} entries</span>
-        </div>
-        <p class="text-light-muted leading-relaxed">
-          Weekly scan of DC infrastructure, AI, competitive, and regulatory signals
-          that warrant attention. Candidates graduate to memos, client conversations,
-          or platform updates.
-        </p>
-      </a>
+    <Section compact>
+      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
+        <a href="/intelligence/memos" class="block py-10 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
+          <div class="grid md:grid-cols-12 gap-6 items-start">
+            <div class="md:col-span-3">
+              <div class="caption mb-2">Long-form</div>
+              <div class="caption text-[var(--color-navy)] tabular-nums">{memos} published</div>
+            </div>
+            <div class="md:col-span-9">
+              <h2 class="display text-2xl mb-3">Technical Memos</h2>
+              <p class="text-[var(--color-ink)] leading-relaxed">
+                Five-page briefs on regulatory, fiscal, and market developments. Minimum three primary sources per memo, audited before publication.
+              </p>
+              <span class="inline-block mt-4 text-sm font-semibold text-[var(--color-navy)]">Browse memos →</span>
+            </div>
+          </div>
+        </a>
 
-      <a
-        href="/intelligence/regwatch"
-        class="block p-8 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
-      >
-        <div class="flex items-start justify-between mb-3">
-          <h2 class="text-2xl font-heading font-semibold text-light-text">Regulatory Watch</h2>
-          <span class="text-sm text-light-muted tabular-nums">{regwatch} digests</span>
-        </div>
-        <p class="text-light-muted leading-relaxed">
-          Monthly digest of regulatory, legal, and fiscal changes across seven LatAm
-          jurisdictions. Every change cites a primary source downloaded to the CMP
-          intelligence corpus.
+        <a href="/intelligence/radar" class="block py-10 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
+          <div class="grid md:grid-cols-12 gap-6 items-start">
+            <div class="md:col-span-3">
+              <div class="caption mb-2">Weekly</div>
+              <div class="caption text-[var(--color-navy)] tabular-nums">{radar} entries</div>
+            </div>
+            <div class="md:col-span-9">
+              <h2 class="display text-2xl mb-3">Innovation Radar</h2>
+              <p class="text-[var(--color-ink)] leading-relaxed">
+                Weekly scan of infrastructure, AI, competitive, and regulatory signals. Candidates graduate to memos, client conversations, or platform updates.
+              </p>
+              <span class="inline-block mt-4 text-sm font-semibold text-[var(--color-navy)]">Browse radar →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="/intelligence/regwatch" class="block py-10 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
+          <div class="grid md:grid-cols-12 gap-6 items-start">
+            <div class="md:col-span-3">
+              <div class="caption mb-2">Monthly</div>
+              <div class="caption text-[var(--color-navy)] tabular-nums">{regwatch} digests</div>
+            </div>
+            <div class="md:col-span-9">
+              <h2 class="display text-2xl mb-3">Regulatory Watch</h2>
+              <p class="text-[var(--color-ink)] leading-relaxed">
+                Monthly digest of regulatory, legal, and fiscal changes across seven LatAm jurisdictions. Every change cites a primary source downloaded to our intelligence corpus.
+              </p>
+              <span class="inline-block mt-4 text-sm font-semibold text-[var(--color-navy)]">Browse watch →</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </Section>
+
+    <Section eyebrow="Method" title="Chain of Truth." tone="alt" compact>
+      <div class="max-w-3xl">
+        <p class="text-[var(--color-ink)] leading-relaxed">
+          Every claim in a CMP publication traces to a primary source we
+          have downloaded and archived. Citations are enforced by an audit
+          gate that blocks publication when references don't resolve to a
+          verifiable document in our intelligence repository.
         </p>
-      </a>
-    </div>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed mt-4 text-sm">
+          This is why memos are capped at five pages: the bar is density of
+          cited fact, not word count.
+        </p>
+      </div>
+    </Section>
   </main>
+
+  <SiteFooter />
 </Base>

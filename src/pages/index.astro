@@ -1,137 +1,137 @@
 ---
-import Base from '../layouts/Base.astro';
-import '../styles/global.css';
+import Base from "../layouts/Base.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Section from "../components/Section.astro";
+
+const platforms = [
+  { name: "Site Selection Tool", desc: "Multi-criteria scoring across 76+ cities in Brazil, Chile, and Mexico.", url: "https://dcplatformcmp.web.app" },
+  { name: "Land Intel", desc: "Land price intelligence across 25 active markets.", url: "https://land-price-dashboard.web.app" },
+  { name: "TestFit Pro", desc: "Data center test-fit with 30+ reference presets.", url: "https://dc-testfit-pro.web.app" },
+  { name: "DC Insights", desc: "Weekly LatAm data center newsletter.", url: "https://dcinsights.web.app" },
+  { name: "Atlas Dashboard", desc: "Client project tracking and milestone management.", url: "https://atlas-dc-dashboard.web.app" },
+  { name: "Financial Model", desc: "DC financial modeling and scenario analysis.", url: null },
+];
 ---
 
-<Base title="Cloud Minds Partners — Data Center Advisory">
-  <header class="bg-navy text-white">
-    <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <span class="text-xl font-heading font-bold tracking-tight">Cloud Minds Partners</span>
-      <div class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="#advisory" class="hover:text-teal transition-colors">Advisory</a>
-        <a href="#development" class="hover:text-teal transition-colors">Project Development</a>
-        <a href="/intelligence" class="hover:text-teal transition-colors">Intelligence</a>
-        <a href="#team" class="hover:text-teal transition-colors">Team</a>
-        <a href="#contact" class="hover:text-teal transition-colors">Contact</a>
-      </div>
-    </nav>
-  </header>
+<Base title="Cloud Minds Partners — Data Center Advisory for Latin America">
+  <SiteHeader active="home" />
 
   <main>
-    <section class="bg-navy text-white py-24 md:py-32">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-5xl font-heading font-bold leading-tight mb-6">
-          Data Center Advisory<br />for Latin America
+    <!-- ——— Hero ————————————————————————————————— -->
+    <section class="pt-20 md:pt-28 pb-20 md:pb-28 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-6">Cloud Minds Partners · Est. 2024</div>
+        <h1 class="display-lg max-w-4xl text-[var(--color-ink)]">
+          Data center projects in Latin America,
+          <span class="text-[var(--color-navy)] italic">built on research.</span>
         </h1>
-        <p class="text-lg md:text-xl text-blue-light max-w-2xl mx-auto mb-10">
-          Site selection, feasibility studies, and market intelligence
-          for data center development across Brazil, Chile, and Mexico.
+        <p class="lede mt-8 max-w-2xl">
+          We work with hyperscalers, colocators, developers, and funds on the
+          parts of the project that don't fit neatly into a spreadsheet —
+          site selection, feasibility, regulatory path, and market context.
         </p>
-        <a href="#contact" class="inline-block bg-teal text-navy-dark font-semibold px-8 py-3 rounded-lg hover:bg-teal-dark transition-colors">
-          Get in Touch
-        </a>
-      </div>
-    </section>
-
-    <section class="py-20 bg-light-surface" id="advisory">
-      <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl font-heading font-bold text-center mb-16">What We Do</h2>
-        <div class="grid md:grid-cols-3 gap-10">
-          <div class="bg-white p-8 rounded-xl shadow-sm">
-            <div class="w-12 h-12 bg-blue/10 rounded-lg flex items-center justify-center mb-4">
-              <span class="text-blue text-xl font-bold">A</span>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">Advisory</h3>
-            <p class="text-light-muted leading-relaxed">
-              Site selection, feasibility analysis, and market intelligence
-              tailored to LatAm regulatory and infrastructure realities.
-            </p>
-          </div>
-          <div class="bg-white p-8 rounded-xl shadow-sm" id="development">
-            <div class="w-12 h-12 bg-blue/10 rounded-lg flex items-center justify-center mb-4">
-              <span class="text-blue text-xl font-bold">P</span>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">Project Development</h3>
-            <p class="text-light-muted leading-relaxed">
-              Co-development, technical due diligence, and financial modeling
-              for greenfield and brownfield data center projects.
-            </p>
-          </div>
-          <a href="/intelligence" class="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow" id="intelligence">
-            <div class="w-12 h-12 bg-blue/10 rounded-lg flex items-center justify-center mb-4">
-              <span class="text-blue text-xl font-bold">I</span>
-            </div>
-            <h3 class="text-xl font-semibold mb-3">Intelligence</h3>
-            <p class="text-light-muted leading-relaxed">
-              Technical memos, weekly radar, and monthly regulatory digests on
-              LatAm data center markets — plus proprietary platforms.
-            </p>
-            <span class="inline-block mt-4 text-sm text-blue font-medium">Browse published research →</span>
-          </a>
+        <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
+          <a href="/advisory" class="no-underline text-[var(--color-ink)] font-semibold">Advisory →</a>
+          <a href="/development" class="no-underline text-[var(--color-ink)] font-semibold">Development →</a>
+          <a href="/intelligence" class="no-underline text-[var(--color-ink)] font-semibold">Intelligence →</a>
         </div>
       </div>
     </section>
 
-    <section class="py-20">
-      <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl font-heading font-bold text-center mb-4">Our Platforms</h2>
-        <p class="text-light-muted text-center mb-16 max-w-2xl mx-auto">
-          Purpose-built tools for data center site intelligence in Latin America.
-        </p>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <a href="https://dcplatformcmp.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
-            <h3 class="font-semibold mb-2">Site Selection Tool</h3>
-            <p class="text-sm text-light-muted">Multi-criteria scoring across 76+ cities in BR, CL, MX</p>
-          </a>
-          <a href="https://dcinsights.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
-            <h3 class="font-semibold mb-2">DC Insights</h3>
-            <p class="text-sm text-light-muted">Weekly newsletter on LatAm data center developments</p>
-          </a>
-          <a href="https://land-price-dashboard.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
-            <h3 class="font-semibold mb-2">Land Intel</h3>
-            <p class="text-sm text-light-muted">Land price intelligence across 25 markets</p>
-          </a>
-          <a href="https://dc-testfit-pro.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
-            <h3 class="font-semibold mb-2">TestFit Pro</h3>
-            <p class="text-sm text-light-muted">Data center test fit with 30+ reference presets</p>
-          </a>
-          <a href="https://atlas-dc-dashboard.web.app" target="_blank" rel="noopener" class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all">
-            <h3 class="font-semibold mb-2">Atlas Dashboard</h3>
-            <p class="text-sm text-light-muted">Client project tracking and milestone management</p>
-          </a>
-          <div class="block p-6 border border-light-border rounded-xl opacity-70">
-            <h3 class="font-semibold mb-2">Financial Model</h3>
-            <p class="text-sm text-light-muted">DC financial modeling and scenario analysis</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-20 bg-light-surface" id="team">
-      <div class="max-w-6xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-heading font-bold mb-4">Our Team</h2>
-        <p class="text-light-muted max-w-xl mx-auto">
-          Coming soon.
-        </p>
-      </div>
-    </section>
-
-    <section class="py-20 bg-navy text-white" id="contact">
-      <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="text-3xl font-heading font-bold mb-4">Let's Talk</h2>
-        <p class="text-blue-light mb-8">
-          Exploring a data center opportunity in Latin America?
-        </p>
-        <a href="mailto:e.abreu@cloudmindspartners.com" class="inline-block bg-teal text-navy-dark font-semibold px-8 py-3 rounded-lg hover:bg-teal-dark transition-colors">
-          e.abreu@cloudmindspartners.com
+    <!-- ——— 3 Pillars ———————————————————————————— -->
+    <Section eyebrow="What we do" title="Three practices, one thesis.">
+      <div class="grid md:grid-cols-3 gap-0 md:gap-px bg-[var(--color-rule)]">
+        <a href="/advisory" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
+          <div class="caption mb-4">01 / Advisory</div>
+          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Advisory</h3>
+          <p class="text-[var(--color-ink-muted)] leading-relaxed">
+            Site selection, feasibility studies, and market intelligence
+            tailored to the regulatory and infrastructure realities of
+            Brazil, Chile, Mexico, and the wider region.
+          </p>
+          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
+        </a>
+        <a href="/development" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
+          <div class="caption mb-4">02 / Project development</div>
+          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Development</h3>
+          <p class="text-[var(--color-ink-muted)] leading-relaxed">
+            Co-development, technical due diligence, and financial modeling
+            for greenfield and brownfield data center projects — from
+            pre-site through commissioning.
+          </p>
+          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
+        </a>
+        <a href="/intelligence" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
+          <div class="caption mb-4">03 / Intelligence</div>
+          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Intelligence</h3>
+          <p class="text-[var(--color-ink-muted)] leading-relaxed">
+            Technical memos, weekly innovation radar, and monthly regulatory
+            digests — plus a set of proprietary platforms used in our own
+            engagements and by clients.
+          </p>
+          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
         </a>
       </div>
-    </section>
+    </Section>
+
+    <!-- ——— Platforms strip ————————————————————————— -->
+    <Section
+      eyebrow="Platforms"
+      title="Purpose-built tools."
+      lede="We productize the parts of our work that survive across engagements. Used internally by our team and available to clients under engagement."
+      tone="alt"
+    >
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--color-rule)]">
+        {platforms.map((p) => {
+          const inner = (
+            <>
+              <h3 class="display text-lg text-[var(--color-ink)] mb-2">{p.name}</h3>
+              <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.desc}</p>
+              {p.url && (
+                <span class="mt-4 inline-block caption text-[var(--color-navy)]">{new URL(p.url).host}</span>
+              )}
+            </>
+          );
+          return p.url ? (
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener"
+              class="bg-[var(--color-surface)] p-7 no-underline block hover:bg-[var(--color-surface-alt)] transition-colors"
+            >
+              {inner}
+            </a>
+          ) : (
+            <div class="bg-[var(--color-surface)] p-7 opacity-70">
+              {inner}
+              <span class="mt-4 inline-block caption">In development</span>
+            </div>
+          );
+        })}
+      </div>
+    </Section>
+
+    <!-- ——— Contact ————————————————————————————— -->
+    <Section tone="ink" compact>
+      <div class="grid md:grid-cols-12 gap-8 items-end">
+        <div class="md:col-span-8">
+          <div class="eyebrow text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)] mb-4">Engagement</div>
+          <h2 class="display text-3xl md:text-4xl max-w-2xl text-[var(--color-canvas)]">
+            Exploring a site, a feasibility question, or a regulatory path in Latin America?
+          </h2>
+        </div>
+        <div class="md:col-span-4 md:text-right">
+          <a
+            href="mailto:e.abreu@cloudmindspartners.com"
+            class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
+          >
+            e.abreu@cloudmindspartners.com
+          </a>
+        </div>
+      </div>
+    </Section>
   </main>
 
-  <footer class="bg-navy-dark text-white/60 py-6">
-    <div class="max-w-6xl mx-auto px-6 text-center text-sm">
-      &copy; 2026 Cloud Minds Partners. All rights reserved.
-    </div>
-  </footer>
+  <SiteFooter />
 </Base>

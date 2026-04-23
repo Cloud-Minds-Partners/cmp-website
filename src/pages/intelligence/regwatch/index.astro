@@ -1,8 +1,9 @@
 ---
 import Base from "../../../layouts/Base.astro";
-import IntelHeader from "../../../components/IntelHeader.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import Section from "../../../components/Section.astro";
 import { getCollection } from "astro:content";
-import "../../../styles/global.css";
 
 const regwatch = (await getCollection("regwatch", (r) => r.data.published)).sort((a, b) =>
   (b.data.month ?? b.id).localeCompare(a.data.month ?? a.id),
@@ -15,36 +16,50 @@ const fmtMonth = (m: string) => {
 };
 ---
 
-<Base title="Regulatory Watch — CMP Intelligence">
-  <IntelHeader active="regwatch" />
+<Base title="Regulatory Watch — Cloud Minds Partners">
+  <SiteHeader
+    active="intelligence"
+    subnav={[
+      { href: "/intelligence", label: "Overview" },
+      { href: "/intelligence/memos", label: "Technical Memos" },
+      { href: "/intelligence/radar", label: "Innovation Radar" },
+      { href: "/intelligence/regwatch", label: "Regulatory Watch", active: true },
+    ]}
+  />
 
-  <main class="max-w-4xl mx-auto px-6 py-16">
-    <header class="mb-10">
-      <h1 class="text-4xl font-heading font-bold text-light-text">Regulatory Watch</h1>
-      <p class="mt-4 text-light-muted max-w-2xl">
-        Monthly digest of regulatory, legal, and fiscal changes across seven
-        LatAm jurisdictions.
-      </p>
-    </header>
+  <main>
+    <section class="pt-20 pb-12 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-4">Intelligence · Regulatory</div>
+        <h1 class="display text-4xl md:text-5xl max-w-3xl">Regulatory Watch.</h1>
+        <p class="lede mt-5 max-w-2xl">
+          Monthly digest of regulatory, legal, and fiscal changes across
+          seven Latin American jurisdictions.
+        </p>
+      </div>
+    </section>
 
-    {regwatch.length === 0 && (
-      <p class="text-light-muted italic">No digests published yet.</p>
-    )}
+    <Section compact>
+      {regwatch.length === 0 && (
+        <p class="text-[var(--color-ink-muted)] italic">No digests published yet.</p>
+      )}
 
-    <ul class="space-y-4">
-      {regwatch.map((entry) => (
-        <li>
-          <a
-            href={`/intelligence/regwatch/${entry.data.month}`}
-            class="flex items-baseline justify-between p-5 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
-          >
-            <h2 class="text-xl font-heading font-semibold text-light-text">
-              {fmtMonth(entry.data.month ?? entry.id)}
-            </h2>
-            <span class="text-sm text-blue">→</span>
+      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
+        {regwatch.map((entry) => (
+          <a href={`/intelligence/regwatch/${entry.data.month ?? entry.id}`} class="block py-8 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
+            <div class="grid md:grid-cols-12 gap-6">
+              <div class="md:col-span-3">
+                <div class="caption text-[var(--color-navy)]">{fmtMonth(entry.data.month ?? entry.id)}</div>
+              </div>
+              <div class="md:col-span-9">
+                <h2 class="display text-xl">{fmtMonth(entry.data.month ?? entry.id)}</h2>
+              </div>
+            </div>
           </a>
-        </li>
-      ))}
-    </ul>
+        ))}
+      </div>
+    </Section>
   </main>
+
+  <SiteFooter />
 </Base>

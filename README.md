@@ -1,33 +1,54 @@
 # cmp-website
 
-Cloud Minds Partners corporate website. **Astro 6 + Tailwind 4.**
+Cloud Minds Partners corporate website. **Astro 6 + Tailwind 4** + `@tailwindcss/typography`.
+
+Editorial aesthetic: serif display (Source Serif 4) + Inter body + JetBrains Mono
+captions. Warm paper canvas (`#FAF8F5`), CMP navy accents, minimal chrome.
+
+## Design decisions
+
+- **No shadcn/ui** — the site is mostly static editorial content, so the
+  React runtime + component library would be dead weight. Pure Astro + Tailwind
+  covers every need here. Add shadcn (and `@astrojs/react`) only if a specific
+  interactive component demands it later.
+- **No content lives in this repo.** Memos, radar, and regwatch come from the
+  private `cmp-knowledge` repo (see "Content source" below).
+- **Light theme only.** Dark inverted sections appear where editorial contrast
+  helps, but the site is fundamentally a light reading surface.
 
 ## Structure
 
 ```
 src/
 ├── components/
-│   └── IntelHeader.astro        # nav for /intelligence/** pages
+│   ├── SiteHeader.astro         # sticky top nav + optional subnav
+│   ├── SiteFooter.astro         # sitemap + legal
+│   └── Section.astro            # semantic section wrapper (eyebrow/title/lede)
 ├── content.config.ts            # Astro content collections (memos/radar/regwatch)
 ├── layouts/
-│   ├── Base.astro               # HTML shell (title, fonts, body classes)
+│   ├── Base.astro               # HTML shell (fonts, meta, og)
 │   ├── MemoLayout.astro         # /intelligence/memos/[slug]
 │   ├── RadarLayout.astro        # /intelligence/radar/[week]
 │   └── RegwatchLayout.astro     # /intelligence/regwatch/[month]
 ├── pages/
-│   ├── index.astro              # homepage (3 pillars, platforms, contact)
+│   ├── index.astro              # homepage (editorial hero, 3 pillars, platforms, contact)
+│   ├── advisory.astro           # 01 / Advisory
+│   ├── development.astro        # 02 / Project Development
+│   ├── platforms.astro          # SST, Land Intel, TestFit, DC Insights, Atlas
+│   ├── team.astro               # Edgard + Gustavo + advisor domains (bios forthcoming)
+│   ├── contact.astro            # email + markets + response SLA
 │   └── intelligence/
-│       ├── index.astro          # intelligence hub — lists all 3 streams
+│       ├── index.astro          # intelligence hub — lists 3 streams
 │       ├── memos/
 │       │   ├── index.astro      # list of published memos
-│       │   └── [slug].astro     # memo detail page
+│       │   └── [slug].astro     # memo detail (via MemoLayout)
 │       ├── radar/
 │       │   ├── index.astro
 │       │   └── [week].astro
 │       └── regwatch/
 │           ├── index.astro
 │           └── [month].astro
-└── styles/global.css
+└── styles/global.css            # Tailwind 4 tokens + typography utilities
 ```
 
 ## Content source

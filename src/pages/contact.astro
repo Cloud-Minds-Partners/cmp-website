@@ -1,0 +1,55 @@
+---
+import Base from "../layouts/Base.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Section from "../components/Section.astro";
+---
+
+<Base title="Contact — Cloud Minds Partners">
+  <SiteHeader active="contact" />
+
+  <main>
+    <section class="pt-24 pb-16 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-4">Contact</div>
+        <h1 class="display-lg max-w-3xl">Tell us about the project.</h1>
+        <p class="lede mt-6 max-w-2xl">
+          The fastest path is email. Include the market, the stage, and
+          anything NDA-worthy only after we've exchanged a mutual.
+        </p>
+      </div>
+    </section>
+
+    <Section compact>
+      <div class="grid md:grid-cols-2 gap-10 max-w-4xl">
+        <div>
+          <div class="eyebrow mb-3">General</div>
+          <a href="mailto:info@cloudmindspartners.com" class="display text-xl no-underline block mb-6">
+            info@cloudmindspartners.com
+          </a>
+
+          <div class="eyebrow mb-3">Partners</div>
+          <a href="mailto:e.abreu@cloudmindspartners.com" class="display text-lg no-underline block">
+            e.abreu@cloudmindspartners.com
+          </a>
+          <a href="mailto:g.costa@cloudmindspartners.com" class="display text-lg no-underline block">
+            g.costa@cloudmindspartners.com
+          </a>
+        </div>
+
+        <div class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+          <div class="eyebrow mb-3">Office</div>
+          <p>São Paulo, Brazil</p>
+
+          <div class="eyebrow mt-8 mb-3">Coverage</div>
+          <p>Primary markets: Brazil, Chile, Mexico.<br/>Secondary: Argentina, Colombia, Peru, Uruguay.</p>
+
+          <div class="eyebrow mt-8 mb-3">Response</div>
+          <p>Within one business day.</p>
+        </div>
+      </div>
+    </Section>
+  </main>
+
+  <SiteFooter />
+</Base>

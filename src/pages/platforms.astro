@@ -1,0 +1,107 @@
+---
+import Base from "../layouts/Base.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Section from "../components/Section.astro";
+
+const platforms = [
+  {
+    name: "Site Selection Tool",
+    domain: "dcplatformcmp.web.app",
+    summary: "Multi-criteria site scoring across 76+ cities in Brazil, Chile, Mexico, and selected LatAm markets.",
+    detail: "Land, power, water, connectivity, tax, and regulatory layers. Generates a Site Analysis PDF + Risk Matrix PDF per engagement. Portfolio view for side-by-side comparison.",
+    url: "https://dcplatformcmp.web.app",
+    tag: "Site scoring",
+  },
+  {
+    name: "Land Intel",
+    domain: "land-price-dashboard.web.app",
+    summary: "Land price intelligence across 25 active markets. Listings, transactions, and broker benchmarks.",
+    detail: "Queryable database of hundreds of listings with geolocation, size, price per m², and zoning context. Reverse-geocodes to unify data across regional conventions.",
+    url: "https://land-price-dashboard.web.app",
+    tag: "Market pricing",
+  },
+  {
+    name: "TestFit Pro",
+    domain: "dc-testfit-pro.web.app",
+    summary: "Data center test-fit with 30+ reference presets. Rapid capacity and layout studies.",
+    detail: "Load-to-GFA calculations, density presets (N+1, 2N, hybrid), PUE modelling, and deliverable PDFs for developer / sponsor review.",
+    url: "https://dc-testfit-pro.web.app",
+    tag: "Capacity modelling",
+  },
+  {
+    name: "DC Insights",
+    domain: "dcinsights.web.app",
+    summary: "Weekly LatAm data center newsletter and subscriber pipeline.",
+    detail: "Curated coverage of regional announcements, deals, policy, and infrastructure. Subscribe endpoint + retention analytics.",
+    url: "https://dcinsights.web.app",
+    tag: "Editorial",
+  },
+  {
+    name: "Atlas Dashboard",
+    domain: "atlas-dc-dashboard.web.app",
+    summary: "Client project tracking — milestones, deliverables, and status across active engagements.",
+    detail: "Timeline-based status visualization, reverse-synced checklists, land assessment integration. Used in owner-rep engagements.",
+    url: "https://atlas-dc-dashboard.web.app",
+    tag: "Project management",
+  },
+  {
+    name: "Financial Model",
+    domain: null,
+    summary: "Data center financial modelling and scenario analysis.",
+    detail: "In development — currently internal only. Will be released when the analyst UI reaches parity with the internal tool used on engagements.",
+    url: null,
+    tag: "In development",
+  },
+];
+---
+
+<Base title="Platforms — Cloud Minds Partners" description="CMP proprietary platforms for data center site selection, market pricing, capacity modelling, and project tracking.">
+  <SiteHeader active="platforms" />
+
+  <main>
+    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-4">Platforms</div>
+        <h1 class="display-lg max-w-3xl">We productize what survives across engagements.</h1>
+        <p class="lede mt-6 max-w-2xl">
+          Our platforms are the tools we use on every project — not a
+          separate business line. They are available to clients under
+          engagement and become deliverables in their own right.
+        </p>
+      </div>
+    </section>
+
+    <Section compact>
+      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
+        {platforms.map((p) => {
+          const title = p.url ? (
+            <a href={p.url} target="_blank" rel="noopener" class="no-underline hover:text-[var(--color-navy)]">
+              {p.name}
+            </a>
+          ) : p.name;
+          return (
+            <article class="py-10 grid md:grid-cols-12 gap-6">
+              <div class="md:col-span-3">
+                <div class="caption mb-2">{p.tag}</div>
+                {p.domain && <div class="caption text-[var(--color-navy)]">{p.domain}</div>}
+              </div>
+              <div class="md:col-span-9">
+                <h2 class="display text-2xl mb-3">{title}</h2>
+                <p class="text-[var(--color-ink)] leading-relaxed">{p.summary}</p>
+                <p class="text-[var(--color-ink-muted)] leading-relaxed mt-3 text-sm">{p.detail}</p>
+                {p.url && (
+                  <a href={p.url} target="_blank" rel="noopener" class="inline-block mt-5 text-sm font-semibold no-underline text-[var(--color-navy)]">
+                    Open →
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </Section>
+  </main>
+
+  <SiteFooter />
+</Base>

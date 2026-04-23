@@ -1,0 +1,102 @@
+---
+import Base from "../layouts/Base.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Section from "../components/Section.astro";
+
+const phases = [
+  {
+    n: "Phase 1",
+    t: "Pre-site",
+    b: "Site qualification, offtake modeling, equity/debt stack scoping. Goal: committable term sheet within 90 days where fundamentals support it.",
+  },
+  {
+    n: "Phase 2",
+    t: "Engineering & permits",
+    b: "Technical DD, interconnection path, environmental and water filings, MV/HV coordination. Managed with EPC and local engineering partners.",
+  },
+  {
+    n: "Phase 3",
+    t: "Construction & commissioning",
+    b: "Owner-rep coordination, risk register, schedule-linked cash curve, milestone reporting. We stay close enough to catch drift without replacing the GC.",
+  },
+  {
+    n: "Phase 4",
+    t: "Operate & iterate",
+    b: "PUE/WUE monitoring, expansion optioning, exit or refinancing prep. Intelligence inputs fed back into the Site Selection Tool for future deals.",
+  },
+];
+---
+
+<Base title="Development — Cloud Minds Partners" description="Co-development, technical due diligence, and financial modeling for data center projects from pre-site through commissioning.">
+  <SiteHeader active="development" />
+
+  <main>
+    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-4">02 / Project Development</div>
+        <h1 class="display-lg max-w-3xl">From thesis to commissioned asset.</h1>
+        <p class="lede mt-6 max-w-2xl">
+          We work alongside operators and sponsors on specific projects —
+          either as co-developer, technical advisor, or financial partner
+          — across the full lifecycle of a data center build.
+        </p>
+      </div>
+    </section>
+
+    <Section eyebrow="Project lifecycle" title="Four phases. One owner of the narrative." compact>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--color-rule)]">
+        {phases.map((p) => (
+          <div class="bg-[var(--color-canvas)] p-7">
+            <div class="caption mb-3">{p.n}</div>
+            <h3 class="display text-lg mb-3">{p.t}</h3>
+            <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.b}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <Section eyebrow="Engagement models" title="How we participate." tone="alt">
+      <div class="grid md:grid-cols-3 gap-px bg-[var(--color-rule)]">
+        <div class="bg-[var(--color-surface)] p-9">
+          <h3 class="display text-lg mb-3">Co-developer</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            CMP holds a development interest alongside the sponsor. Aligned
+            on outcome, not billable hour.
+          </p>
+        </div>
+        <div class="bg-[var(--color-surface)] p-9">
+          <h3 class="display text-lg mb-3">Owner's technical advisor</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            Fixed-scope engagements covering technical DD, permitting,
+            procurement support, and commissioning oversight.
+          </p>
+        </div>
+        <div class="bg-[var(--color-surface)] p-9">
+          <h3 class="display text-lg mb-3">Intelligence subscription</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            For funds and strategic operators — ongoing access to platform
+            data, memos, and monthly regulatory digests.
+          </p>
+        </div>
+      </div>
+    </Section>
+
+    <Section tone="ink" compact>
+      <div class="max-w-3xl">
+        <div class="eyebrow mb-4 text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)]">Next</div>
+        <h2 class="display text-2xl md:text-3xl text-[var(--color-canvas)] mb-6">
+          Have a project that needs either a co-developer or a sharper technical lens?
+        </h2>
+        <a
+          href="mailto:e.abreu@cloudmindspartners.com"
+          class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
+        >
+          e.abreu@cloudmindspartners.com
+        </a>
+      </div>
+    </Section>
+  </main>
+
+  <SiteFooter />
+</Base>

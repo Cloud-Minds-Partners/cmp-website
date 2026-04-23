@@ -1,7 +1,7 @@
 ---
 import Base from "./Base.astro";
-import IntelHeader from "../components/IntelHeader.astro";
-import "../styles/global.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
   title: string;
@@ -15,8 +15,7 @@ interface Props {
   tags?: string[];
 }
 
-const { title, description, jurisdiction, author, created, updated, word_count, sources_count, tags = [] } =
-  Astro.props;
+const { title, description, jurisdiction, author, created, updated, word_count, sources_count, tags = [] } = Astro.props;
 
 const fmtDate = (d: Date) =>
   d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
@@ -28,52 +27,53 @@ const countryName: Record<string, string> = {
 ---
 
 <Base title={`${title} — CMP Technical Memo`} description={description}>
-  <IntelHeader active="memos" />
+  <SiteHeader
+    active="intelligence"
+    subnav={[
+      { href: "/intelligence", label: "Overview" },
+      { href: "/intelligence/memos", label: "Technical Memos", active: true },
+      { href: "/intelligence/radar", label: "Innovation Radar" },
+      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
+    ]}
+  />
 
-  <main class="max-w-3xl mx-auto px-6 py-12">
-    <nav class="text-sm text-light-muted mb-6">
-      <a href="/intelligence/memos" class="hover:text-blue">← All memos</a>
+  <main class="max-w-[720px] mx-auto px-6 py-16">
+    <nav class="caption mb-10">
+      <a href="/intelligence/memos" class="no-underline">← All memos</a>
     </nav>
 
-    <header class="mb-10 pb-8 border-b border-light-border">
-      <div class="flex flex-wrap gap-2 text-xs uppercase tracking-wider text-blue font-semibold mb-3">
-        <span>{countryName[jurisdiction.country] ?? jurisdiction.country}</span>
-        <span>·</span>
-        <span>{jurisdiction.scope}</span>
-        {jurisdiction.region && (
-          <>
-            <span>·</span>
-            <span>{jurisdiction.region}</span>
-          </>
-        )}
+    <header class="mb-12 pb-8 border-b border-[var(--color-rule)]">
+      <div class="caption text-[var(--color-navy)] mb-4">
+        {countryName[jurisdiction.country] ?? jurisdiction.country} · {jurisdiction.scope}
+        {jurisdiction.region && <> · {jurisdiction.region}</>}
       </div>
-      <h1 class="text-3xl md:text-4xl font-heading font-bold leading-tight text-light-text">{title}</h1>
-      <div class="mt-5 flex flex-wrap gap-x-6 gap-y-1 text-sm text-light-muted">
-        <span>Author: <span class="text-light-text">{author}</span></span>
+      <h1 class="display text-4xl md:text-5xl leading-tight tracking-tight">{title}</h1>
+      <div class="mt-6 flex flex-wrap gap-x-6 gap-y-1 text-sm text-[var(--color-ink-muted)]">
+        <span>Author: <span class="text-[var(--color-ink)]">{author}</span></span>
         <span>Published: {fmtDate(created)}</span>
         {updated > created && <span>Updated: {fmtDate(updated)}</span>}
-        {word_count && <span>{word_count} words</span>}
-        {sources_count !== undefined && <span>{sources_count} primary sources</span>}
+        {word_count && <span class="tabular-nums">{word_count} words</span>}
+        {sources_count !== undefined && <span class="tabular-nums">{sources_count} primary sources</span>}
       </div>
       {tags.length > 0 && (
-        <div class="mt-4 flex flex-wrap gap-2">
+        <div class="mt-5 flex flex-wrap gap-2">
           {tags.map((t) => (
-            <span class="text-xs px-2 py-1 bg-light-surface text-light-muted rounded">{t}</span>
+            <span class="caption px-2 py-1 bg-[var(--color-surface-alt)] border border-[var(--color-rule)]">{t}</span>
           ))}
         </div>
       )}
     </header>
 
-    <article class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-light-text prose-a:text-blue">
+    <article class="prose prose-lg">
       <slot />
     </article>
 
-    <footer class="mt-16 pt-8 border-t border-light-border text-sm text-light-muted">
-      <p>
-        © 2026 Cloud Minds Partners. Published technical memo. Citations trace
-        to primary sources audited via
-        <code class="text-xs bg-light-surface px-1 py-0.5 rounded">cmp-memo audit</code>.
-      </p>
+    <footer class="mt-16 pt-8 border-t border-[var(--color-rule)] text-xs text-[var(--color-ink-quiet)] leading-relaxed">
+      © 2026 Cloud Minds Partners. Citations audited via <code class="bg-[var(--color-surface-alt)] px-1 py-0.5">cmp-memo audit</code> —
+      every <code class="bg-[var(--color-surface-alt)] px-1 py-0.5">[src:...]</code> token in the body resolves to a primary
+      source downloaded to our intelligence repository.
     </footer>
   </main>
+
+  <SiteFooter />
 </Base>

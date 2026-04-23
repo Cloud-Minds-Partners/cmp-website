@@ -1,0 +1,55 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-28 border-t border-[var(--color-rule)] bg-[var(--color-canvas)]">
+  <div class="max-w-[1200px] mx-auto px-6 py-14 grid grid-cols-2 md:grid-cols-5 gap-10 text-sm">
+    <div class="col-span-2 md:col-span-2">
+      <div class="display text-base text-[var(--color-ink)] mb-2">Cloud Minds Partners</div>
+      <p class="text-[var(--color-ink-muted)] max-w-xs leading-relaxed">
+        Data center advisory, project development, and intelligence across
+        Latin America.
+      </p>
+      <a
+        href="mailto:info@cloudmindspartners.com"
+        class="mt-3 inline-block caption text-[var(--color-navy)]"
+      >
+        info@cloudmindspartners.com
+      </a>
+    </div>
+
+    <div>
+      <div class="eyebrow mb-3">Services</div>
+      <ul class="space-y-1.5">
+        <li><a href="/advisory" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Advisory</a></li>
+        <li><a href="/development" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Development</a></li>
+        <li><a href="/intelligence" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Intelligence</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="eyebrow mb-3">Intelligence</div>
+      <ul class="space-y-1.5">
+        <li><a href="/intelligence/memos" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Technical Memos</a></li>
+        <li><a href="/intelligence/radar" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Innovation Radar</a></li>
+        <li><a href="/intelligence/regwatch" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Regulatory Watch</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="eyebrow mb-3">About</div>
+      <ul class="space-y-1.5">
+        <li><a href="/team" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Team</a></li>
+        <li><a href="/platforms" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Platforms</a></li>
+        <li><a href="/contact" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--color-rule)]">
+    <div class="max-w-[1200px] mx-auto px-6 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-2 text-xs text-[var(--color-ink-quiet)]">
+      <span>© {year} Cloud Minds Partners. All rights reserved.</span>
+      <span class="caption">São Paulo · Data Center Advisory for LatAm</span>
+    </div>
+  </div>
+</footer>

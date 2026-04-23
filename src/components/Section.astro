@@ -1,0 +1,33 @@
+---
+// Semantic section wrapper with consistent spacing + max-width
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  lede?: string;
+  tone?: "default" | "alt" | "ink";   // default=canvas, alt=surface-alt, ink=dark
+  id?: string;
+  compact?: boolean;
+}
+const { eyebrow, title, lede, tone = "default", id, compact = false } = Astro.props;
+
+const bg = {
+  default: "bg-[var(--color-canvas)]",
+  alt: "bg-[var(--color-surface-alt)]",
+  ink: "bg-[var(--color-navy-deep)] text-[var(--color-canvas)]",
+}[tone];
+
+const py = compact ? "py-14" : "py-24 md:py-28";
+---
+
+<section id={id} class={`${bg} ${py}`}>
+  <div class="max-w-[1200px] mx-auto px-6">
+    {(eyebrow || title || lede) && (
+      <header class="mb-12 max-w-3xl">
+        {eyebrow && <div class="eyebrow mb-3">{eyebrow}</div>}
+        {title && <h2 class="display text-3xl md:text-[2.5rem] leading-tight tracking-tight">{title}</h2>}
+        {lede && <p class="lede mt-4">{lede}</p>}
+      </header>
+    )}
+    <slot />
+  </div>
+</section>

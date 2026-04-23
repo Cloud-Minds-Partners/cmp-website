@@ -1,0 +1,93 @@
+---
+import Base from "../layouts/Base.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Section from "../components/Section.astro";
+
+const capabilities = [
+  {
+    n: "01",
+    t: "Site selection",
+    b: "Multi-criteria scoring across land, power, water, connectivity, tax, and regulatory fit. Driven by our Site Selection Tool and ground-truthed with local partners.",
+  },
+  {
+    n: "02",
+    t: "Feasibility studies",
+    b: "Capex envelope, timeline risk, interconnection gate, water baseline, permitting path. Output is a defensible file deliverable, not a pitch deck.",
+  },
+  {
+    n: "03",
+    t: "Market intelligence",
+    b: "Demand signals, competitive density, tariff trajectories, and policy context across Brazil, Chile, and Mexico as primary markets.",
+  },
+  {
+    n: "04",
+    t: "Regulatory path mapping",
+    b: "Federal, state, and municipal requirements distilled into a project timeline. Primary sources attached. Reviewed monthly under Regulatory Watch.",
+  },
+];
+---
+
+<Base title="Advisory — Cloud Minds Partners" description="Site selection, feasibility studies, market intelligence, and regulatory path mapping for data center projects in Latin America.">
+  <SiteHeader active="advisory" />
+
+  <main>
+    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-4">01 / Advisory</div>
+        <h1 class="display-lg max-w-3xl">Advisory for data center projects in Latin America.</h1>
+        <p class="lede mt-6 max-w-2xl">
+          The work that sits before a project has a CFO and an EPC —
+          deciding where, whether, and how, with evidence that holds up in
+          front of a board, a regulator, or a bank.
+        </p>
+      </div>
+    </section>
+
+    <Section eyebrow="Capabilities" title="How we work." compact>
+      <div class="grid md:grid-cols-2 gap-px bg-[var(--color-rule)]">
+        {capabilities.map((c) => (
+          <div class="bg-[var(--color-canvas)] p-9">
+            <div class="caption mb-3">{c.n}</div>
+            <h3 class="display text-xl mb-3">{c.t}</h3>
+            <p class="text-[var(--color-ink-muted)] leading-relaxed">{c.b}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <Section eyebrow="Method" title="Primary sources first. Always." tone="alt">
+      <div class="max-w-3xl">
+        <p class="text-[var(--color-ink)] leading-relaxed text-lg">
+          Every factual claim in a CMP deliverable traces back to a primary
+          source downloaded and archived in our intelligence repository.
+          We built an audit gate —
+          <code class="text-sm bg-[var(--color-canvas)] px-1.5 py-0.5 border border-[var(--color-rule)]">cmp-memo audit</code>
+          — that blocks publication when citations don't resolve to a
+          verifiable document.
+        </p>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed mt-5">
+          This is unusual in the industry. It is not a marketing line.
+          It is the constraint that shapes what we publish and when.
+        </p>
+      </div>
+    </Section>
+
+    <Section tone="ink" compact>
+      <div class="max-w-3xl">
+        <div class="eyebrow mb-4 text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)]">Next</div>
+        <h2 class="display text-2xl md:text-3xl text-[var(--color-canvas)] mb-6">
+          Looking at a specific site or market?
+        </h2>
+        <a
+          href="mailto:e.abreu@cloudmindspartners.com"
+          class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
+        >
+          e.abreu@cloudmindspartners.com
+        </a>
+      </div>
+    </Section>
+  </main>
+
+  <SiteFooter />
+</Base>

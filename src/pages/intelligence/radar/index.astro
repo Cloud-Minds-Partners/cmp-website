@@ -1,8 +1,9 @@
 ---
 import Base from "../../../layouts/Base.astro";
-import IntelHeader from "../../../components/IntelHeader.astro";
+import SiteHeader from "../../../components/SiteHeader.astro";
+import SiteFooter from "../../../components/SiteFooter.astro";
+import Section from "../../../components/Section.astro";
 import { getCollection } from "astro:content";
-import "../../../styles/global.css";
 
 const radar = (await getCollection("radar", (r) => r.data.published)).sort((a, b) => {
   const aStart = a.data.period_start?.valueOf() ?? 0;
@@ -14,42 +15,53 @@ const fmt = (d: Date | undefined) =>
   d ? d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "";
 ---
 
-<Base title="Innovation Radar — CMP Intelligence">
-  <IntelHeader active="radar" />
+<Base title="Innovation Radar — Cloud Minds Partners">
+  <SiteHeader
+    active="intelligence"
+    subnav={[
+      { href: "/intelligence", label: "Overview" },
+      { href: "/intelligence/memos", label: "Technical Memos" },
+      { href: "/intelligence/radar", label: "Innovation Radar", active: true },
+      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
+    ]}
+  />
 
-  <main class="max-w-4xl mx-auto px-6 py-16">
-    <header class="mb-10">
-      <h1 class="text-4xl font-heading font-bold text-light-text">Innovation Radar</h1>
-      <p class="mt-4 text-light-muted max-w-2xl">
-        Weekly scan of DC infrastructure, AI, competitive, and regulatory signals.
-      </p>
-    </header>
+  <main>
+    <section class="pt-20 pb-12 border-b border-[var(--color-rule)]">
+      <div class="max-w-[1200px] mx-auto px-6">
+        <div class="eyebrow mb-4">Intelligence · Radar</div>
+        <h1 class="display text-4xl md:text-5xl max-w-3xl">Innovation Radar.</h1>
+        <p class="lede mt-5 max-w-2xl">
+          Weekly scan of infrastructure, AI, competitive, and regulatory
+          signals worth tracking for LatAm data center operators.
+        </p>
+      </div>
+    </section>
 
-    {radar.length === 0 && (
-      <p class="text-light-muted italic">No radar entries published yet.</p>
-    )}
+    <Section compact>
+      {radar.length === 0 && (
+        <p class="text-[var(--color-ink-muted)] italic">No radar entries published yet.</p>
+      )}
 
-    <ul class="space-y-4">
-      {radar.map((entry) => (
-        <li>
-          <a
-            href={`/intelligence/radar/${entry.data.week}`}
-            class="flex items-baseline justify-between p-5 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
-          >
-            <div>
-              <h2 class="text-xl font-heading font-semibold text-light-text">
-                Week {entry.data.week ?? entry.id}
-              </h2>
-              {entry.data.period_start && entry.data.period_end && (
-                <p class="text-sm text-light-muted mt-1">
-                  {fmt(entry.data.period_start)} — {fmt(entry.data.period_end)}
-                </p>
-              )}
+      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
+        {radar.map((entry) => (
+          <a href={`/intelligence/radar/${entry.data.week ?? entry.id}`} class="block py-8 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
+            <div class="grid md:grid-cols-12 gap-6">
+              <div class="md:col-span-3">
+                <div class="caption text-[var(--color-navy)]">Week {entry.data.week ?? entry.id}</div>
+                {entry.data.period_start && entry.data.period_end && (
+                  <div class="caption mt-1">{fmt(entry.data.period_start)} — {fmt(entry.data.period_end)}</div>
+                )}
+              </div>
+              <div class="md:col-span-9">
+                <h2 class="display text-xl">Week {entry.data.week ?? entry.id}</h2>
+              </div>
             </div>
-            <span class="text-sm text-blue">→</span>
           </a>
-        </li>
-      ))}
-    </ul>
+        ))}
+      </div>
+    </Section>
   </main>
+
+  <SiteFooter />
 </Base>
