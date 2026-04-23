@@ -3,14 +3,6 @@ import Base from "../layouts/Base.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
-import { getCollection } from "astro:content";
-
-const partners = (await getCollection("people"))
-  .filter((p) => !p.id.includes("/"))
-  .sort((a, b) => {
-    const order: Record<string, number> = { "Founder & CEO": 0 };
-    return (order[a.data.role] ?? 99) - (order[b.data.role] ?? 99);
-  });
 ---
 
 <Base title="Contact — Cloud Minds Partners">
@@ -32,24 +24,9 @@ const partners = (await getCollection("people"))
       <div class="grid md:grid-cols-2 gap-10 max-w-4xl">
         <div>
           <div class="eyebrow mb-3">General</div>
-          <a href="mailto:info@cloudmindspartners.com" class="display text-xl no-underline block mb-6">
+          <a href="mailto:info@cloudmindspartners.com" class="display text-2xl no-underline block">
             info@cloudmindspartners.com
           </a>
-
-          <div class="eyebrow mb-3">Partners</div>
-          {partners.map((p) => (
-            <div class="mb-3">
-              <div class="caption mb-1">{p.data.name} · {p.data.role}</div>
-              {p.data.email ? (
-                <a href={`mailto:${p.data.email}`} class="display text-lg no-underline block">
-                  {p.data.email}
-                </a>
-              ) : (
-                <span class="text-sm text-[var(--color-ink-muted)]">Reach via info@ above</span>
-              )}
-              {p.data.phone && <div class="caption mt-1">{p.data.phone}</div>}
-            </div>
-          ))}
         </div>
 
         <div class="text-sm text-[var(--color-ink-muted)] leading-relaxed">

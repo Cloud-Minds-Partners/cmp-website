@@ -5,12 +5,12 @@ import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
 
 const platforms = [
-  { name: "Site Selection Tool", desc: "Multi-criteria scoring across 76+ cities in Brazil, Chile, and Mexico.", url: "https://dcplatformcmp.web.app" },
-  { name: "Land Intel", desc: "Land price intelligence across 25 active markets.", url: "https://land-price-dashboard.web.app" },
-  { name: "TestFit Pro", desc: "Data center test-fit with 30+ reference presets.", url: "https://dc-testfit-pro.web.app" },
-  { name: "DC Insights", desc: "Weekly LatAm data center newsletter.", url: "https://dcinsights.web.app" },
-  { name: "Atlas Dashboard", desc: "Client project tracking and milestone management.", url: "https://atlas-dc-dashboard.web.app" },
-  { name: "Financial Model", desc: "DC financial modeling and scenario analysis.", url: null },
+  { name: "Site Selection Tool", desc: "Multi-criteria scoring across 76+ cities in Brazil, Chile, and Mexico.", url: "https://dcplatformcmp.web.app", showHost: true },
+  { name: "Land Intel", desc: "Land price intelligence across 25 active markets.", url: "https://land-price-dashboard.web.app", showHost: true },
+  { name: "TestFit Pro", desc: "Data center test-fit with 30+ reference presets.", url: "https://dc-testfit-pro.web.app", showHost: true },
+  { name: "DC Insights", desc: "Weekly LatAm data center newsletter.", url: "https://dcinsights.web.app", showHost: true },
+  { name: "Project Management Dashboard", desc: "Client project tracking, milestones, and deliverables across active engagements.", url: null, showHost: false },
+  { name: "Financial Model", desc: "DC financial modeling and scenario analysis.", url: null, showHost: false },
 ];
 ---
 
@@ -88,7 +88,7 @@ const platforms = [
             <>
               <h3 class="display text-lg text-[var(--color-ink)] mb-2">{p.name}</h3>
               <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.desc}</p>
-              {p.url && (
+              {p.url && p.showHost && (
                 <span class="mt-4 inline-block caption text-[var(--color-navy)]">{new URL(p.url).host}</span>
               )}
             </>
@@ -103,9 +103,8 @@ const platforms = [
               {inner}
             </a>
           ) : (
-            <div class="bg-[var(--color-surface)] p-7 opacity-70">
+            <div class="bg-[var(--color-surface)] p-7">
               {inner}
-              <span class="mt-4 inline-block caption">In development</span>
             </div>
           );
         })}
@@ -123,10 +122,10 @@ const platforms = [
         </div>
         <div class="md:col-span-4 md:text-right">
           <a
-            href="mailto:e.abreu@cloudmindspartners.com"
+            href="mailto:info@cloudmindspartners.com"
             class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
           >
-            e.abreu@cloudmindspartners.com
+            info@cloudmindspartners.com
           </a>
         </div>
       </div>

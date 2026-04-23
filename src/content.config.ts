@@ -95,6 +95,7 @@ const people = defineCollection({
     phone: z.string().optional(),
     linkedin: z.union([z.string(), z.boolean()]).optional(),
     photo: z.string().optional(),           // path relative to people/
+    photo_position: z.string().optional(),  // CSS object-position override (e.g. "center 20%")
     source: z.string().optional(),
   }),
 });
