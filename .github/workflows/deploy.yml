@@ -17,8 +17,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      # Surface the secret as an env var so expressions can gate on it
+      # Surface secrets as env vars so expressions can gate on them
       HAS_KNOWLEDGE_TOKEN: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN != '' }}
+      HAS_FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN != '' }}
     steps:
       - name: Checkout cmp-website
         uses: actions/checkout@v4
@@ -56,9 +57,16 @@ jobs:
         working-directory: cmp-website
 
       - name: Deploy to Firebase Hosting (cmp-website site)
+        if: env.HAS_FIREBASE_TOKEN == 'true'
         run: |
           npm install -g firebase-tools
           firebase deploy --only hosting:cmp-website --project dcplatformcmp --non-interactive
         working-directory: cmp-website
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Skipping deploy (no token)
+        if: env.HAS_FIREBASE_TOKEN != 'true'
+        run: |
+          echo "::warning::FIREBASE_TOKEN not set — build validated, deploy skipped."
+          echo "Set FIREBASE_TOKEN repo secret (value from `firebase login:ci`) to enable deploys."
