@@ -80,27 +80,28 @@ npm install
 npm run dev            # serves localhost:4321
 ```
 
-### Production build (CI)
+### Production build + deploy (CI)
 
-CI workflow must clone `cmp-knowledge` before `astro build`:
+Workflow at `.github/workflows/deploy.yml` triggers on push to `main` (paths
+default, README-only changes skipped) and on `workflow_dispatch`.
 
-```yaml
-- uses: actions/checkout@v4
-  with:
-    repository: Cloud-Minds-Partners/cmp-knowledge
-    path: ../cmp-knowledge
-    token: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN }}
-- uses: actions/checkout@v4
-  with:
-    path: cmp-website
-- run: npm ci
-  working-directory: cmp-website
-- run: npm run build
-  working-directory: cmp-website
+It clones `cmp-knowledge` as a sibling, builds Astro, and deploys to the
+`cmp-website` Firebase Hosting site in project `dcplatformcmp`.
+
+**Hosting target:** `https://cmp-website.web.app` (custom domain later).
+
+**Required repository secrets:**
+
+| Secret | Purpose |
+|---|---|
+| `CMP_KNOWLEDGE_READ_TOKEN` | Fine-grained PAT with read access on `Cloud-Minds-Partners/cmp-knowledge`. |
+| `FIREBASE_TOKEN` | Firebase CI token (`firebase login:ci`). Same value used in SST repo. |
+
+First-time setup (already done 2026-04-23):
+```bash
+firebase hosting:sites:create cmp-website --project dcplatformcmp
+# Target mapping is in .firebaserc
 ```
-
-`CMP_KNOWLEDGE_READ_TOKEN` = fine-grained PAT with read access on
-`Cloud-Minds-Partners/cmp-knowledge`.
 
 ### Publishing flow
 

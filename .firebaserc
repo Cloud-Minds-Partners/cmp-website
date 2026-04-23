@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "dcplatformcmp"
+  },
+  "targets": {
+    "dcplatformcmp": {
+      "hosting": {
+        "cmp-website": ["cmp-website"]
+      }
+    }
+  }
+}
