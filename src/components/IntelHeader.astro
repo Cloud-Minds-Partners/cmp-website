@@ -1,0 +1,27 @@
+---
+// Shared header for /intelligence/** pages
+interface Props {
+  active?: "memos" | "radar" | "regwatch" | "index";
+}
+const { active = "index" } = Astro.props;
+
+const cls = (key: typeof active) =>
+  active === key
+    ? "text-teal border-b-2 border-teal pb-1"
+    : "text-white/80 hover:text-teal transition-colors";
+---
+
+<header class="bg-navy text-white border-b border-white/10">
+  <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="text-xl font-heading font-bold tracking-tight hover:text-teal transition-colors">
+      Cloud Minds Partners
+    </a>
+    <div class="hidden md:flex gap-8 text-sm font-medium">
+      <a href="/intelligence" class={cls("index")}>Intelligence</a>
+      <a href="/intelligence/memos" class={cls("memos")}>Memos</a>
+      <a href="/intelligence/radar" class={cls("radar")}>Radar</a>
+      <a href="/intelligence/regwatch" class={cls("regwatch")}>Regulatory Watch</a>
+      <a href="/#contact" class="text-white/80 hover:text-teal transition-colors">Contact</a>
+    </div>
+  </nav>
+</header>

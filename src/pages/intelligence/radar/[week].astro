@@ -1,0 +1,24 @@
+---
+import RadarLayout from "../../../layouts/RadarLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const radar = await getCollection("radar", (r) => r.data.published);
+  return radar.map((entry) => ({
+    params: { week: entry.data.week ?? entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<RadarLayout
+  week={entry.data.week ?? entry.id}
+  period_start={entry.data.period_start ?? new Date(0)}
+  period_end={entry.data.period_end ?? new Date(0)}
+  author={entry.data.author}
+>
+  <Content />
+</RadarLayout>

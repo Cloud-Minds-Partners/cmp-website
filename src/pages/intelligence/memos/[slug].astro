@@ -1,0 +1,28 @@
+---
+import MemoLayout from "../../../layouts/MemoLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const memos = await getCollection("memos", (m) => m.data.publish);
+  return memos.map((memo) => ({
+    params: { slug: memo.data.slug },
+    props: { memo },
+  }));
+}
+
+const { memo } = Astro.props;
+const { Content } = await render(memo);
+---
+
+<MemoLayout
+  title={memo.data.title}
+  jurisdiction={memo.data.jurisdiction}
+  author={memo.data.author}
+  created={memo.data.created}
+  updated={memo.data.updated}
+  word_count={memo.data.word_count}
+  sources_count={memo.data.sources_count}
+  tags={memo.data.tags}
+>
+  <Content />
+</MemoLayout>

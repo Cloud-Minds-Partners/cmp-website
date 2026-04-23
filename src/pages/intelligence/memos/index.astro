@@ -1,0 +1,60 @@
+---
+import Base from "../../../layouts/Base.astro";
+import IntelHeader from "../../../components/IntelHeader.astro";
+import { getCollection } from "astro:content";
+import "../../../styles/global.css";
+
+const memos = (await getCollection("memos", (m) => m.data.publish)).sort(
+  (a, b) => b.data.created.valueOf() - a.data.created.valueOf(),
+);
+
+const countryName: Record<string, string> = {
+  BR: "Brazil", MX: "Mexico", CL: "Chile", AR: "Argentina",
+  CO: "Colombia", PE: "Peru", UY: "Uruguay",
+};
+
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short" });
+---
+
+<Base title="Technical Memos — CMP Intelligence">
+  <IntelHeader active="memos" />
+
+  <main class="max-w-4xl mx-auto px-6 py-16">
+    <header class="mb-10">
+      <h1 class="text-4xl font-heading font-bold text-light-text">Technical Memos</h1>
+      <p class="mt-4 text-light-muted max-w-2xl">
+        5-page technical briefs on regulatory, fiscal, and market developments.
+        Every claim traces to a primary source.
+      </p>
+    </header>
+
+    {memos.length === 0 && (
+      <p class="text-light-muted italic">No memos published yet.</p>
+    )}
+
+    <ul class="space-y-6">
+      {memos.map((memo) => (
+        <li>
+          <a
+            href={`/intelligence/memos/${memo.data.slug}`}
+            class="block p-6 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
+          >
+            <div class="flex flex-wrap gap-2 text-xs uppercase tracking-wider text-blue font-semibold mb-2">
+              <span>{countryName[memo.data.jurisdiction.country] ?? memo.data.jurisdiction.country}</span>
+              <span>·</span>
+              <span>{memo.data.jurisdiction.scope}</span>
+              <span>·</span>
+              <span>{fmt(memo.data.created)}</span>
+            </div>
+            <h2 class="text-xl font-heading font-semibold text-light-text">{memo.data.title}</h2>
+            {memo.data.sources_count !== undefined && (
+              <p class="mt-2 text-sm text-light-muted">
+                {memo.data.sources_count} primary sources · {memo.data.word_count} words
+              </p>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>

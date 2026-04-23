@@ -1,0 +1,55 @@
+---
+import Base from "../../../layouts/Base.astro";
+import IntelHeader from "../../../components/IntelHeader.astro";
+import { getCollection } from "astro:content";
+import "../../../styles/global.css";
+
+const radar = (await getCollection("radar", (r) => r.data.published)).sort((a, b) => {
+  const aStart = a.data.period_start?.valueOf() ?? 0;
+  const bStart = b.data.period_start?.valueOf() ?? 0;
+  return bStart - aStart;
+});
+
+const fmt = (d: Date | undefined) =>
+  d ? d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "";
+---
+
+<Base title="Innovation Radar — CMP Intelligence">
+  <IntelHeader active="radar" />
+
+  <main class="max-w-4xl mx-auto px-6 py-16">
+    <header class="mb-10">
+      <h1 class="text-4xl font-heading font-bold text-light-text">Innovation Radar</h1>
+      <p class="mt-4 text-light-muted max-w-2xl">
+        Weekly scan of DC infrastructure, AI, competitive, and regulatory signals.
+      </p>
+    </header>
+
+    {radar.length === 0 && (
+      <p class="text-light-muted italic">No radar entries published yet.</p>
+    )}
+
+    <ul class="space-y-4">
+      {radar.map((entry) => (
+        <li>
+          <a
+            href={`/intelligence/radar/${entry.data.week}`}
+            class="flex items-baseline justify-between p-5 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
+          >
+            <div>
+              <h2 class="text-xl font-heading font-semibold text-light-text">
+                Week {entry.data.week ?? entry.id}
+              </h2>
+              {entry.data.period_start && entry.data.period_end && (
+                <p class="text-sm text-light-muted mt-1">
+                  {fmt(entry.data.period_start)} — {fmt(entry.data.period_end)}
+                </p>
+              )}
+            </div>
+            <span class="text-sm text-blue">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>

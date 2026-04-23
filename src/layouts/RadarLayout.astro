@@ -1,0 +1,42 @@
+---
+import Base from "./Base.astro";
+import IntelHeader from "../components/IntelHeader.astro";
+import "../styles/global.css";
+
+interface Props {
+  week: string;
+  period_start: Date;
+  period_end: Date;
+  author: string;
+  description?: string;
+}
+
+const { week, period_start, period_end, author, description } = Astro.props;
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+---
+
+<Base title={`Innovation Radar — Week ${week}`} description={description}>
+  <IntelHeader active="radar" />
+
+  <main class="max-w-3xl mx-auto px-6 py-12">
+    <nav class="text-sm text-light-muted mb-6">
+      <a href="/intelligence/radar" class="hover:text-blue">← All radar entries</a>
+    </nav>
+
+    <header class="mb-10 pb-8 border-b border-light-border">
+      <div class="text-xs uppercase tracking-wider text-blue font-semibold mb-3">Innovation Radar</div>
+      <h1 class="text-3xl md:text-4xl font-heading font-bold leading-tight text-light-text">
+        Week {week}
+      </h1>
+      <div class="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-light-muted">
+        <span>{fmtDate(period_start)} — {fmtDate(period_end)}</span>
+        <span>Author: <span class="text-light-text">{author}</span></span>
+      </div>
+    </header>
+
+    <article class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-light-text prose-a:text-blue">
+      <slot />
+    </article>
+  </main>
+</Base>

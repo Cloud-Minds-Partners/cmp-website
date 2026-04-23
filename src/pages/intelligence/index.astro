@@ -1,0 +1,71 @@
+---
+import Base from "../../layouts/Base.astro";
+import IntelHeader from "../../components/IntelHeader.astro";
+import { getCollection } from "astro:content";
+import "../../styles/global.css";
+
+const memos = (await getCollection("memos", (m) => m.data.publish)).length;
+const radar = (await getCollection("radar", (r) => r.data.published)).length;
+const regwatch = (await getCollection("regwatch", (r) => r.data.published)).length;
+---
+
+<Base title="Intelligence — Cloud Minds Partners">
+  <IntelHeader active="index" />
+
+  <main class="max-w-4xl mx-auto px-6 py-16">
+    <header class="mb-14">
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-light-text leading-tight">Intelligence</h1>
+      <p class="mt-5 text-lg text-light-muted max-w-2xl">
+        Three streams of published research covering data center development across
+        Latin America — each grounded in primary sources and peer-reviewed before release.
+      </p>
+    </header>
+
+    <div class="space-y-10">
+      <a
+        href="/intelligence/memos"
+        class="block p-8 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
+      >
+        <div class="flex items-start justify-between mb-3">
+          <h2 class="text-2xl font-heading font-semibold text-light-text">Technical Memos</h2>
+          <span class="text-sm text-light-muted tabular-nums">{memos} published</span>
+        </div>
+        <p class="text-light-muted leading-relaxed">
+          5-page technical briefs on regulatory, fiscal, and market developments in
+          LatAm data center markets. Each memo cites a minimum of three primary sources,
+          validated through an audit gate before publication.
+        </p>
+      </a>
+
+      <a
+        href="/intelligence/radar"
+        class="block p-8 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
+      >
+        <div class="flex items-start justify-between mb-3">
+          <h2 class="text-2xl font-heading font-semibold text-light-text">Innovation Radar</h2>
+          <span class="text-sm text-light-muted tabular-nums">{radar} entries</span>
+        </div>
+        <p class="text-light-muted leading-relaxed">
+          Weekly scan of DC infrastructure, AI, competitive, and regulatory signals
+          that warrant attention. Candidates graduate to memos, client conversations,
+          or platform updates.
+        </p>
+      </a>
+
+      <a
+        href="/intelligence/regwatch"
+        class="block p-8 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
+      >
+        <div class="flex items-start justify-between mb-3">
+          <h2 class="text-2xl font-heading font-semibold text-light-text">Regulatory Watch</h2>
+          <span class="text-sm text-light-muted tabular-nums">{regwatch} digests</span>
+        </div>
+        <p class="text-light-muted leading-relaxed">
+          Monthly digest of regulatory, legal, and fiscal changes across seven LatAm
+          jurisdictions. Every change cites a primary source downloaded to the CMP
+          intelligence corpus.
+        </p>
+      </a>
+    </div>
+  </main>
+</Base>

@@ -1,0 +1,50 @@
+---
+import Base from "../../../layouts/Base.astro";
+import IntelHeader from "../../../components/IntelHeader.astro";
+import { getCollection } from "astro:content";
+import "../../../styles/global.css";
+
+const regwatch = (await getCollection("regwatch", (r) => r.data.published)).sort((a, b) =>
+  (b.data.month ?? b.id).localeCompare(a.data.month ?? a.id),
+);
+
+const fmtMonth = (m: string) => {
+  const [y, mo] = m.split("-").map(Number);
+  if (!y || !mo) return m;
+  return new Date(y, mo - 1, 1).toLocaleDateString("en-US", { year: "numeric", month: "long" });
+};
+---
+
+<Base title="Regulatory Watch — CMP Intelligence">
+  <IntelHeader active="regwatch" />
+
+  <main class="max-w-4xl mx-auto px-6 py-16">
+    <header class="mb-10">
+      <h1 class="text-4xl font-heading font-bold text-light-text">Regulatory Watch</h1>
+      <p class="mt-4 text-light-muted max-w-2xl">
+        Monthly digest of regulatory, legal, and fiscal changes across seven
+        LatAm jurisdictions.
+      </p>
+    </header>
+
+    {regwatch.length === 0 && (
+      <p class="text-light-muted italic">No digests published yet.</p>
+    )}
+
+    <ul class="space-y-4">
+      {regwatch.map((entry) => (
+        <li>
+          <a
+            href={`/intelligence/regwatch/${entry.data.month}`}
+            class="flex items-baseline justify-between p-5 border border-light-border rounded-xl hover:border-blue hover:shadow-md transition-all"
+          >
+            <h2 class="text-xl font-heading font-semibold text-light-text">
+              {fmtMonth(entry.data.month ?? entry.id)}
+            </h2>
+            <span class="text-sm text-blue">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>

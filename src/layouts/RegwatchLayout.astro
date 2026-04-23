@@ -1,0 +1,38 @@
+---
+import Base from "./Base.astro";
+import IntelHeader from "../components/IntelHeader.astro";
+import "../styles/global.css";
+
+interface Props {
+  month: string;
+  author: string;
+  description?: string;
+}
+
+const { month, author, description } = Astro.props;
+
+const [y, m] = month.split("-").map(Number);
+const label = new Date(y, m - 1, 1).toLocaleDateString("en-US", { year: "numeric", month: "long" });
+---
+
+<Base title={`Regulatory Watch — ${label}`} description={description}>
+  <IntelHeader active="regwatch" />
+
+  <main class="max-w-3xl mx-auto px-6 py-12">
+    <nav class="text-sm text-light-muted mb-6">
+      <a href="/intelligence/regwatch" class="hover:text-blue">← All digests</a>
+    </nav>
+
+    <header class="mb-10 pb-8 border-b border-light-border">
+      <div class="text-xs uppercase tracking-wider text-blue font-semibold mb-3">Regulatory Watch</div>
+      <h1 class="text-3xl md:text-4xl font-heading font-bold leading-tight text-light-text">{label}</h1>
+      <div class="mt-4 text-sm text-light-muted">
+        Author: <span class="text-light-text">{author}</span>
+      </div>
+    </header>
+
+    <article class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-light-text prose-a:text-blue">
+      <slot />
+    </article>
+  </main>
+</Base>

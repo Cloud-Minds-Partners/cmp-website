@@ -1,0 +1,22 @@
+---
+import RegwatchLayout from "../../../layouts/RegwatchLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const regwatch = await getCollection("regwatch", (r) => r.data.published);
+  return regwatch.map((entry) => ({
+    params: { month: entry.data.month ?? entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<RegwatchLayout
+  month={entry.data.month ?? entry.id}
+  author={entry.data.author}
+>
+  <Content />
+</RegwatchLayout>
