@@ -79,6 +79,12 @@ jobs:
           grep -oE "Abreu|Kummer|Aires|Pelosini|Pacheco" cmp-website/dist/team/index.html | sort | uniq -c
           echo "--- photo references ---"
           grep -oE "/people/photos/[a-z-]+\.jpg" cmp-website/dist/team/index.html | sort -u
+          echo "--- last 3000 bytes of team/index.html ---"
+          tail -c 3000 cmp-website/dist/team/index.html
+          echo ""
+          echo "--- dist/team/index.html md5 + sha ---"
+          md5sum cmp-website/dist/team/index.html
+          sha256sum cmp-website/dist/team/index.html
 
       - name: Deploy to Firebase Hosting (cmp-website site)
         if: env.HAS_FIREBASE_TOKEN == 'true'
