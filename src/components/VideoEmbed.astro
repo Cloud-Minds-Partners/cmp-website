@@ -1,0 +1,65 @@
+---
+// Reusable video embed — handles YouTube, Vimeo, and direct MP4.
+// Graceful degrade when url is null (renders coming-soon placeholder).
+
+interface Props {
+  url: string | null;
+  poster?: string | null;
+  aspect?: "16/9" | "9/16" | "1/1";
+  comingSoonLabel?: string;
+}
+const { url, poster, aspect = "16/9", comingSoonLabel = "Coming soon" } = Astro.props;
+
+const aspectCls = {
+  "16/9": "aspect-video",
+  "9/16": "aspect-[9/16]",
+  "1/1": "aspect-square",
+}[aspect];
+
+const youtube = url?.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]+)/)?.[1];
+const vimeo = url?.match(/vimeo\.com\/(\d+)/)?.[1];
+const isMp4 = url?.toLowerCase().endsWith(".mp4");
+---
+
+<div class={`relative ${aspectCls} bg-[var(--color-ink)] overflow-hidden border border-[var(--color-rule)]`}>
+  {youtube && (
+    <iframe
+      class="absolute inset-0 w-full h-full"
+      src={`https://www.youtube.com/embed/${youtube}?rel=0`}
+      title="Video"
+      frameborder="0"
+      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  )}
+  {vimeo && (
+    <iframe
+      class="absolute inset-0 w-full h-full"
+      src={`https://player.vimeo.com/video/${vimeo}`}
+      title="Video"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  )}
+  {isMp4 && !youtube && !vimeo && (
+    <video
+      class="absolute inset-0 w-full h-full object-cover"
+      controls
+      preload="metadata"
+      poster={poster ?? undefined}
+    >
+      <source src={url!} type="video/mp4" />
+    </video>
+  )}
+  {!url && (
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-[var(--color-canvas)] p-8 text-center">
+      <div class="w-14 h-14 rounded-full border-2 border-[var(--color-canvas)]/60 flex items-center justify-center mb-3">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </div>
+      <div class="caption text-[var(--color-canvas)]/60">{comingSoonLabel}</div>
+    </div>
+  )}
+</div>

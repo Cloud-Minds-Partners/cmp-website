@@ -3,6 +3,9 @@ import Base from "../layouts/Base.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
+import WeeklyPulseSection from "../components/WeeklyPulseSection.astro";
+import NewsletterSubscribe from "../components/NewsletterSubscribe.astro";
+import NewsletterArchive from "../components/NewsletterArchive.astro";
 
 const platforms = [
   { name: "Site Selection Tool", desc: "Multi-criteria scoring across 76+ cities in Brazil, Chile, and Mexico.", url: "https://dcplatformcmp.web.app", showHost: true },
@@ -108,6 +111,23 @@ const platforms = [
             </div>
           );
         })}
+      </div>
+    </Section>
+
+    <!-- ——— Weekly Pulse ———————————————————————————— -->
+    <Section>
+      <WeeklyPulseSection />
+    </Section>
+
+    <!-- ——— Newsletter ——————————————————————————————— -->
+    <Section tone="alt">
+      <div class="grid md:grid-cols-12 gap-12">
+        <div class="md:col-span-5">
+          <NewsletterSubscribe />
+        </div>
+        <div class="md:col-span-7">
+          <NewsletterArchive />
+        </div>
       </div>
     </Section>
 

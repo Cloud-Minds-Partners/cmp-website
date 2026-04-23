@@ -1,4 +1,6 @@
 ---
+import SocialLinks from "./SocialLinks.astro";
+
 interface Props {
   /** which top-level section is active — drives underline treatment */
   active?: "home" | "advisory" | "development" | "intelligence" | "platforms" | "team" | "contact";
@@ -40,6 +42,8 @@ const linkCls = (k: string) =>
       >
         Contact
       </a>
+      <span class="w-px h-4 bg-[var(--color-rule)]"></span>
+      <SocialLinks tone="muted" />
     </nav>
 
     <button

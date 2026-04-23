@@ -1,4 +1,5 @@
 ---
+import SocialLinks from "./SocialLinks.astro";
 const year = new Date().getFullYear();
 ---
 
@@ -16,6 +17,9 @@ const year = new Date().getFullYear();
       >
         info@cloudmindspartners.com
       </a>
+      <div class="mt-5">
+        <SocialLinks tone="muted" />
+      </div>
     </div>
 
     <div>
@@ -33,6 +37,7 @@ const year = new Date().getFullYear();
         <li><a href="/intelligence/memos" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Technical Memos</a></li>
         <li><a href="/intelligence/radar" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Innovation Radar</a></li>
         <li><a href="/intelligence/regwatch" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Regulatory Watch</a></li>
+        <li><a href="/newsletter" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Newsletter</a></li>
       </ul>
     </div>
 

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import WhatsAppFab from "../components/WhatsAppFab.astro";
 
 interface Props {
   title: string;
@@ -45,5 +46,6 @@ const fullTitle = title.includes("Cloud Minds")
   </head>
   <body>
     <slot />
+    <WhatsAppFab />
   </body>
 </html>

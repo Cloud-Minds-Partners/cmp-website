@@ -1,0 +1,71 @@
+---
+// Reusable carousel embed — renders LinkedIn-style PDF/image carousel.
+// Accepts a carousel-data JSON path (Remotion output) or a plain array of
+// image URLs. Empty → coming-soon placeholder.
+
+interface Props {
+  slides?: string[];                 // array of image URLs (PNG/JPG)
+  aspect?: "square" | "portrait";    // matches Remotion 1080x1080 or 1080x1350
+  comingSoonLabel?: string;
+}
+const { slides = [], aspect = "portrait", comingSoonLabel = "Coming soon" } = Astro.props;
+const aspectCls = aspect === "portrait" ? "aspect-[1080/1350]" : "aspect-square";
+const hasSlides = slides.length > 0;
+---
+
+<div class="relative">
+  {hasSlides ? (
+    <div class="relative">
+      <div class={`${aspectCls} bg-[var(--color-ink)] border border-[var(--color-rule)] overflow-hidden relative`}>
+        {slides.map((src, i) => (
+          <img
+            src={src}
+            alt={`Slide ${i + 1}`}
+            class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${i === 0 ? "opacity-100 carousel-slide-active" : "opacity-0"}`}
+            data-index={i}
+            loading={i === 0 ? "eager" : "lazy"}
+          />
+        ))}
+      </div>
+      {slides.length > 1 && (
+        <div class="mt-4 flex items-center justify-between text-sm">
+          <button type="button" class="carousel-prev caption text-[var(--color-navy)] no-underline">← Prev</button>
+          <span class="carousel-counter caption tabular-nums"><span class="current">01</span> / {String(slides.length).padStart(2, "0")}</span>
+          <button type="button" class="carousel-next caption text-[var(--color-navy)] no-underline">Next →</button>
+        </div>
+      )}
+    </div>
+  ) : (
+    <div class={`${aspectCls} bg-[var(--color-ink)] border border-[var(--color-rule)] flex flex-col items-center justify-center text-[var(--color-canvas)] text-center p-8`}>
+      <div class="caption text-[var(--color-canvas)]/60">{comingSoonLabel}</div>
+    </div>
+  )}
+</div>
+
+{slides.length > 1 && (
+  <script is:inline>
+    (() => {
+      document.querySelectorAll('.carousel-prev').forEach((btn) => {
+        const wrapper = btn.closest('div').previousElementSibling;
+        const slides = wrapper.querySelectorAll('img');
+        const counter = btn.parentElement.querySelector('.current');
+        btn.addEventListener('click', () => step(slides, counter, -1));
+      });
+      document.querySelectorAll('.carousel-next').forEach((btn) => {
+        const wrapper = btn.closest('div').previousElementSibling;
+        const slides = wrapper.querySelectorAll('img');
+        const counter = btn.parentElement.querySelector('.current');
+        btn.addEventListener('click', () => step(slides, counter, 1));
+      });
+      function step(slides, counter, dir) {
+        const active = Array.from(slides).findIndex((s) => s.classList.contains('carousel-slide-active'));
+        const next = (active + dir + slides.length) % slides.length;
+        slides[active].classList.remove('carousel-slide-active');
+        slides[active].style.opacity = '0';
+        slides[next].classList.add('carousel-slide-active');
+        slides[next].style.opacity = '1';
+        if (counter) counter.textContent = String(next + 1).padStart(2, '0');
+      }
+    })();
+  </script>
+)}
