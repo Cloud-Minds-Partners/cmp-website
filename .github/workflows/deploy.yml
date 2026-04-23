@@ -73,6 +73,13 @@ jobs:
         run: npm run build
         working-directory: cmp-website
 
+      - name: Inspect built team/index.html
+        run: |
+          echo "--- dist/team/index.html ($(wc -c < cmp-website/dist/team/index.html) bytes) ---"
+          grep -oE "Abreu|Kummer|Aires|Pelosini|Pacheco" cmp-website/dist/team/index.html | sort | uniq -c
+          echo "--- photo references ---"
+          grep -oE "/people/photos/[a-z-]+\.jpg" cmp-website/dist/team/index.html | sort -u
+
       - name: Deploy to Firebase Hosting (cmp-website site)
         if: env.HAS_FIREBASE_TOKEN == 'true'
         run: |
