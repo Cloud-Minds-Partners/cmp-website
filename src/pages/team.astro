@@ -3,12 +3,45 @@ import Base from "../layouts/Base.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
+import { getCollection, render } from "astro:content";
 
-// Structural only — bios populated from cmp-knowledge/people/ in a follow-up.
-// Content loader deliberately deferred until bios are verified and staged.
+const everyone = await getCollection("people");
+// Partners = top-level files (ids that don't contain a slash).
+const partners = everyone.filter((p) => !p.id.includes("/"));
+const advisors = everyone.filter((p) => p.id.includes("/") && p.id.startsWith("advisors/"));
+
+// Photo resolution — the CI step copies cmp-knowledge/people/photos/ into
+// /public/people/photos/, so the served path is just /people/photos/<file>.
+const photoSrc = (photoField: string | undefined) => {
+  if (!photoField) return null;
+  const filename = photoField.replace(/^(\.\.\/)?photos\//, "");
+  return `/people/photos/${filename}`;
+};
+
+// Sort: partners by role (Founder first), advisors alphabetically
+const partnerOrder: Record<string, number> = {
+  "Founder & CEO": 0,
+  "Head of Design & Project Management": 1,
+};
+partners.sort((a, b) => (partnerOrder[a.data.role] ?? 99) - (partnerOrder[b.data.role] ?? 99));
+advisors.sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+// Pre-render each person's markdown body so we can inline it
+const renderedPartners = await Promise.all(
+  partners.map(async (p) => {
+    const { Content } = await render(p);
+    return { ...p, Content };
+  }),
+);
+const renderedAdvisors = await Promise.all(
+  advisors.map(async (a) => {
+    const { Content } = await render(a);
+    return { ...a, Content };
+  }),
+);
 ---
 
-<Base title="Team — Cloud Minds Partners">
+<Base title="Team — Cloud Minds Partners" description="Partners and advisors at Cloud Minds Partners — data center advisory and development for Latin America.">
   <SiteHeader active="team" />
 
   <main>
@@ -17,49 +50,73 @@ import Section from "../components/Section.astro";
         <div class="eyebrow mb-4">Team</div>
         <h1 class="display-lg max-w-3xl">A small partnership. A wider bench.</h1>
         <p class="lede mt-6 max-w-2xl">
-          Cloud Minds Partners is led by two partners in São Paulo, backed by
-          a bench of technical and commercial advisors in power, engineering,
-          capital markets, and regulatory practice.
+          Cloud Minds Partners is led by two partners in São Paulo, backed by a
+          bench of technical advisors in energy interconnection, telecom
+          infrastructure, and permitting.
         </p>
       </div>
     </section>
 
-    <Section compact>
+    <Section eyebrow="Partners" title="Leadership." compact>
       <div class="grid md:grid-cols-2 gap-px bg-[var(--color-rule)]">
-        <article class="bg-[var(--color-canvas)] p-10">
-          <div class="caption mb-3">Partner</div>
-          <h2 class="display text-2xl mb-2">Edgard Abreu</h2>
-          <p class="text-sm text-[var(--color-ink-muted)] mb-4">Founding partner. São Paulo.</p>
-          <p class="text-[var(--color-ink)] leading-relaxed">
-            Bio forthcoming.
-          </p>
-        </article>
-
-        <article class="bg-[var(--color-canvas)] p-10">
-          <div class="caption mb-3">Partner</div>
-          <h2 class="display text-2xl mb-2">Gustavo Costa</h2>
-          <p class="text-sm text-[var(--color-ink-muted)] mb-4">Partner. São Paulo.</p>
-          <p class="text-[var(--color-ink)] leading-relaxed">
-            Bio forthcoming.
-          </p>
-        </article>
+        {renderedPartners.map((p) => {
+          const src = photoSrc(p.data.photo);
+          return (
+            <article class="bg-[var(--color-canvas)] p-10 flex flex-col">
+              {src && (
+                <img
+                  src={src}
+                  alt={p.data.name}
+                  class="w-32 h-32 rounded-full object-cover mb-6 border border-[var(--color-rule)]"
+                  loading="lazy"
+                />
+              )}
+              <div class="caption mb-2">{p.data.role}</div>
+              <h2 class="display text-2xl mb-4">{p.data.name}</h2>
+              <div class="prose text-[var(--color-ink)] text-[15px] leading-relaxed prose-ul:my-0 prose-li:my-0 [&_h1]:hidden">
+                <p.Content />
+              </div>
+              <div class="mt-6 pt-4 border-t border-[var(--color-rule)] text-sm flex flex-wrap gap-x-6 gap-y-1 text-[var(--color-ink-muted)]">
+                {p.data.email && (
+                  <a href={`mailto:${p.data.email}`} class="no-underline hover:text-[var(--color-navy)]">
+                    {p.data.email}
+                  </a>
+                )}
+                {p.data.phone && <span class="caption">{p.data.phone}</span>}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </Section>
 
-    <Section eyebrow="Advisory bench" title="Advisors." tone="alt" compact>
+    <Section eyebrow="Advisors" title="Domain bench." tone="alt" compact>
       <p class="max-w-2xl text-[var(--color-ink-muted)] leading-relaxed mb-10">
-        Our advisors work on engagement-specific mandates — power systems
-        design, environmental permitting, grid interconnection, project
-        finance, and regional commercial development. Full roster published
-        upon request.
+        Our advisors work on engagement-specific mandates across energy
+        interconnection, telecom and connectivity infrastructure, and
+        permitting.
       </p>
       <div class="grid md:grid-cols-3 gap-px bg-[var(--color-rule)]">
-        {["Power systems", "Environmental & permitting", "Project finance"].map((area) => (
-          <div class="bg-[var(--color-surface)] p-7">
-            <div class="caption mb-2">Domain</div>
-            <div class="display text-lg">{area}</div>
-          </div>
-        ))}
+        {renderedAdvisors.map((a) => {
+          const src = photoSrc(a.data.photo);
+          return (
+            <article class="bg-[var(--color-surface)] p-8 flex flex-col">
+              {src && (
+                <img
+                  src={src}
+                  alt={a.data.name}
+                  class="w-24 h-24 rounded-full object-cover mb-5 border border-[var(--color-rule)]"
+                  loading="lazy"
+                />
+              )}
+              <div class="caption mb-2">{a.data.role}</div>
+              <h3 class="display text-lg mb-3">{a.data.name}</h3>
+              <div class="prose text-[var(--color-ink-muted)] text-[14px] leading-relaxed prose-ul:my-0 prose-li:my-0 [&_h1]:hidden">
+                <a.Content />
+              </div>
+            </article>
+          );
+        })}
       </div>
     </Section>
   </main>

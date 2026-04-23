@@ -38,8 +38,21 @@ jobs:
         if: env.HAS_KNOWLEDGE_TOKEN != 'true'
         run: |
           echo "::warning::CMP_KNOWLEDGE_READ_TOKEN not set — content collections will be empty."
-          echo "Set the repo secret to deploy published memos/radar/regwatch."
-          mkdir -p cmp-knowledge/knowledge/memos/published cmp-knowledge/knowledge/innovation-radar cmp-knowledge/knowledge/regwatch
+          echo "Set the repo secret to deploy published memos/radar/regwatch/people."
+          mkdir -p cmp-knowledge/knowledge/memos/published \
+                   cmp-knowledge/knowledge/innovation-radar \
+                   cmp-knowledge/knowledge/regwatch \
+                   cmp-knowledge/people/photos \
+                   cmp-knowledge/people/advisors
+
+      - name: Stage people photos into /public/people/photos
+        if: env.HAS_KNOWLEDGE_TOKEN == 'true'
+        run: |
+          mkdir -p cmp-website/public/people/photos
+          if [ -d cmp-knowledge/people/photos ]; then
+            cp -R cmp-knowledge/people/photos/. cmp-website/public/people/photos/ || true
+            echo "copied $(ls cmp-website/public/people/photos | wc -l) photo(s)"
+          fi
 
       - name: Use Node 22
         uses: actions/setup-node@v4

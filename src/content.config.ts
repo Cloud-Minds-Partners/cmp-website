@@ -7,6 +7,7 @@ import { glob } from "astro/loaders";
 // See README.md § "Content sync".
 
 const KNOWLEDGE_ROOT = "../cmp-knowledge/knowledge";
+const PEOPLE_ROOT = "../cmp-knowledge/people";
 
 // ——— Memos ——————————————————————————————————————
 // Only memos with `publish: true` are rendered. Draft/review/approved-but-
@@ -78,4 +79,24 @@ const regwatch = defineCollection({
   }),
 });
 
-export const collections = { memos, radar, regwatch };
+// ——— People ———————————————————————————————————————
+// Partners live at people/*.md, advisors at people/advisors/*.md.
+// Photos are copied from cmp-knowledge/people/photos/ into public/people/ at
+// build time (see .github/workflows/deploy.yml).
+const people = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: PEOPLE_ROOT,
+  }),
+  schema: z.object({
+    name: z.string(),
+    role: z.string(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+    linkedin: z.union([z.string(), z.boolean()]).optional(),
+    photo: z.string().optional(),           // path relative to people/
+    source: z.string().optional(),
+  }),
+});
+
+export const collections = { memos, radar, regwatch, people };

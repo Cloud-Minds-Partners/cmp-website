@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# Staged from cmp-knowledge at build time (see .github/workflows/deploy.yml)
+public/people/photos/
+
 # dependencies
 node_modules/
 
