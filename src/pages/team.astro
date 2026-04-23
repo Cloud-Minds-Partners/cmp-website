@@ -6,9 +6,6 @@ import Section from "../components/Section.astro";
 import { getCollection, render } from "astro:content";
 
 const everyone = await getCollection("people");
-// diagnostic — visible as HTML comment in production
-const debugIds = everyone.map((p) => p.id).join(", ");
-console.log("[team] people collection ids:", debugIds);
 // Partners = top-level files (ids that don't contain a slash).
 const partners = everyone.filter((p) => !p.id.includes("/"));
 const advisors = everyone.filter((p) => p.id.includes("/") && p.id.startsWith("advisors/"));
@@ -46,7 +43,6 @@ const renderedAdvisors = await Promise.all(
 
 <Base title="Team — Cloud Minds Partners" description="Partners and advisors at Cloud Minds Partners — data center advisory and development for Latin America.">
   <SiteHeader active="team" />
-  <!-- debug: people ids = {debugIds} -->
 
 
   <main>
