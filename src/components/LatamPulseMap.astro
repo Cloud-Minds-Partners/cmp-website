@@ -1,0 +1,114 @@
+---
+// Abstract LatAm "data centers map" — SVG coordinates representing major
+// DC markets CMP covers. Pure SVG with subtle pulse animations.
+// No real map — just dots + connections evoking the geography.
+---
+
+<svg viewBox="0 0 360 420" class="w-full h-full" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="pulseBlue" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#4A8FE7" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#4A8FE7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pulseTeal" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#00B8A9" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#00B8A9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Abstract connections between markets -->
+  <g stroke="#2D4165" stroke-width="0.5" fill="none" opacity="0.7">
+    <path d="M180 100 L220 180 L260 220 L240 280 L200 340"/>
+    <path d="M140 120 L170 200 L200 260 L180 320"/>
+    <path d="M220 180 L170 200"/>
+    <path d="M260 220 L200 260"/>
+    <path d="M240 280 L180 320"/>
+  </g>
+
+  <!-- Market nodes — approximate LatAm positions -->
+  <!-- Mexico (top) -->
+  <g transform="translate(140, 120)">
+    <circle r="10" fill="url(#pulseBlue)">
+      <animate attributeName="r" values="10;16;10" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7;0;0.7" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="3" fill="#2D6BE4" filter="url(#glow)"/>
+    <text x="14" y="4" font-family="JetBrains Mono, monospace" font-size="8" fill="#C8D8F0" opacity="0.8">MX</text>
+  </g>
+
+  <!-- Querétaro -->
+  <g transform="translate(150, 145)">
+    <circle r="2" fill="#4A8FE7" opacity="0.9"/>
+  </g>
+
+  <!-- Colombia/Venezuela -->
+  <g transform="translate(180, 180)">
+    <circle r="8" fill="url(#pulseTeal)">
+      <animate attributeName="r" values="8;13;8" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0;0.6" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="2.5" fill="#00B8A9" filter="url(#glow)"/>
+    <text x="12" y="4" font-family="JetBrains Mono, monospace" font-size="8" fill="#C8D8F0" opacity="0.8">CO</text>
+  </g>
+
+  <!-- Peru -->
+  <g transform="translate(170, 240)">
+    <circle r="2" fill="#8A9DBF" opacity="0.7"/>
+    <text x="8" y="3" font-family="JetBrains Mono, monospace" font-size="7" fill="#8A9DBF" opacity="0.6">PE</text>
+  </g>
+
+  <!-- Brazil — SP + RJ -->
+  <g transform="translate(240, 280)">
+    <circle r="14" fill="url(#pulseBlue)">
+      <animate attributeName="r" values="14;22;14" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="4" fill="#2D6BE4" filter="url(#glow)"/>
+    <text x="16" y="5" font-family="JetBrains Mono, monospace" font-size="8" fill="#C8D8F0">BR</text>
+  </g>
+
+  <!-- Campinas (near SP) -->
+  <g transform="translate(232, 272)">
+    <circle r="2" fill="#4A8FE7" opacity="0.9"/>
+  </g>
+  <!-- RJ -->
+  <g transform="translate(252, 285)">
+    <circle r="2" fill="#4A8FE7" opacity="0.9"/>
+  </g>
+
+  <!-- Chile — Santiago -->
+  <g transform="translate(180, 340)">
+    <circle r="8" fill="url(#pulseTeal)">
+      <animate attributeName="r" values="8;12;8" dur="3.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0;0.6" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="2.5" fill="#00B8A9" filter="url(#glow)"/>
+    <text x="12" y="3" font-family="JetBrains Mono, monospace" font-size="8" fill="#C8D8F0" opacity="0.8">CL</text>
+  </g>
+
+  <!-- Argentina — Buenos Aires -->
+  <g transform="translate(210, 360)">
+    <circle r="7" fill="url(#pulseBlue)">
+      <animate attributeName="r" values="7;11;7" dur="4.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="4.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="2.5" fill="#2D6BE4" filter="url(#glow)"/>
+    <text x="12" y="3" font-family="JetBrains Mono, monospace" font-size="8" fill="#C8D8F0" opacity="0.7">AR</text>
+  </g>
+
+  <!-- Grid lines — latitude/longitude aesthetic -->
+  <g stroke="#1A2D47" stroke-width="0.4" opacity="0.5">
+    <line x1="0" y1="100" x2="360" y2="100"/>
+    <line x1="0" y1="200" x2="360" y2="200"/>
+    <line x1="0" y1="300" x2="360" y2="300"/>
+    <line x1="120" y1="0" x2="120" y2="420"/>
+    <line x1="240" y1="0" x2="240" y2="420"/>
+  </g>
+</svg>
