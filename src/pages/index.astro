@@ -3,124 +3,139 @@ import Base from "../layouts/Base.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
+import LatamPulseMap from "../components/LatamPulseMap.astro";
 import WeeklyPulseSection from "../components/WeeklyPulseSection.astro";
 import NewsletterSubscribe from "../components/NewsletterSubscribe.astro";
 import NewsletterArchive from "../components/NewsletterArchive.astro";
+import { platforms } from "../data/platforms";
 
-const platforms = [
-  { name: "Site Selection Tool", desc: "Multi-criteria scoring across 76+ cities in Brazil, Chile, and Mexico.", url: "https://dcplatformcmp.web.app", showHost: true },
-  { name: "Land Intel", desc: "Land price intelligence across 25 active markets.", url: "https://land-price-dashboard.web.app", showHost: true },
-  { name: "TestFit Pro", desc: "Data center test-fit with 30+ reference presets.", url: "https://dc-testfit-pro.web.app", showHost: true },
-  { name: "DC Insights", desc: "Weekly LatAm data center newsletter.", url: "https://dcinsights.web.app", showHost: true },
-  { name: "Project Management Dashboard", desc: "Client project tracking, milestones, and deliverables across active engagements.", url: null, showHost: false },
-  { name: "Financial Model", desc: "DC financial modeling and scenario analysis.", url: null, showHost: false },
+const stats = [
+  { value: "76+", label: "Cities scored · BR · CL · MX" },
+  { value: "251", label: "Land parcels benchmarked" },
+  { value: "18 GW", label: "Interconnection mapped" },
 ];
 ---
 
-<Base title="Cloud Minds Partners — Data Center Advisory for Latin America">
+<Base title="Cloud Minds Partners — Data Center Intelligence for Latin America">
   <SiteHeader active="home" />
 
   <main>
-    <!-- ——— Hero ————————————————————————————————— -->
-    <section class="pt-20 md:pt-28 pb-20 md:pb-28 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-6">Cloud Minds Partners · Est. 2024</div>
-        <h1 class="display-lg max-w-4xl text-[var(--color-ink)]">
-          Data center projects in Latin America,
-          <span class="text-[var(--color-navy)] italic">built on research.</span>
-        </h1>
-        <p class="lede mt-8 max-w-2xl">
-          We work with hyperscalers, colocators, developers, and funds on the
-          parts of the project that don't fit neatly into a spreadsheet —
-          site selection, feasibility, regulatory path, and market context.
-        </p>
-        <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
-          <a href="/advisory" class="no-underline text-[var(--color-ink)] font-semibold">Advisory →</a>
-          <a href="/development" class="no-underline text-[var(--color-ink)] font-semibold">Development →</a>
-          <a href="/intelligence" class="no-underline text-[var(--color-ink)] font-semibold">Intelligence →</a>
+    <!-- ═══ HERO (DARK) — dramatic entry ═══ -->
+    <section class="relative overflow-hidden bg-[var(--color-dark-bg)] text-[var(--color-dark-ink)]">
+      <div class="absolute inset-0 dot-grid-dark opacity-50" aria-hidden="true"></div>
+      <div class="absolute inset-0 hero-glow-dark" aria-hidden="true"></div>
+
+      <div class="relative max-w-[1280px] mx-auto px-6 pt-28 pb-32 md:pt-36 md:pb-40">
+        <div class="grid md:grid-cols-12 gap-10 items-center">
+          <div class="md:col-span-7">
+            <div class="glass-badge mb-8">
+              <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-green)] animate-pulse"></span>
+              <span class="caption !text-[var(--color-dark-ink-muted)]">Live · Data center intelligence · LatAm</span>
+            </div>
+
+            <h1 class="display-lg">
+              <span class="block text-[var(--color-dark-ink)]">Data center projects,</span>
+              <span class="block bg-gradient-to-r from-[var(--color-accent-bright)] via-[#6AA5F0] to-[var(--color-purple)] bg-clip-text text-transparent">built on primary research.</span>
+            </h1>
+
+            <p class="lede mt-8 max-w-xl !text-[var(--color-dark-ink-muted)]">
+              We work with hyperscalers, colocators, developers, and funds on
+              the parts of the project that don't fit into a spreadsheet —
+              site selection, feasibility, regulatory path, market context.
+            </p>
+
+            <div class="mt-10 flex flex-wrap items-center gap-3">
+              <a href="/platforms" class="btn btn-primary-dark">
+                Explore platforms
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+              <a href="/contact" class="btn btn-ghost-dark">Talk to us</a>
+            </div>
+
+            <!-- Hero metrics -->
+            <div class="mt-16 grid grid-cols-3 gap-6 max-w-xl">
+              {stats.map((s) => (
+                <div>
+                  <div style="font-family:var(--font-display);" class="text-2xl md:text-3xl font-medium text-[var(--color-dark-ink)] tabular-nums">{s.value}</div>
+                  <div class="caption mt-2 !text-[color:color-mix(in_srgb,var(--color-dark-ink-muted)_65%,transparent)]">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="md:col-span-5 relative">
+            <div class="relative aspect-square max-w-[460px] mx-auto">
+              <LatamPulseMap />
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ——— 3 Pillars ———————————————————————————— -->
+    <!-- ═══ 3 PILLARS (LIGHT) ═══ -->
     <Section eyebrow="What we do" title="Three practices, one thesis.">
-      <div class="grid md:grid-cols-3 gap-0 md:gap-px bg-[var(--color-rule)]">
-        <a href="/advisory" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
-          <div class="caption mb-4">01 / Advisory</div>
-          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Advisory</h3>
-          <p class="text-[var(--color-ink-muted)] leading-relaxed">
-            Site selection, feasibility studies, and market intelligence
-            tailored to the regulatory and infrastructure realities of
-            Brazil, Chile, Mexico, and the wider region.
-          </p>
-          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
-        </a>
-        <a href="/development" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
-          <div class="caption mb-4">02 / Project development</div>
-          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Development</h3>
-          <p class="text-[var(--color-ink-muted)] leading-relaxed">
-            Co-development, technical due diligence, and financial modeling
-            for greenfield and brownfield data center projects — from
-            pre-site through commissioning.
-          </p>
-          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
-        </a>
-        <a href="/intelligence" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
-          <div class="caption mb-4">03 / Intelligence</div>
-          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Intelligence</h3>
-          <p class="text-[var(--color-ink-muted)] leading-relaxed">
-            Technical memos, weekly innovation radar, and monthly regulatory
-            digests — plus a set of proprietary platforms used in our own
-            engagements and by clients.
-          </p>
-          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
-        </a>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {[
+          { num: "01", tag: "Advisory", href: "/advisory", desc: "Site selection, feasibility studies, and market intelligence tailored to the regulatory and infrastructure realities of Brazil, Chile, Mexico, and the wider region." },
+          { num: "02", tag: "Development", href: "/development", desc: "Co-development, technical due diligence, and financial modeling for greenfield and brownfield data center projects — from pre-site through commissioning." },
+          { num: "03", tag: "Intelligence", href: "/intelligence", desc: "Technical memos, weekly innovation radar, and monthly regulatory digests — plus proprietary platforms used in our own engagements and by clients." },
+        ].map((pillar) => (
+          <a href={pillar.href} class="card card-link p-8 no-underline block group rounded-lg">
+            <div class="flex items-center justify-between mb-6">
+              <span class="caption">{pillar.num}</span>
+              <span class="w-8 h-8 rounded-md border border-[var(--color-border)] inline-flex items-center justify-center group-hover:border-[var(--color-accent)] transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-[var(--color-ink-muted)] group-hover:text-[var(--color-accent)] transition-colors" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </span>
+            </div>
+            <h3 style="font-family:var(--font-display);" class="text-[1.5rem] font-medium mb-3 text-[var(--color-ink)]">{pillar.tag}</h3>
+            <p class="text-[var(--color-ink-secondary)] leading-relaxed text-[15px]">{pillar.desc}</p>
+          </a>
+        ))}
       </div>
     </Section>
 
-    <!-- ——— Platforms strip ————————————————————————— -->
+    <!-- ═══ PLATFORMS (BENTO) ═══ -->
     <Section
       eyebrow="Platforms"
       title="Purpose-built tools."
-      lede="We productize the parts of our work that survive across engagements. Used internally by our team and available to clients under engagement."
-      tone="alt"
+      lede="We productize the parts of our work that survive across engagements. Used internally and available to clients under engagement."
+      tone="subtle"
     >
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--color-rule)]">
-        {platforms.map((p) => {
-          const inner = (
-            <>
-              <h3 class="display text-lg text-[var(--color-ink)] mb-2">{p.name}</h3>
-              <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.desc}</p>
-              {p.url && p.showHost && (
-                <span class="mt-4 inline-block caption text-[var(--color-navy)]">{new URL(p.url).host}</span>
-              )}
-            </>
-          );
-          return p.url ? (
-            <a
-              href={p.url}
-              target="_blank"
-              rel="noopener"
-              class="bg-[var(--color-surface)] p-7 no-underline block hover:bg-[var(--color-surface-alt)] transition-colors"
-            >
-              {inner}
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5 auto-rows-[minmax(220px,auto)]">
+        {platforms.map((p, i) => {
+          const colSpan = i === 0 ? "md:col-span-6 md:row-span-2" : i === 3 ? "md:col-span-6" : "md:col-span-3";
+          return (
+            <a href={`/platforms/${p.slug}`} class={`card card-link p-7 no-underline block group relative overflow-hidden rounded-lg col-span-12 ${colSpan}`}>
+              <div class="flex items-center justify-between mb-5">
+                <span class="caption">{p.tag}</span>
+                <span class={`inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                  p.status === "live" ? "bg-[color:color-mix(in_srgb,var(--color-green)_12%,transparent)] text-[var(--color-green)]" :
+                  p.status === "beta" ? "bg-[color:color-mix(in_srgb,var(--color-amber)_12%,transparent)] text-[var(--color-amber)]" :
+                  "bg-[color:color-mix(in_srgb,var(--color-ink-quiet)_15%,transparent)] text-[var(--color-ink-muted)]"
+                }`}>
+                  <span class={`w-1 h-1 rounded-full ${p.status === "live" ? "bg-[var(--color-green)]" : p.status === "beta" ? "bg-[var(--color-amber)]" : "bg-[var(--color-ink-muted)]"}`}></span>
+                  {p.status === "live" ? "Live" : p.status === "beta" ? "Beta" : "In dev"}
+                </span>
+              </div>
+              <h3 style="font-family:var(--font-display);" class={`font-medium mb-3 text-[var(--color-ink)] ${i === 0 ? "text-[1.75rem]" : "text-[1.25rem]"}`}>{p.name}</h3>
+              <p class={`text-[var(--color-ink-secondary)] leading-relaxed ${i === 0 ? "text-[16px]" : "text-[14px]"}`}>{p.summary}</p>
+              <div class="mt-5 flex items-center gap-2 text-[13px] text-[var(--color-accent)] font-medium group-hover:gap-3 transition-all">
+                <span>Learn more</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </div>
             </a>
-          ) : (
-            <div class="bg-[var(--color-surface)] p-7">
-              {inner}
-            </div>
           );
         })}
       </div>
     </Section>
 
-    <!-- ——— Weekly Pulse ———————————————————————————— -->
+    <!-- ═══ WEEKLY PULSE (LIGHT) ═══ -->
     <Section>
       <WeeklyPulseSection />
     </Section>
 
-    <!-- ——— Newsletter ——————————————————————————————— -->
-    <Section tone="alt">
+    <!-- ═══ NEWSLETTER (SUBTLE) ═══ -->
+    <Section tone="subtle">
       <div class="grid md:grid-cols-12 gap-12">
         <div class="md:col-span-5">
           <NewsletterSubscribe />
@@ -131,25 +146,26 @@ const platforms = [
       </div>
     </Section>
 
-    <!-- ——— Contact ————————————————————————————— -->
-    <Section tone="ink" compact>
-      <div class="grid md:grid-cols-12 gap-8 items-end">
-        <div class="md:col-span-8">
-          <div class="eyebrow text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)] mb-4">Engagement</div>
-          <h2 class="display text-3xl md:text-4xl max-w-2xl text-[var(--color-canvas)]">
-            Exploring a site, a feasibility question, or a regulatory path in Latin America?
-          </h2>
-        </div>
-        <div class="md:col-span-4 md:text-right">
-          <a
-            href="mailto:info@cloudmindspartners.com"
-            class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
-          >
+    <!-- ═══ CONTACT CTA (DARK — mirror hero) ═══ -->
+    <section class="relative overflow-hidden bg-[var(--color-dark-bg)] text-[var(--color-dark-ink)]">
+      <div class="absolute inset-0 dot-grid-dark opacity-40" aria-hidden="true"></div>
+      <div class="absolute inset-0 hero-glow-dark opacity-60" aria-hidden="true"></div>
+
+      <div class="relative max-w-[1280px] mx-auto px-6 py-24 md:py-28 text-center">
+        <div class="eyebrow-dark mb-5">Engagement</div>
+        <h2 class="display text-[2rem] md:text-[2.75rem] max-w-3xl mx-auto text-[var(--color-dark-ink)]">
+          Exploring a site, a feasibility question,
+          <br class="hidden md:block" />
+          or a regulatory path in Latin America?
+        </h2>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <a href="mailto:info@cloudmindspartners.com" class="btn btn-primary-dark">
             info@cloudmindspartners.com
           </a>
+          <a href="/contact" class="btn btn-ghost-dark">More contact options</a>
         </div>
       </div>
-    </Section>
+    </section>
   </main>
 
   <SiteFooter />

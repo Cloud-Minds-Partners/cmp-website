@@ -16,7 +16,7 @@ const hasData = editions.length > 0;
       <div class="eyebrow mb-2">Recent editions</div>
       <h3 style="font-family:var(--font-display);" class="text-[1.5rem] font-medium text-[var(--color-ink)]">Last seven dispatches.</h3>
     </div>
-    <a href={social.newsletterLanding} target="_blank" rel="noopener" class="link-slide caption text-[var(--color-accent-bright)]">
+    <a href={social.newsletterLanding} target="_blank" rel="noopener" class="link-slide caption text-[var(--color-accent)]">
       dcinsights.web.app →
     </a>
   </div>
@@ -29,30 +29,30 @@ const hasData = editions.length > 0;
             href={ed.url ?? social.newsletterLanding}
             target="_blank"
             rel="noopener"
-            class="block py-4 no-underline hover:bg-[var(--color-bg-elevated)] -mx-6 px-6 transition-colors"
+            class="block py-4 no-underline hover:bg-[var(--color-bg-surface)] -mx-6 px-6 transition-colors"
           >
             <div class="grid grid-cols-12 gap-4 items-baseline">
               <div class="col-span-3 caption tabular-nums">{ed.date}</div>
-              <div class="col-span-8 text-[var(--color-ink-secondary)] leading-snug">{ed.title}</div>
-              <div class="col-span-1 text-right text-[var(--color-accent-bright)]">→</div>
+              <div class="col-span-8 text-[var(--color-ink)] leading-snug">{ed.title}</div>
+              <div class="col-span-1 text-right text-[var(--color-accent)]">→</div>
             </div>
           </a>
         </li>
       ))}
     </ul>
   ) : (
-    <div class="surface-card p-7 text-[14px] text-[var(--color-ink-muted)] leading-relaxed max-w-2xl">
+    <div class="card p-7 text-[14px] text-[var(--color-ink-muted)] leading-relaxed max-w-2xl rounded-lg">
       <div class="flex items-start gap-4">
-        <div class="w-10 h-10 rounded-sm bg-[var(--color-bg-base)] border border-[var(--color-border-bright)] flex items-center justify-center shrink-0">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="text-[var(--color-accent-bright)]">
+        <div class="w-10 h-10 rounded-md bg-[var(--color-bg-subtle)] border border-[var(--color-border)] flex items-center justify-center shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="text-[var(--color-accent)]">
             <rect x="2" y="4" width="20" height="16" rx="2"/>
             <path d="M22 6l-10 7L2 6"/>
           </svg>
         </div>
         <div>
           <p class="text-[var(--color-ink-secondary)]">Per-edition archive coming soon.</p>
-          <p class="mt-2">The latest edition is always at
-            <a href={social.newsletterLanding} target="_blank" rel="noopener" class="text-[var(--color-accent-bright)]">dcinsights.web.app</a>.
+          <p class="mt-2">Meanwhile, the latest edition is always at
+            <a href={social.newsletterLanding} target="_blank" rel="noopener" class="text-[var(--color-accent)]">dcinsights.web.app</a>.
           </p>
         </div>
       </div>

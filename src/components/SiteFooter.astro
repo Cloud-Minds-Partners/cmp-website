@@ -1,60 +1,59 @@
 ---
 import SocialLinks from "./SocialLinks.astro";
+import Logo from "./Logo.astro";
 const year = new Date().getFullYear();
 ---
 
-<footer class="mt-28 border-t border-[var(--color-rule)] bg-[var(--color-canvas)]">
-  <div class="max-w-[1200px] mx-auto px-6 py-14 grid grid-cols-2 md:grid-cols-5 gap-10 text-sm">
+<footer class="mt-32 bg-[var(--color-dark-bg)] text-[var(--color-dark-ink)] relative overflow-hidden">
+  <div class="absolute inset-0 dot-grid-dark opacity-40" aria-hidden="true"></div>
+
+  <div class="relative max-w-[1280px] mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-5 gap-10 text-sm">
     <div class="col-span-2 md:col-span-2">
-      <div class="display text-base text-[var(--color-ink)] mb-2">Cloud Minds Partners</div>
-      <p class="text-[var(--color-ink-muted)] max-w-xs leading-relaxed">
-        Data center advisory, project development, and intelligence across
-        Latin America.
+      <Logo variant="white" height={28} />
+      <p class="mt-5 text-[var(--color-dark-ink-muted)] max-w-xs leading-relaxed">
+        Data center advisory, project development, and intelligence across Latin America.
       </p>
-      <a
-        href="mailto:info@cloudmindspartners.com"
-        class="mt-3 inline-block caption text-[var(--color-navy)]"
-      >
+      <a href="mailto:info@cloudmindspartners.com" class="mt-4 inline-block caption text-[var(--color-accent-bright)]">
         info@cloudmindspartners.com
       </a>
-      <div class="mt-5">
-        <SocialLinks tone="muted" />
+      <div class="mt-6">
+        <SocialLinks variant="dark" />
       </div>
     </div>
 
     <div>
-      <div class="eyebrow mb-3">Services</div>
-      <ul class="space-y-1.5">
-        <li><a href="/advisory" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Advisory</a></li>
-        <li><a href="/development" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Development</a></li>
-        <li><a href="/intelligence" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Intelligence</a></li>
+      <div class="eyebrow-dark mb-4">Services</div>
+      <ul class="space-y-2 text-[var(--color-dark-ink-muted)]">
+        <li><a href="/advisory" class="hover:text-[var(--color-dark-ink)] transition-colors">Advisory</a></li>
+        <li><a href="/development" class="hover:text-[var(--color-dark-ink)] transition-colors">Development</a></li>
+        <li><a href="/intelligence" class="hover:text-[var(--color-dark-ink)] transition-colors">Intelligence</a></li>
       </ul>
     </div>
 
     <div>
-      <div class="eyebrow mb-3">Intelligence</div>
-      <ul class="space-y-1.5">
-        <li><a href="/intelligence/memos" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Technical Memos</a></li>
-        <li><a href="/intelligence/radar" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Innovation Radar</a></li>
-        <li><a href="/intelligence/regwatch" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Regulatory Watch</a></li>
-        <li><a href="/newsletter" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Newsletter</a></li>
+      <div class="eyebrow-dark mb-4">Intelligence</div>
+      <ul class="space-y-2 text-[var(--color-dark-ink-muted)]">
+        <li><a href="/intelligence/memos" class="hover:text-[var(--color-dark-ink)] transition-colors">Technical Memos</a></li>
+        <li><a href="/intelligence/radar" class="hover:text-[var(--color-dark-ink)] transition-colors">Innovation Radar</a></li>
+        <li><a href="/intelligence/regwatch" class="hover:text-[var(--color-dark-ink)] transition-colors">Regulatory Watch</a></li>
+        <li><a href="/newsletter" class="hover:text-[var(--color-dark-ink)] transition-colors">Newsletter</a></li>
       </ul>
     </div>
 
     <div>
-      <div class="eyebrow mb-3">About</div>
-      <ul class="space-y-1.5">
-        <li><a href="/team" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Team</a></li>
-        <li><a href="/platforms" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Platforms</a></li>
-        <li><a href="/contact" class="no-underline text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]">Contact</a></li>
+      <div class="eyebrow-dark mb-4">About</div>
+      <ul class="space-y-2 text-[var(--color-dark-ink-muted)]">
+        <li><a href="/team" class="hover:text-[var(--color-dark-ink)] transition-colors">Team</a></li>
+        <li><a href="/platforms" class="hover:text-[var(--color-dark-ink)] transition-colors">Platforms</a></li>
+        <li><a href="/contact" class="hover:text-[var(--color-dark-ink)] transition-colors">Contact</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="border-t border-[var(--color-rule)]">
-    <div class="max-w-[1200px] mx-auto px-6 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-2 text-xs text-[var(--color-ink-quiet)]">
-      <span>© {year} Cloud Minds Partners. All rights reserved.</span>
-      <span class="caption">São Paulo · Data Center Advisory for LatAm</span>
+  <div class="relative border-t border-[var(--color-dark-border)]">
+    <div class="max-w-[1280px] mx-auto px-6 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-2 text-xs text-[color:color-mix(in_srgb,var(--color-dark-ink-muted)_70%,transparent)]">
+      <span>© {year} Cloud Minds Partners · All rights reserved</span>
+      <span class="caption !text-[color:color-mix(in_srgb,var(--color-dark-ink-muted)_70%,transparent)]">São Paulo · Data Center Advisory for LatAm</span>
     </div>
   </div>
 </footer>

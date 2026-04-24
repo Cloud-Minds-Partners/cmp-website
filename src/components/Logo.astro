@@ -1,0 +1,22 @@
+---
+// CMP logo — official SVG from J.A Design brand kit.
+// Two variants: "navy" for light backgrounds, "white" for dark.
+// Source: public/brand/cmp-logo-navy.svg + cmp-logo-white.svg
+
+interface Props {
+  variant?: "navy" | "white";
+  height?: number;                 // defaults to 24
+  class?: string;
+}
+const { variant = "navy", height = 24, class: className = "" } = Astro.props;
+const src = variant === "white" ? "/brand/cmp-logo-white.svg" : "/brand/cmp-logo-navy.svg";
+---
+
+<img
+  src={src}
+  alt="Cloud Minds Partners"
+  height={height}
+  style={`height: ${height}px; width: auto;`}
+  class={className}
+  loading="eager"
+/>

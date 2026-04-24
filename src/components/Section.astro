@@ -3,28 +3,32 @@ interface Props {
   eyebrow?: string;
   title?: string;
   lede?: string;
-  tone?: "default" | "elevated" | "bright";
+  tone?: "default" | "subtle" | "dark";
   id?: string;
   compact?: boolean;
 }
 const { eyebrow, title, lede, tone = "default", id, compact = false } = Astro.props;
 
 const bg = {
-  default: "bg-[var(--color-bg-base)]",
-  elevated: "bg-[var(--color-bg-elevated)]",
-  bright: "bg-[var(--color-bg-overlay)]",
+  default: "bg-[var(--color-bg)] text-[var(--color-ink)]",
+  subtle: "bg-[var(--color-bg-subtle)] text-[var(--color-ink)]",
+  dark: "bg-[var(--color-dark-bg)] text-[var(--color-dark-ink)]",
 }[tone];
 
 const py = compact ? "py-16" : "py-24 md:py-28";
+
+const eyebrowCls = tone === "dark" ? "eyebrow-dark" : "eyebrow";
+const titleCls = tone === "dark" ? "text-[var(--color-dark-ink)]" : "text-[var(--color-ink)]";
+const ledeCls = tone === "dark" ? "text-[var(--color-dark-ink-muted)]" : "text-[var(--color-ink-secondary)]";
 ---
 
 <section id={id} class={`${bg} ${py} relative`}>
   <div class="max-w-[1280px] mx-auto px-6 relative">
     {(eyebrow || title || lede) && (
       <header class="mb-14 max-w-3xl">
-        {eyebrow && <div class="eyebrow mb-4">{eyebrow}</div>}
-        {title && <h2 class="display text-3xl md:text-[2.5rem] text-[var(--color-ink)]">{title}</h2>}
-        {lede && <p class="lede mt-5">{lede}</p>}
+        {eyebrow && <div class={`${eyebrowCls} mb-4`}>{eyebrow}</div>}
+        {title && <h2 class={`display text-3xl md:text-[2.5rem] ${titleCls}`}>{title}</h2>}
+        {lede && <p class={`lede mt-5 ${ledeCls}`}>{lede}</p>}
       </header>
     )}
     <slot />

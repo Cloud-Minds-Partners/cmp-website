@@ -1,10 +1,9 @@
 ---
 import SocialLinks from "./SocialLinks.astro";
+import Logo from "./Logo.astro";
 
 interface Props {
-  /** which top-level section is active — drives underline treatment */
   active?: "home" | "advisory" | "development" | "intelligence" | "platforms" | "team" | "contact";
-  /** optional sub-nav shown under the main bar (e.g. intelligence sub-sections) */
   subnav?: Array<{ href: string; label: string; active?: boolean }>;
 }
 const { active = "home", subnav } = Astro.props;
@@ -19,56 +18,63 @@ const primary = [
 
 const linkCls = (k: string) =>
   active === k
-    ? "text-[var(--color-ink)] font-semibold"
+    ? "text-[var(--color-ink)] font-medium"
     : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]";
 ---
 
-<header class="sticky top-0 z-40 border-b border-[var(--color-rule)] bg-[var(--color-canvas)]/90 backdrop-blur supports-[backdrop-filter]:bg-[var(--color-canvas)]/75">
-  <div class="max-w-[1200px] mx-auto px-6 flex items-center justify-between h-16">
-    <a href="/" class="group flex items-baseline gap-3 no-underline">
-      <span class="display text-lg text-[var(--color-ink)] tracking-tight">Cloud Minds Partners</span>
-      <span class="caption hidden md:inline text-[var(--color-ink-quiet)]">Data center advisory · LatAm</span>
+<header class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_85%,transparent)] backdrop-blur-lg">
+  <div class="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-[68px]">
+    <a href="/" class="flex items-center no-underline" aria-label="Cloud Minds Partners — Home">
+      <Logo variant="navy" height={28} />
     </a>
 
-    <nav class="hidden md:flex items-center gap-7 text-sm">
+    <nav class="hidden md:flex items-center gap-8 text-[14px]">
       {primary.map((item) => (
-        <a href={item.href} class={`no-underline ${linkCls(item.key)}`}>
+        <a href={item.href} class={`link-slide transition-colors ${linkCls(item.key)}`}>
           {item.label}
         </a>
       ))}
       <a
         href="/contact"
-        class={`no-underline border border-[var(--color-navy)] px-3.5 py-1.5 text-[var(--color-navy)] hover:bg-[var(--color-navy)] hover:text-[var(--color-canvas)] transition-colors ${active === "contact" ? "bg-[var(--color-navy)] text-[var(--color-canvas)]" : ""}`}
+        class={`btn btn-primary !py-2 !px-4 !text-[13px] ${active === "contact" ? "bg-[var(--color-accent)]" : ""}`}
       >
         Contact
       </a>
-      <span class="w-px h-4 bg-[var(--color-rule)]"></span>
-      <SocialLinks tone="muted" />
+      <span class="w-px h-5 bg-[var(--color-border)]"></span>
+      <SocialLinks />
     </nav>
 
     <button
       id="mobile-toggle"
-      class="md:hidden text-sm text-[var(--color-ink-muted)]"
+      class="md:hidden text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition-colors"
       aria-label="Menu"
-    >Menu</button>
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <line x1="4" y1="8" x2="20" y2="8"/>
+        <line x1="4" y1="16" x2="20" y2="16"/>
+      </svg>
+    </button>
   </div>
 
-  <nav id="mobile-nav" class="md:hidden hidden border-t border-[var(--color-rule)] bg-[var(--color-canvas)]">
-    <div class="max-w-[1200px] mx-auto px-6 py-4 flex flex-col gap-3 text-sm">
+  <nav id="mobile-nav" class="md:hidden hidden border-t border-[var(--color-border)] bg-[var(--color-bg-surface)]">
+    <div class="max-w-[1280px] mx-auto px-6 py-5 flex flex-col gap-4 text-[15px]">
       {primary.map((item) => (
         <a href={item.href} class={`no-underline ${linkCls(item.key)}`}>{item.label}</a>
       ))}
-      <a href="/contact" class="no-underline text-[var(--color-navy)] font-semibold">Contact</a>
+      <a href="/contact" class="no-underline text-[var(--color-accent)] font-medium">Contact</a>
+      <div class="pt-3 border-t border-[var(--color-border)]">
+        <SocialLinks />
+      </div>
     </div>
   </nav>
 
   {subnav && subnav.length > 0 && (
-    <div class="border-t border-[var(--color-rule)] bg-[var(--color-surface-alt)]">
-      <div class="max-w-[1200px] mx-auto px-6 h-11 flex items-center gap-6 text-xs overflow-x-auto">
+    <div class="border-t border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
+      <div class="max-w-[1280px] mx-auto px-6 h-10 flex items-center gap-6 text-xs overflow-x-auto">
         {subnav.map((s) => (
           <a
             href={s.href}
-            class={`no-underline whitespace-nowrap ${s.active ? "text-[var(--color-navy)] font-semibold" : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"}`}
+            class={`no-underline whitespace-nowrap link-slide ${s.active ? "text-[var(--color-accent)] font-medium" : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"}`}
           >
             {s.label}
           </a>
