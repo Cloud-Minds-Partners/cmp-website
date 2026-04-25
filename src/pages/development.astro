@@ -1,8 +1,6 @@
 ---
-import Base from "../layouts/Base.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
+import V4Layout from "../components/v4/V4Layout.astro";
+import TierIsometric from "../components/v4/TierIsometric.astro";
 
 const phases = [
   {
@@ -26,77 +24,91 @@ const phases = [
     b: "PUE/WUE monitoring, expansion optioning, exit or refinancing prep. Intelligence inputs fed back into the Site Selection Tool for future deals.",
   },
 ];
+
+const models = [
+  { t: "Co-developer", b: "CMP holds a development interest alongside the sponsor. Aligned on outcome, not billable hour." },
+  { t: "Owner's technical advisor", b: "Fixed-scope engagements covering technical DD, permitting, procurement support, and commissioning oversight." },
+  { t: "Intelligence subscription", b: "For funds and strategic operators — ongoing access to platform data, memos, and monthly regulatory digests." },
+];
 ---
 
-<Base title="Development — Cloud Minds Partners" description="Co-development, technical due diligence, and financial modeling for data center projects from pre-site through commissioning.">
-  <SiteHeader active="development" />
-
-  <main>
-    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">02 / Project Development</div>
-        <h1 class="display-lg max-w-3xl">From thesis to commissioned asset.</h1>
-        <p class="lede mt-6 max-w-2xl">
+<V4Layout title="Development — Cloud Minds Partners" description="Co-development, technical due diligence, and financial modeling for data center projects from pre-site through commissioning." active="development">
+  <!-- ═══ HERO ═══ -->
+  <section class="v4-page-hero has-visual">
+    <div class="v4-page-hero-inner">
+      <div>
+        <span class="v4-eyebrow">02 / Project Development</span>
+        <h1 class="v4-display-xl">
+          From thesis to <em class="v4-italic-rust">commissioned asset</em>.
+        </h1>
+        <p class="v4-lede">
           We work alongside operators and sponsors on specific projects —
-          either as co-developer, technical advisor, or financial partner
-          — across the full lifecycle of a data center build.
+          as co-developer, technical advisor, or financial partner —
+          across the full lifecycle of a data center build.
         </p>
+        <div class="v4-btn-row">
+          <a href="/contact" class="v4-btn v4-btn-primary">Bring us a project →</a>
+          <a href="/advisory" class="v4-btn v4-btn-secondary">Pre-site advisory</a>
+        </div>
       </div>
-    </section>
+      <div class="v4-tier-visual"><TierIsometric /></div>
+    </div>
+  </section>
 
-    <Section eyebrow="Project lifecycle" title="Four phases. One owner of the narrative." compact>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--color-rule)]">
+  <!-- ═══ PHASES ═══ -->
+  <section class="v4-section v4-section-light">
+    <div class="v4-section-inner">
+      <span class="v4-eyebrow v4-eyebrow-light">Project lifecycle</span>
+      <h2 class="v4-display-lg" style="margin-bottom:16px;">Four phases. One owner of the narrative.</h2>
+      <p class="v4-lede v4-lede-light" style="margin-bottom:56px;">
+        Each phase has a defined gate, a primary deliverable, and a clear hand-off. Schedule, budget,
+        and risk are tracked against a single project register.
+      </p>
+      <div class="v4-card-grid" style="grid-template-columns: repeat(4, 1fr);">
         {phases.map((p) => (
-          <div class="bg-[var(--color-canvas)] p-7">
-            <div class="caption mb-3">{p.n}</div>
-            <h3 class="display text-lg mb-3">{p.t}</h3>
-            <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.b}</p>
+          <div class="v4-card" style="min-height:260px;">
+            <div class="v4-card-num">{p.n.toUpperCase()}</div>
+            <h3 class="v4-card-name" style="font-size:20px;">{p.t}</h3>
+            <p class="v4-card-desc">{p.b}</p>
           </div>
         ))}
       </div>
-    </Section>
+    </div>
+  </section>
 
-    <Section eyebrow="Engagement models" title="How we participate." tone="alt">
-      <div class="grid md:grid-cols-3 gap-px bg-[var(--color-rule)]">
-        <div class="bg-[var(--color-surface)] p-9">
-          <h3 class="display text-lg mb-3">Co-developer</h3>
-          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-            CMP holds a development interest alongside the sponsor. Aligned
-            on outcome, not billable hour.
-          </p>
-        </div>
-        <div class="bg-[var(--color-surface)] p-9">
-          <h3 class="display text-lg mb-3">Owner's technical advisor</h3>
-          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-            Fixed-scope engagements covering technical DD, permitting,
-            procurement support, and commissioning oversight.
-          </p>
-        </div>
-        <div class="bg-[var(--color-surface)] p-9">
-          <h3 class="display text-lg mb-3">Intelligence subscription</h3>
-          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-            For funds and strategic operators — ongoing access to platform
-            data, memos, and monthly regulatory digests.
-          </p>
-        </div>
+  <!-- ═══ ENGAGEMENT MODELS ═══ -->
+  <section class="v4-section v4-section-dark">
+    <div class="v4-section-inner">
+      <span class="v4-eyebrow">Engagement models</span>
+      <h2 class="v4-display-lg">How we participate.</h2>
+      <p class="v4-lede" style="margin-bottom:56px;">
+        Three forms of engagement, each with a different risk-share. Pick the one that maps
+        to your phase and the rest follows.
+      </p>
+      <div class="v4-card-grid v4-card-grid-dark">
+        {models.map((m, i) => (
+          <div class="v4-card v4-card-dark">
+            <div class="v4-card-num">{String(i+1).padStart(2,"0")}</div>
+            <h3 class="v4-card-name">{m.t}</h3>
+            <p class="v4-card-desc">{m.b}</p>
+          </div>
+        ))}
       </div>
-    </Section>
+    </div>
+  </section>
 
-    <Section tone="ink" compact>
-      <div class="max-w-3xl">
-        <div class="eyebrow mb-4 text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)]">Next</div>
-        <h2 class="display text-2xl md:text-3xl text-[var(--color-canvas)] mb-6">
-          Have a project that needs either a co-developer or a sharper technical lens?
-        </h2>
-        <a
-          href="mailto:info@cloudmindspartners.com"
-          class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
-        >
-          info@cloudmindspartners.com
-        </a>
-      </div>
-    </Section>
-  </main>
-
-  <SiteFooter />
-</Base>
+  <!-- ═══ BIG CTA ═══ -->
+  <section class="v4-big-cta">
+    <div class="v4-big-cta-inner">
+      <h2 class="v4-display-xl">
+        Have a project that needs<br/>
+        a <em class="v4-italic-rust">co-developer</em> or a <em class="v4-italic-rust">sharper technical lens</em>?
+      </h2>
+      <p class="v4-big-cta-body">
+        Send a one-pager. We come back with a yes/no/maybe and the scope of a first
+        engagement within a week.
+      </p>
+      <a href="/contact" class="v4-btn v4-btn-primary v4-btn-large">Start a conversation →</a>
+    </div>
+  </section>
+</V4Layout>

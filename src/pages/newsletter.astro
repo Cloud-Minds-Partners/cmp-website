@@ -1,54 +1,108 @@
 ---
-import Base from "../layouts/Base.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
+import V4Layout from "../components/v4/V4Layout.astro";
 import NewsletterSubscribe from "../components/NewsletterSubscribe.astro";
 import NewsletterArchive from "../components/NewsletterArchive.astro";
 ---
 
-<Base title="Newsletter — DC Insights" description="DC Insights — weekly digest of data center developments across Latin America.">
-  <SiteHeader active="intelligence" />
+<V4Layout title="DC Insights Newsletter — Cloud Minds Partners" description="DC Insights — weekly digest of data center developments across Latin America." active="intelligence">
+  <!-- ═══ HERO ═══ -->
+  <section class="v4-page-hero">
+    <div class="v4-page-hero-inner">
+      <span class="v4-eyebrow">Newsletter</span>
+      <h1 class="v4-display-xl" style="max-width:900px;">
+        DC Insights — <em class="v4-italic-rust">Weekly Pulse</em>.
+      </h1>
+      <p class="v4-lede">
+        Three to four LatAm-relevant data center stories every week. Deals,
+        regulation, deployments, and infrastructure signals that rarely make the
+        English-language trade press. Primary sources, audited before send.
+      </p>
+    </div>
+  </section>
 
-  <main>
-    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Newsletter</div>
-        <h1 class="display-lg max-w-3xl">DC Insights.</h1>
-        <p class="lede mt-6 max-w-2xl">
-          A weekly dispatch on data center developments across Latin America —
-          deals, regulation, deployments, and the infrastructure signals that
-          rarely make the English-language trade press.
-        </p>
-      </div>
-    </section>
-
-    <Section compact>
-      <div class="grid md:grid-cols-12 gap-12 items-start">
-        <div class="md:col-span-5">
+  <!-- ═══ SUBSCRIBE + ARCHIVE ═══ -->
+  <section class="v4-section v4-section-light">
+    <div class="v4-section-inner">
+      <div class="v4-nl-grid">
+        <div class="v4-nl-subscribe">
+          <span class="v4-eyebrow v4-eyebrow-light" style="margin-bottom:24px;">Subscribe</span>
           <NewsletterSubscribe showHeadline={false} />
-          <div class="mt-10 space-y-5 text-sm text-[var(--color-ink-muted)] leading-relaxed max-w-md">
+
+          <div class="v4-nl-meta">
             <div>
-              <div class="eyebrow text-[11px] mb-2">What you get</div>
-              <ul class="list-disc pl-5 space-y-1.5">
+              <div class="v4-nl-meta-label">What you get</div>
+              <ul class="v4-nl-list">
                 <li>Weekly digest, curated from primary sources</li>
                 <li>Deals, capacity announcements, policy moves</li>
                 <li>LatAm-first editorial — BR, MX, CL, and the wider region</li>
-                <li>No tracking beyond what Brevo does for delivery</li>
+                <li>No tracking beyond delivery confirmation</li>
               </ul>
             </div>
-            <div>
-              <div class="eyebrow text-[11px] mb-2">Publishing</div>
-              <p>Daily weekday dispatches plus a weekly Sunday roll-up.</p>
+            <div style="margin-top:24px;">
+              <div class="v4-nl-meta-label">Publishing</div>
+              <p class="v4-nl-meta-body">Daily weekday dispatches plus a weekly Sunday roll-up.</p>
             </div>
           </div>
         </div>
-        <div class="md:col-span-7">
+
+        <div class="v4-nl-archive">
+          <span class="v4-eyebrow v4-eyebrow-light" style="margin-bottom:24px;">Archive</span>
           <NewsletterArchive />
         </div>
       </div>
-    </Section>
-  </main>
+    </div>
+  </section>
 
-  <SiteFooter />
-</Base>
+  <!-- ═══ DARK STRIP ═══ -->
+  <section class="v4-section v4-section-dark" style="padding-top:80px; padding-bottom:80px;">
+    <div class="v4-section-narrow" style="text-align:center;">
+      <h2 class="v4-display-lg">
+        No filler. No hot takes.<br/>
+        <em class="v4-italic-rust">Only what moves the market.</em>
+      </h2>
+      <div style="margin-top:32px;">
+        <a href="mailto:info@cloudmindspartners.com?subject=Newsletter inquiry" class="v4-btn v4-btn-primary v4-btn-large">Get in touch →</a>
+      </div>
+    </div>
+  </section>
+</V4Layout>
+
+<style>
+  .v4-nl-grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .v4-nl-meta {
+    margin-top: 32px;
+  }
+  .v4-nl-meta-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-quiet);
+    margin-bottom: 10px;
+  }
+  .v4-nl-list {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--color-ink-muted);
+    padding-left: 18px;
+    margin: 0;
+  }
+  .v4-nl-list li { margin: 6px 0; }
+  .v4-nl-meta-body {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-ink-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .v4-nl-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+</style>

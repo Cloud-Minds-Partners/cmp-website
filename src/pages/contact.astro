@@ -1,47 +1,68 @@
 ---
-import Base from "../layouts/Base.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
+import V4Layout from "../components/v4/V4Layout.astro";
 ---
 
-<Base title="Contact — Cloud Minds Partners">
-  <SiteHeader active="contact" />
+<V4Layout title="Contact — Cloud Minds Partners" description="Reach Cloud Minds Partners — data center advisory, development, and intelligence for Latin America." active="contact">
+  <!-- ═══ HERO ═══ -->
+  <section class="v4-page-hero">
+    <div class="v4-page-hero-inner">
+      <span class="v4-eyebrow">Contact</span>
+      <h1 class="v4-display-xl" style="max-width:1000px;">
+        Tell us about <em class="v4-italic-rust">the project</em>.
+      </h1>
+      <p class="v4-lede">
+        The fastest path is email. Include the market, the stage, and anything
+        NDA-worthy only after we've exchanged a mutual.
+      </p>
+    </div>
+  </section>
 
-  <main>
-    <section class="pt-24 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Contact</div>
-        <h1 class="display-lg max-w-3xl">Tell us about the project.</h1>
-        <p class="lede mt-6 max-w-2xl">
-          The fastest path is email. Include the market, the stage, and
-          anything NDA-worthy only after we've exchanged a mutual.
-        </p>
-      </div>
-    </section>
-
-    <Section compact>
-      <div class="grid md:grid-cols-2 gap-10 max-w-4xl">
-        <div>
-          <div class="eyebrow mb-3">General</div>
-          <a href="mailto:info@cloudmindspartners.com" class="display text-2xl no-underline block">
+  <!-- ═══ CONTACT GRID ═══ -->
+  <section class="v4-section v4-section-light">
+    <div class="v4-section-inner">
+      <div class="v4-card-grid-2">
+        <div class="v4-card" style="min-height:320px; background:var(--color-canvas);">
+          <div class="v4-card-num">GENERAL ENQUIRIES</div>
+          <h3 class="v4-card-name" style="font-size:20px; margin-bottom:24px;">Email is the fastest path.</h3>
+          <a href="mailto:info@cloudmindspartners.com" class="v4-display-md" style="margin-top:8px; color:var(--color-navy); text-decoration:none; word-break:break-word;">
             info@cloudmindspartners.com
           </a>
+          <p class="v4-card-desc" style="margin-top:18px;">
+            One business day response. Two if it's a deep technical brief that needs careful reading first.
+          </p>
         </div>
-
-        <div class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-          <div class="eyebrow mb-3">Office</div>
-          <p>São Paulo, Brazil</p>
-
-          <div class="eyebrow mt-8 mb-3">Coverage</div>
-          <p>Primary markets: Brazil, Chile, Mexico.<br/>Secondary: Argentina, Colombia, Peru, Uruguay.</p>
-
-          <div class="eyebrow mt-8 mb-3">Response</div>
-          <p>Within one business day.</p>
+        <div class="v4-card" style="min-height:320px;">
+          <div class="v4-card-num">OPERATING DETAILS</div>
+          <h3 class="v4-card-name" style="font-size:20px; margin-bottom:24px;">Where and how we work.</h3>
+          <div style="display:grid; grid-template-columns:auto 1fr; gap:16px 24px; font-family:var(--font-body); font-size:14px;">
+            <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; color:var(--color-ink-quiet); text-transform:uppercase;">Office</div>
+            <div>São Paulo, Brazil</div>
+            <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; color:var(--color-ink-quiet); text-transform:uppercase;">Coverage</div>
+            <div>Primary: Brazil, Chile, Mexico<br/>Secondary: Argentina, Colombia, Peru, Uruguay</div>
+            <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; color:var(--color-ink-quiet); text-transform:uppercase;">Response</div>
+            <div>Within one business day</div>
+            <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; color:var(--color-ink-quiet); text-transform:uppercase;">Engagement</div>
+            <div>Retainer · Project · Success-fee · Co-development</div>
+          </div>
         </div>
       </div>
-    </Section>
-  </main>
+    </div>
+  </section>
 
-  <SiteFooter />
-</Base>
+  <!-- ═══ DARK STRIP ═══ -->
+  <section class="v4-section v4-section-dark" style="padding-top:80px; padding-bottom:80px;">
+    <div class="v4-section-narrow" style="text-align:center;">
+      <h2 class="v4-display-lg">
+        Brief us in <em class="v4-italic-rust">one paragraph</em>.
+      </h2>
+      <p class="v4-lede" style="text-align:left; margin-left:auto; margin-right:auto; margin-top:24px;">
+        Where, what, when, and the part of the problem you're stuck on.
+        That's enough to start. We'll come back with a yes/no/maybe and
+        the shape of a first engagement.
+      </p>
+      <div style="margin-top:32px;">
+        <a href="mailto:info@cloudmindspartners.com?subject=Project brief" class="v4-btn v4-btn-primary v4-btn-large">Email us →</a>
+      </div>
+    </div>
+  </section>
+</V4Layout>

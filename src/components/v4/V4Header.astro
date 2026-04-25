@@ -1,0 +1,28 @@
+---
+interface Props {
+  active?: "home" | "advisory" | "development" | "intelligence" | "platforms" | "team" | "contact";
+}
+const { active = "home" } = Astro.props;
+const links = [
+  { href: "/advisory", label: "Advisory", key: "advisory" },
+  { href: "/development", label: "Development", key: "development" },
+  { href: "/intelligence", label: "Intelligence", key: "intelligence" },
+  { href: "/platforms", label: "Platforms", key: "platforms" },
+  { href: "/team", label: "Team", key: "team" },
+];
+---
+
+<header class="v4-header">
+  <div class="v4-header-inner">
+    <a href="/" class="v4-brand">
+      <span class="v4-brand-name">Cloud Minds Partners</span>
+      <span class="v4-brand-tag">Data center advisory · LatAm</span>
+    </a>
+    <nav class="v4-nav">
+      {links.map((l) => (
+        <a href={l.href} class:list={[active === l.key && "is-active"]}>{l.label}</a>
+      ))}
+      <a href="/contact" class="v4-cta">Talk to us →</a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,134 @@
+---
+// Isometric data center build — Development tier visual.
+// Stacked layers + power line + rising substation icon.
+// Animation: layers materialize in sequence, then idle pulse.
+---
+
+<svg viewBox="-130 -110 260 260" class="tier-svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="iso-face-light" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1D4289" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#1D4289" stop-opacity="0.20"/>
+    </linearGradient>
+    <linearGradient id="iso-face-mid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0F2B5C" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0F2B5C" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="iso-face-dark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A1E40" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0A1E40" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="iso-rust" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C1472A" stop-opacity="0.60"/>
+      <stop offset="100%" stop-color="#C1472A" stop-opacity="0.30"/>
+    </linearGradient>
+    <radialGradient id="iso-bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="rgba(15,43,92,0.20)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="0" cy="0" r="120" fill="url(#iso-bg)"/>
+
+  <!-- isometric grid floor -->
+  <g opacity="0.18" stroke="rgba(245,241,232,0.5)" stroke-width="0.5" fill="none">
+    {[-3,-2,-1,0,1,2,3].map((i) => (
+      <>
+        <line x1={-90 + i*20} y1={50 + i*10} x2={i*20} y2={100 + i*10}/>
+        <line x1={90 - i*20} y1={50 + i*10} x2={-i*20} y2={100 + i*10}/>
+      </>
+    ))}
+  </g>
+
+  <!-- Layer 5 (top — air handlers) -->
+  <g class="iso-layer iso-l5">
+    <polygon points="-50,-78 0,-103 50,-78 0,-53" fill="url(#iso-rust)" stroke="#C1472A" stroke-width="1"/>
+    <polygon points="-50,-78 -50,-66 0,-41 0,-53" fill="#0A1E40" stroke="#C1472A" stroke-width="1" opacity="0.85"/>
+    <polygon points="0,-53 0,-41 50,-66 50,-78" fill="#0F2B5C" stroke="#C1472A" stroke-width="1" opacity="0.85"/>
+    <!-- HVAC fans -->
+    <circle cx="-25" cy="-78" r="5" fill="none" stroke="#F5F1E8" stroke-width="0.8" opacity="0.7"/>
+    <circle cx="0" cy="-90" r="5" fill="none" stroke="#F5F1E8" stroke-width="0.8" opacity="0.7"/>
+    <circle cx="25" cy="-78" r="5" fill="none" stroke="#F5F1E8" stroke-width="0.8" opacity="0.7"/>
+  </g>
+
+  <!-- Layer 4 (server hall upper) -->
+  <g class="iso-layer iso-l4">
+    <polygon points="-55,-50 0,-78 55,-50 0,-22" fill="url(#iso-face-light)" stroke="#1D4289" stroke-width="1"/>
+    <polygon points="-55,-50 -55,-28 0,0 0,-22" fill="url(#iso-face-mid)" stroke="#1D4289" stroke-width="1"/>
+    <polygon points="0,-22 0,0 55,-28 55,-50" fill="url(#iso-face-dark)" stroke="#1D4289" stroke-width="1"/>
+    <!-- vent stripes -->
+    <line x1="-46" y1="-46" x2="46" y2="-46" stroke="rgba(245,241,232,0.18)" stroke-width="0.5"/>
+    <line x1="-46" y1="-38" x2="46" y2="-38" stroke="rgba(245,241,232,0.18)" stroke-width="0.5"/>
+    <line x1="-46" y1="-30" x2="46" y2="-30" stroke="rgba(245,241,232,0.18)" stroke-width="0.5"/>
+  </g>
+
+  <!-- Layer 3 (server hall lower) -->
+  <g class="iso-layer iso-l3">
+    <polygon points="-60,-22 0,-50 60,-22 0,6" fill="url(#iso-face-light)" stroke="#1D4289" stroke-width="1"/>
+    <polygon points="-60,-22 -60,2 0,30 0,6" fill="url(#iso-face-mid)" stroke="#1D4289" stroke-width="1"/>
+    <polygon points="0,6 0,30 60,2 60,-22" fill="url(#iso-face-dark)" stroke="#1D4289" stroke-width="1"/>
+    <!-- racks indicator dots -->
+    {[-30,-15,0,15,30].map((dx) => (
+      <circle cx={dx} cy={-22 + Math.abs(dx)*0.4} r="1.5" fill="#C1472A" opacity="0.7">
+        <animate attributeName="opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite" begin={`${(dx + 30) * 0.05}s`} />
+      </circle>
+    ))}
+  </g>
+
+  <!-- Layer 2 (foundation/utility) -->
+  <g class="iso-layer iso-l2">
+    <polygon points="-65,8 0,-22 65,8 0,38" fill="url(#iso-face-light)" stroke="#1D4289" stroke-width="1" opacity="0.85"/>
+    <polygon points="-65,8 -65,28 0,58 0,38" fill="url(#iso-face-mid)" stroke="#1D4289" stroke-width="1"/>
+    <polygon points="0,38 0,58 65,28 65,8" fill="url(#iso-face-dark)" stroke="#1D4289" stroke-width="1"/>
+  </g>
+
+  <!-- Substation tower (right, animated power flow) -->
+  <g class="iso-substation">
+    <line x1="80" y1="40" x2="80" y2="-30" stroke="#C1472A" stroke-width="1.2"/>
+    <line x1="76" y1="-20" x2="84" y2="-20" stroke="#C1472A" stroke-width="1.2"/>
+    <line x1="74" y1="-10" x2="86" y2="-10" stroke="#C1472A" stroke-width="1.2"/>
+    <line x1="80" y1="-30" x2="55" y2="-22" stroke="#C1472A" stroke-width="1" opacity="0.8" stroke-dasharray="3 3">
+      <animate attributeName="stroke-dashoffset" from="6" to="0" dur="1s" repeatCount="indefinite"/>
+    </line>
+    <circle cx="80" cy="-30" r="2.5" fill="#C1472A">
+      <animate attributeName="r" values="2.5;4;2.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Construction crane (left, idle sway) -->
+  <g class="iso-crane" transform="translate(-90, -40)">
+    <line x1="0" y1="60" x2="0" y2="-30" stroke="rgba(245,241,232,0.5)" stroke-width="1"/>
+    <line x1="-15" y1="-25" x2="40" y2="-25" stroke="rgba(245,241,232,0.5)" stroke-width="1"/>
+    <line x1="0" y1="-30" x2="40" y2="-25" stroke="rgba(245,241,232,0.4)" stroke-width="0.5"/>
+    <line x1="0" y1="-30" x2="-15" y2="-25" stroke="rgba(245,241,232,0.4)" stroke-width="0.5"/>
+    <line x1="35" y1="-25" x2="35" y2="-15" stroke="#C1472A" stroke-width="0.8" stroke-dasharray="2 2"/>
+    <rect x="32" y="-15" width="6" height="3" fill="#C1472A" opacity="0.7"/>
+    <animateTransform attributeName="transform" type="rotate" values="-2 -90 60;2 -90 60;-2 -90 60" dur="6s" repeatCount="indefinite" additive="sum"/>
+  </g>
+
+  <style>
+    .iso-layer { animation: iso-rise 1.2s cubic-bezier(.23,1,.32,1) backwards; transform-origin: 0 0; }
+    .iso-l2 { animation-delay: 0.1s; }
+    .iso-l3 { animation-delay: 0.4s; }
+    .iso-l4 { animation-delay: 0.7s; }
+    .iso-l5 { animation-delay: 1.0s; }
+    .iso-substation { animation: iso-fade 1.2s ease-out 1.5s backwards; }
+    .iso-crane { animation: iso-fade 1.2s ease-out 0.6s backwards; }
+    @keyframes iso-rise {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes iso-fade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  </style>
+</svg>
+
+<style>
+  .tier-svg {
+    width: 100%; height: 100%;
+    max-width: 520px; max-height: 520px;
+    display: block; margin: 0 auto;
+  }
+</style>

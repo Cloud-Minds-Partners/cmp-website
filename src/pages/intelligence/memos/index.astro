@@ -1,8 +1,5 @@
 ---
-import Base from "../../../layouts/Base.astro";
-import SiteHeader from "../../../components/SiteHeader.astro";
-import SiteFooter from "../../../components/SiteFooter.astro";
-import Section from "../../../components/Section.astro";
+import V4Layout from "../../../components/v4/V4Layout.astro";
 import { getCollection } from "astro:content";
 
 const memos = (await getCollection("memos", (m) => m.data.publish)).sort(
@@ -17,58 +14,141 @@ const countryName: Record<string, string> = {
 const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short" });
 ---
 
-<Base title="Technical Memos — Cloud Minds Partners">
-  <SiteHeader
-    active="intelligence"
-    subnav={[
-      { href: "/intelligence", label: "Overview" },
-      { href: "/intelligence/memos", label: "Technical Memos", active: true },
-      { href: "/intelligence/radar", label: "Innovation Radar" },
-      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
-    ]}
-  />
+<V4Layout title="Technical Memos — Cloud Minds Partners" description="Five-page briefs on regulatory, fiscal, and market developments in Latin American data center markets." active="intelligence">
+  <!-- ═══ HERO ═══ -->
+  <section class="v4-page-hero">
+    <div class="v4-page-hero-inner">
+      <nav style="margin-bottom:20px;">
+        <a href="/intelligence" class="v4-back-link">← Intelligence</a>
+      </nav>
+      <span class="v4-eyebrow">Long-form · Technical Memos</span>
+      <h1 class="v4-display-xl" style="max-width:900px;">
+        Five pages. <em class="v4-italic-rust">Primary sources only.</em>
+      </h1>
+      <p class="v4-lede">
+        Each memo covers one regulatory, fiscal, or market development.
+        Minimum three primary sources per memo, audited before publication.
+      </p>
+    </div>
+  </section>
 
-  <main>
-    <section class="pt-20 pb-12 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Intelligence · Memos</div>
-        <h1 class="display text-4xl md:text-5xl max-w-3xl">Technical Memos.</h1>
-        <p class="lede mt-5 max-w-2xl">
-          Five-page briefs on regulatory, fiscal, and market developments in
-          Latin American data center markets.
+  <!-- ═══ MEMO LIST ═══ -->
+  <section class="v4-section v4-section-light">
+    <div class="v4-section-inner">
+      {memos.length === 0 ? (
+        <p style="font-family:var(--font-body); font-size:15px; color:var(--color-ink-muted); font-style:italic;">
+          No memos published yet. First memos in pipeline.
         </p>
-      </div>
-    </section>
-
-    <Section compact>
-      {memos.length === 0 && (
-        <p class="text-[var(--color-ink-muted)] italic">No memos published yet.</p>
-      )}
-
-      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
-        {memos.map((memo) => (
-          <a href={`/intelligence/memos/${memo.data.slug}`} class="block py-8 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-            <div class="grid md:grid-cols-12 gap-6">
-              <div class="md:col-span-3">
-                <div class="caption text-[var(--color-navy)]">
-                  {countryName[memo.data.jurisdiction.country] ?? memo.data.jurisdiction.country} · {memo.data.jurisdiction.scope}
-                </div>
-                <div class="caption mt-1">{fmt(memo.data.created)}</div>
+      ) : (
+        <div class="v4-memo-list">
+          {memos.map((memo) => (
+            <a href={`/intelligence/memos/${memo.data.slug}`} class="v4-memo-row">
+              <div class="v4-memo-meta">
+                <span class="v4-memo-country">{countryName[memo.data.jurisdiction.country] ?? memo.data.jurisdiction.country}</span>
+                <span class="v4-memo-scope">{memo.data.jurisdiction.scope}</span>
+                <span class="v4-memo-date">{fmt(memo.data.created)}</span>
               </div>
-              <div class="md:col-span-9">
-                <h2 class="display text-xl md:text-2xl mb-2">{memo.data.title}</h2>
+              <div class="v4-memo-body">
+                <h3 class="v4-memo-title">{memo.data.title}</h3>
                 {memo.data.sources_count !== undefined && (
-                  <p class="text-sm text-[var(--color-ink-muted)]">
-                    {memo.data.sources_count} primary sources · {memo.data.word_count} words
-                  </p>
+                  <p class="v4-memo-stats">{memo.data.sources_count} primary sources · {memo.data.word_count?.toLocaleString()} words</p>
                 )}
               </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </Section>
-  </main>
+              <span class="v4-card-arrow">Read →</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
 
-  <SiteFooter />
-</Base>
+  <!-- ═══ METHOD CALLOUT ═══ -->
+  <section class="v4-section v4-section-dark" style="padding-top:80px; padding-bottom:80px;">
+    <div class="v4-section-narrow">
+      <span class="v4-eyebrow">Method</span>
+      <h2 class="v4-display-lg">Chain of Truth.</h2>
+      <p class="v4-lede" style="max-width:720px;">
+        Every claim traces to a primary source downloaded and archived before the
+        memo is published. An audit gate blocks publication when references don't resolve.
+        Cap: five pages. Density of cited fact, not word count.
+      </p>
+    </div>
+  </section>
+</V4Layout>
+
+<style>
+  .v4-back-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-quiet);
+    text-decoration: none;
+  }
+  .v4-back-link:hover { color: var(--color-rust); }
+
+  .v4-memo-list {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .v4-memo-row {
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--color-rule);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s;
+    margin: 0 -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .v4-memo-row:hover { background: var(--color-surface); }
+
+  .v4-memo-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .v4-memo-country {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-navy);
+  }
+  .v4-memo-scope {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--color-ink-quiet);
+  }
+  .v4-memo-date {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-ink-muted);
+    margin-top: 4px;
+  }
+
+  .v4-memo-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-ink);
+    margin: 0 0 6px;
+    line-height: 1.3;
+  }
+  .v4-memo-stats {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-ink-quiet);
+    margin: 0;
+  }
+
+  @media (max-width: 700px) {
+    .v4-memo-row { grid-template-columns: 1fr; }
+    .v4-memo-meta { flex-direction: row; gap: 12px; }
+  }
+</style>

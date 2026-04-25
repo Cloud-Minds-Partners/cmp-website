@@ -1,0 +1,191 @@
+---
+// 3D animated globe focused on LatAm with glowing data center nodes.
+// Uses Three.js. Self-contained — drops into any layout via <LatAmGlobe />.
+---
+
+<div class="latam-globe-wrap">
+  <canvas id="latam-globe" class="block w-full h-full"></canvas>
+</div>
+
+<style>
+  .latam-globe-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .latam-globe-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(circle at center, rgba(15,43,92,0.35) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #latam-globe {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
+<script>
+  import * as THREE from "three";
+
+  function initGlobe() {
+    const canvas = document.getElementById("latam-globe") as HTMLCanvasElement | null;
+    if (!canvas) return;
+
+    const wrap = canvas.parentElement!;
+    let w = wrap.clientWidth;
+    let h = wrap.clientHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
+    camera.position.z = 3.2;
+    // Tilt to focus on LatAm side
+    camera.position.x = 0.3;
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Wireframe globe — subtle
+    const globeMat = new THREE.MeshBasicMaterial({
+      color: 0x1D4289,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.18,
+    });
+    const globe = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 36), globeMat);
+    scene.add(globe);
+
+    // Inner solid (very dark) so wireframe reads
+    const innerMat = new THREE.MeshBasicMaterial({
+      color: 0x0A1E40,
+      transparent: true,
+      opacity: 0.55,
+    });
+    const inner = new THREE.Mesh(new THREE.SphereGeometry(0.985, 48, 36), innerMat);
+    scene.add(inner);
+
+    // LatAm DC sites (real coords)
+    const dcSites = [
+      { lat: -23.55, lon: -46.63, name: "São Paulo" },
+      { lat: -22.91, lon: -43.20, name: "Rio" },
+      { lat: -19.92, lon: -43.94, name: "Belo Horizonte" },
+      { lat: -15.79, lon: -47.88, name: "Brasília" },
+      { lat: -3.78, lon: -38.53, name: "Fortaleza" },
+      { lat: -8.05, lon: -34.88, name: "Recife" },
+      { lat: -12.97, lon: -38.50, name: "Salvador" },
+      { lat: -30.03, lon: -51.22, name: "Porto Alegre" },
+      { lat: -33.45, lon: -70.66, name: "Santiago" },
+      { lat: -33.04, lon: -71.62, name: "Valparaíso" },
+      { lat: 19.43, lon: -99.13, name: "Mexico City" },
+      { lat: 25.69, lon: -100.32, name: "Monterrey" },
+      { lat: 20.59, lon: -100.39, name: "Querétaro" },
+      { lat: 20.67, lon: -103.34, name: "Guadalajara" },
+    ];
+
+    function latLonToVec3(lat: number, lon: number, r = 1) {
+      const phi = ((90 - lat) * Math.PI) / 180;
+      const theta = ((lon + 180) * Math.PI) / 180;
+      return new THREE.Vector3(
+        -r * Math.sin(phi) * Math.cos(theta),
+        r * Math.cos(phi),
+        r * Math.sin(phi) * Math.sin(theta)
+      );
+    }
+
+    // Group all rotating elements
+    const rotor = new THREE.Group();
+    rotor.add(globe);
+    rotor.add(inner);
+    scene.add(rotor);
+
+    // Initial rotation so LatAm faces camera
+    rotor.rotation.y = Math.PI * 0.15;
+
+    // DC dots + pulsing rings
+    const dotMat = new THREE.MeshBasicMaterial({ color: 0xC1472A });
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0xC1472A,
+      transparent: true,
+      opacity: 0.5,
+      side: THREE.DoubleSide,
+    });
+
+    type Pulser = { ring: THREE.Mesh; phase: number };
+    const pulsers: Pulser[] = [];
+
+    dcSites.forEach((dc, i) => {
+      const pos = latLonToVec3(dc.lat, dc.lon, 1.005);
+      const dot = new THREE.Mesh(new THREE.SphereGeometry(0.013, 12, 12), dotMat);
+      dot.position.copy(pos);
+      rotor.add(dot);
+
+      // Pulse ring
+      const ring = new THREE.Mesh(new THREE.RingGeometry(0.018, 0.022, 24), ringMat.clone());
+      ring.position.copy(pos);
+      ring.lookAt(0, 0, 0);
+      rotor.add(ring);
+      pulsers.push({ ring, phase: i * 0.4 });
+    });
+
+    // Connection arcs (curves above the surface) — sparingly
+    const arcMat = new THREE.LineBasicMaterial({
+      color: 0x1D4289,
+      transparent: true,
+      opacity: 0.28,
+    });
+    function arc(i: number, j: number) {
+      const p1 = latLonToVec3(dcSites[i].lat, dcSites[i].lon, 1);
+      const p2 = latLonToVec3(dcSites[j].lat, dcSites[j].lon, 1);
+      const mid = p1.clone().add(p2).multiplyScalar(0.5).normalize().multiplyScalar(1.4);
+      const curve = new THREE.QuadraticBezierCurve3(p1, mid, p2);
+      const pts = curve.getPoints(40);
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      return new THREE.Line(geo, arcMat);
+    }
+    [
+      [0, 8], [0, 10], [8, 10], [0, 11], [4, 5], [3, 0],
+      [0, 1], [2, 3], [10, 12], [10, 11], [11, 13], [8, 9],
+    ].forEach(([i, j]) => rotor.add(arc(i, j)));
+
+    // Resize
+    function resize() {
+      w = wrap.clientWidth;
+      h = wrap.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    new ResizeObserver(resize).observe(wrap);
+
+    // Animate
+    let t0 = performance.now();
+    function tick() {
+      const t = (performance.now() - t0) / 1000;
+      rotor.rotation.y += 0.0015;
+
+      // Pulse rings: scale + opacity oscillate
+      pulsers.forEach((p, i) => {
+        const phase = (t + p.phase) % 2;
+        const scale = 1 + phase * 1.5;
+        p.ring.scale.set(scale, scale, scale);
+        (p.ring.material as THREE.MeshBasicMaterial).opacity = 0.5 * (1 - phase / 2);
+      });
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGlobe);
+  } else {
+    initGlobe();
+  }
+</script>

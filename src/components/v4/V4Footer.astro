@@ -1,0 +1,66 @@
+---
+const cols = [
+  {
+    title: "Practices",
+    links: [
+      { href: "/advisory", label: "Advisory" },
+      { href: "/development", label: "Development" },
+      { href: "/intelligence", label: "Intelligence" },
+    ],
+  },
+  {
+    title: "Intelligence",
+    links: [
+      { href: "/intelligence/memos", label: "Memos" },
+      { href: "/intelligence/radar", label: "Innovation radar" },
+      { href: "/intelligence/regwatch", label: "Regulatory watch" },
+      { href: "/newsletter", label: "DC Weekly Pulse" },
+    ],
+  },
+  {
+    title: "Platforms",
+    links: [
+      { href: "/platforms", label: "All platforms" },
+      { href: "https://dcplatformcmp.web.app", label: "Site Selection Tool" },
+      { href: "https://dc-testfit-pro.web.app", label: "TestFit Pro" },
+      { href: "https://land-price-dashboard.web.app", label: "Land Intel" },
+      { href: "https://dcinsights.web.app", label: "DC Insights" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { href: "/team", label: "Team" },
+      { href: "/contact", label: "Contact" },
+    ],
+  },
+];
+---
+
+<footer class="v4-footer">
+  <div class="v4-footer-inner">
+    <div class="v4-footer-top">
+      <div class="v4-footer-brand">
+        <strong>Cloud Minds Partners</strong>
+        <p>Data center advisory, project development, and intelligence for Latin America. São Paulo · Santiago · Mexico City.</p>
+        <a href="/contact" class="v4-footer-cta">Start a conversation →</a>
+      </div>
+      <div class="v4-footer-cols">
+        {cols.map((c) => (
+          <div>
+            <h4>{c.title}</h4>
+            <ul>
+              {c.links.map((l) => (
+                <li><a href={l.href}>{l.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="v4-footer-meta">
+      <span>© 2026 Cloud Minds Partners · Established 2024</span>
+      <span>Built on research · Verified before publish</span>
+    </div>
+  </div>
+</footer>

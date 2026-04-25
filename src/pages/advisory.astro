@@ -1,8 +1,6 @@
 ---
-import Base from "../layouts/Base.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
+import V4Layout from "../components/v4/V4Layout.astro";
+import TierRadar from "../components/v4/TierRadar.astro";
 
 const capabilities = [
   {
@@ -26,68 +24,102 @@ const capabilities = [
     b: "Federal, state, and municipal requirements distilled into a project timeline. Primary sources attached. Reviewed monthly under Regulatory Watch.",
   },
 ];
+
+const stats = [
+  { value: "76", label: "cities scored" },
+  { value: "30+", label: "test-fit presets" },
+  { value: "3", label: "primary countries" },
+  { value: "1", label: "audit gate, no exceptions" },
+];
 ---
 
-<Base title="Advisory — Cloud Minds Partners" description="Site selection, feasibility studies, market intelligence, and regulatory path mapping for data center projects in Latin America.">
-  <SiteHeader active="advisory" />
-
-  <main>
-    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">01 / Advisory</div>
-        <h1 class="display-lg max-w-3xl">Advisory for data center projects in Latin America.</h1>
-        <p class="lede mt-6 max-w-2xl">
+<V4Layout title="Advisory — Cloud Minds Partners" description="Site selection, feasibility studies, market intelligence, and regulatory path mapping for data center projects in Latin America." active="advisory">
+  <!-- ═══ HERO ═══ -->
+  <section class="v4-page-hero has-visual">
+    <div class="v4-page-hero-inner">
+      <div>
+        <span class="v4-eyebrow">01 / Advisory</span>
+        <h1 class="v4-display-xl">
+          Advisory for data center projects in <em class="v4-italic-rust">Latin America</em>.
+        </h1>
+        <p class="v4-lede">
           The work that sits before a project has a CFO and an EPC —
           deciding where, whether, and how, with evidence that holds up in
           front of a board, a regulator, or a bank.
         </p>
+        <div class="v4-btn-row">
+          <a href="/contact" class="v4-btn v4-btn-primary">Engage advisory →</a>
+          <a href="/intelligence" class="v4-btn v4-btn-secondary">See our research</a>
+        </div>
       </div>
-    </section>
+      <div class="v4-tier-visual"><TierRadar /></div>
+    </div>
+  </section>
 
-    <Section eyebrow="Capabilities" title="How we work." compact>
-      <div class="grid md:grid-cols-2 gap-px bg-[var(--color-rule)]">
-        {capabilities.map((c) => (
-          <div class="bg-[var(--color-canvas)] p-9">
-            <div class="caption mb-3">{c.n}</div>
-            <h3 class="display text-xl mb-3">{c.t}</h3>
-            <p class="text-[var(--color-ink-muted)] leading-relaxed">{c.b}</p>
+  <!-- ═══ STATS BAR ═══ -->
+  <section class="v4-section v4-section-darker" style="padding-top:72px; padding-bottom:72px;">
+    <div class="v4-section-inner">
+      <div class="v4-stats" style="grid-template-columns: repeat(4, 1fr); margin: 0; border: none; padding: 0;">
+        {stats.map((s) => (
+          <div>
+            <div class="v4-stat-value">{s.value}</div>
+            <div class="v4-stat-label">{s.label}</div>
           </div>
         ))}
       </div>
-    </Section>
+    </div>
+  </section>
 
-    <Section eyebrow="Method" title="Primary sources first. Always." tone="alt">
-      <div class="max-w-3xl">
-        <p class="text-[var(--color-ink)] leading-relaxed text-lg">
-          Every factual claim in a CMP deliverable traces back to a primary
-          source downloaded and archived in our intelligence repository.
-          We built an audit gate —
-          <code class="text-sm bg-[var(--color-canvas)] px-1.5 py-0.5 border border-[var(--color-rule)]">cmp-memo audit</code>
-          — that blocks publication when citations don't resolve to a
-          verifiable document.
-        </p>
-        <p class="text-[var(--color-ink-muted)] leading-relaxed mt-5">
-          This is unusual in the industry. It is not a marketing line.
-          It is the constraint that shapes what we publish and when.
-        </p>
+  <!-- ═══ CAPABILITIES ═══ -->
+  <section class="v4-section v4-section-light">
+    <div class="v4-section-inner">
+      <span class="v4-eyebrow v4-eyebrow-light">Capabilities</span>
+      <h2 class="v4-display-lg" style="margin-bottom:16px;">How we work.</h2>
+      <p class="v4-lede v4-lede-light" style="margin-bottom:56px;">
+        Four practices, one method: primary sources, audit gate, defensible deliverables.
+      </p>
+      <div class="v4-card-grid-2">
+        {capabilities.map((c) => (
+          <div class="v4-card">
+            <div class="v4-card-num">{c.n}</div>
+            <h3 class="v4-card-name">{c.t}</h3>
+            <p class="v4-card-desc">{c.b}</p>
+          </div>
+        ))}
       </div>
-    </Section>
+    </div>
+  </section>
 
-    <Section tone="ink" compact>
-      <div class="max-w-3xl">
-        <div class="eyebrow mb-4 text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)]">Next</div>
-        <h2 class="display text-2xl md:text-3xl text-[var(--color-canvas)] mb-6">
-          Looking at a specific site or market?
-        </h2>
-        <a
-          href="mailto:info@cloudmindspartners.com"
-          class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
-        >
-          info@cloudmindspartners.com
-        </a>
-      </div>
-    </Section>
-  </main>
+  <!-- ═══ METHOD ═══ -->
+  <section class="v4-section v4-section-dark">
+    <div class="v4-section-narrow">
+      <span class="v4-eyebrow">Method</span>
+      <h2 class="v4-display-lg">Primary sources first. Always.</h2>
+      <p class="v4-lede" style="font-size:20px; max-width:760px;">
+        Every factual claim in a CMP deliverable traces back to a primary
+        source downloaded and archived in our intelligence repository. We
+        built an audit gate —
+        <code style="font-family:var(--font-mono); font-size:15px; background:rgba(245,241,232,0.08); padding:2px 8px; border:1px solid var(--v4-rule-dark); border-radius:4px;">cmp-memo audit</code>
+        — that blocks publication when citations don't resolve to a verifiable document.
+      </p>
+      <p class="v4-lede" style="margin-top:20px; max-width:760px;">
+        This is unusual in the industry. It is not a marketing line. It is
+        the constraint that shapes what we publish and when.
+      </p>
+    </div>
+  </section>
 
-  <SiteFooter />
-</Base>
+  <!-- ═══ BIG CTA ═══ -->
+  <section class="v4-big-cta">
+    <div class="v4-big-cta-inner">
+      <h2 class="v4-display-xl">
+        Looking at a specific <em class="v4-italic-rust">site</em> or <em class="v4-italic-rust">market</em>?
+      </h2>
+      <p class="v4-big-cta-body">
+        Send us the brief. First conversation is on us — we'll tell you
+        whether it's a CMP-shaped problem or not, and what the next step looks like either way.
+      </p>
+      <a href="/contact" class="v4-btn v4-btn-primary v4-btn-large">Start a conversation →</a>
+    </div>
+  </section>
+</V4Layout>

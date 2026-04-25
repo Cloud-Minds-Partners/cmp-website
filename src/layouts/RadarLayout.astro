@@ -1,7 +1,5 @@
 ---
-import Base from "./Base.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
+import V4Layout from "../components/v4/V4Layout.astro";
 
 interface Props {
   week: string;
@@ -19,35 +17,105 @@ const fmtDate = (d: Date) =>
 const hasRange = period_start.valueOf() > 0 && period_end.valueOf() > 0;
 ---
 
-<Base title={`Innovation Radar — Week ${week}`} description={description}>
-  <SiteHeader
-    active="intelligence"
-    subnav={[
-      { href: "/intelligence", label: "Overview" },
-      { href: "/intelligence/memos", label: "Technical Memos" },
-      { href: "/intelligence/radar", label: "Innovation Radar", active: true },
-      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
-    ]}
-  />
+<V4Layout title={`Innovation Radar — Week ${week}`} description={description} active="intelligence">
+  <section class="v4-section v4-section-light" style="padding-top:56px; padding-bottom:0;">
+    <div class="v4-prose-container">
+      <nav style="margin-bottom:32px;">
+        <a href="/intelligence/radar" class="v4-back-link">← All radar entries</a>
+      </nav>
 
-  <main class="max-w-[720px] mx-auto px-6 py-16">
-    <nav class="caption mb-10">
-      <a href="/intelligence/radar" class="no-underline">← All radar entries</a>
-    </nav>
+      <header class="v4-prose-header">
+        <div class="v4-memo-jurisdiction">Innovation Radar</div>
+        <h1 class="v4-display-lg" style="margin-top:16px; margin-bottom:24px;">Week {week}</h1>
+        <div class="v4-memo-byline">
+          {hasRange && <span>{fmtDate(period_start)} — {fmtDate(period_end)}</span>}
+          <span>Author: <strong>{author}</strong></span>
+        </div>
+      </header>
+    </div>
+  </section>
 
-    <header class="mb-12 pb-8 border-b border-[var(--color-rule)]">
-      <div class="caption text-[var(--color-navy)] mb-4">Innovation Radar</div>
-      <h1 class="display text-4xl md:text-5xl leading-tight tracking-tight">Week {week}</h1>
-      <div class="mt-5 flex flex-wrap gap-x-6 gap-y-1 text-sm text-[var(--color-ink-muted)]">
-        {hasRange && <span>{fmtDate(period_start)} — {fmtDate(period_end)}</span>}
-        <span>Author: <span class="text-[var(--color-ink)]">{author}</span></span>
-      </div>
-    </header>
+  <section class="v4-section v4-section-light" style="padding-top:48px;">
+    <div class="v4-prose-container">
+      <article class="v4-prose">
+        <slot />
+      </article>
+    </div>
+  </section>
+</V4Layout>
 
-    <article class="prose prose-lg">
-      <slot />
-    </article>
-  </main>
+<style>
+  .v4-prose-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .v4-back-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-quiet);
+    text-decoration: none;
+  }
+  .v4-back-link:hover { color: var(--color-rust); }
+  .v4-memo-jurisdiction {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-navy);
+  }
+  .v4-prose-header {
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--color-rule);
+    margin-bottom: 48px;
+  }
+  .v4-memo-byline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-ink-muted);
+  }
+  .v4-memo-byline strong { color: var(--color-ink); font-weight: 500; }
 
-  <SiteFooter />
-</Base>
+  .v4-prose {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--color-ink);
+  }
+  .v4-prose :global(h1) { display: none; }
+  .v4-prose :global(h2) {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 500;
+    margin: 48px 0 16px;
+  }
+  .v4-prose :global(h3) {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 32px 0 12px;
+    color: var(--color-ink-muted);
+  }
+  .v4-prose :global(p) { margin: 0 0 20px; }
+  .v4-prose :global(ul), .v4-prose :global(ol) { margin: 0 0 20px; padding-left: 24px; }
+  .v4-prose :global(li) { margin: 6px 0; }
+  .v4-prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-rule);
+    padding: 2px 6px;
+  }
+  .v4-prose :global(a) { color: var(--color-navy); }
+  .v4-prose :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-rule);
+    margin: 40px 0;
+  }
+</style>

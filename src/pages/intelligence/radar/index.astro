@@ -1,8 +1,5 @@
 ---
-import Base from "../../../layouts/Base.astro";
-import SiteHeader from "../../../components/SiteHeader.astro";
-import SiteFooter from "../../../components/SiteFooter.astro";
-import Section from "../../../components/Section.astro";
+import V4Layout from "../../../components/v4/V4Layout.astro";
 import { getCollection } from "astro:content";
 
 const radar = (await getCollection("radar", (r) => r.data.published)).sort((a, b) => {
@@ -15,53 +12,98 @@ const fmt = (d: Date | undefined) =>
   d ? d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "";
 ---
 
-<Base title="Innovation Radar — Cloud Minds Partners">
-  <SiteHeader
-    active="intelligence"
-    subnav={[
-      { href: "/intelligence", label: "Overview" },
-      { href: "/intelligence/memos", label: "Technical Memos" },
-      { href: "/intelligence/radar", label: "Innovation Radar", active: true },
-      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
-    ]}
-  />
+<V4Layout title="Innovation Radar — Cloud Minds Partners" description="Weekly scan of infrastructure, AI, competitive, and regulatory signals for LatAm data center operators." active="intelligence">
+  <!-- ═══ HERO ═══ -->
+  <section class="v4-page-hero">
+    <div class="v4-page-hero-inner">
+      <nav style="margin-bottom:20px;">
+        <a href="/intelligence" class="v4-back-link">← Intelligence</a>
+      </nav>
+      <span class="v4-eyebrow">Weekly · Innovation Radar</span>
+      <h1 class="v4-display-xl" style="max-width:900px;">
+        Weekly signals. <em class="v4-italic-rust">Audited before send.</em>
+      </h1>
+      <p class="v4-lede">
+        Infrastructure, AI, competitive, and regulatory signals worth tracking
+        for LatAm data center operators. Candidates graduate to memos or client conversations.
+      </p>
+    </div>
+  </section>
 
-  <main>
-    <section class="pt-20 pb-12 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Intelligence · Radar</div>
-        <h1 class="display text-4xl md:text-5xl max-w-3xl">Innovation Radar.</h1>
-        <p class="lede mt-5 max-w-2xl">
-          Weekly scan of infrastructure, AI, competitive, and regulatory
-          signals worth tracking for LatAm data center operators.
+  <!-- ═══ RADAR LIST ═══ -->
+  <section class="v4-section v4-section-light">
+    <div class="v4-section-inner">
+      {radar.length === 0 ? (
+        <p style="font-family:var(--font-body); font-size:15px; color:var(--color-ink-muted); font-style:italic;">
+          No radar entries published yet.
         </p>
-      </div>
-    </section>
-
-    <Section compact>
-      {radar.length === 0 && (
-        <p class="text-[var(--color-ink-muted)] italic">No radar entries published yet.</p>
-      )}
-
-      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
-        {radar.map((entry) => (
-          <a href={`/intelligence/radar/${entry.data.week ?? entry.id}`} class="block py-8 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-            <div class="grid md:grid-cols-12 gap-6">
-              <div class="md:col-span-3">
-                <div class="caption text-[var(--color-navy)]">Week {entry.data.week ?? entry.id}</div>
+      ) : (
+        <div class="v4-memo-list">
+          {radar.map((entry) => (
+            <a href={`/intelligence/radar/${entry.data.week ?? entry.id}`} class="v4-memo-row">
+              <div class="v4-memo-meta">
+                <span class="v4-memo-country">Week {entry.data.week ?? entry.id}</span>
                 {entry.data.period_start && entry.data.period_end && (
-                  <div class="caption mt-1">{fmt(entry.data.period_start)} — {fmt(entry.data.period_end)}</div>
+                  <span class="v4-memo-date">{fmt(entry.data.period_start)} — {fmt(entry.data.period_end)}</span>
                 )}
               </div>
-              <div class="md:col-span-9">
-                <h2 class="display text-xl">Week {entry.data.week ?? entry.id}</h2>
+              <div class="v4-memo-body">
+                <h3 class="v4-memo-title">Innovation Radar — Week {entry.data.week ?? entry.id}</h3>
               </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </Section>
-  </main>
+              <span class="v4-card-arrow">Read →</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</V4Layout>
 
-  <SiteFooter />
-</Base>
+<style>
+  .v4-back-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-quiet);
+    text-decoration: none;
+  }
+  .v4-back-link:hover { color: var(--color-rust); }
+
+  .v4-memo-list { border-top: 1px solid var(--color-rule); }
+
+  .v4-memo-row {
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 28px 24px;
+    border-bottom: 1px solid var(--color-rule);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s;
+    margin: 0 -24px;
+  }
+  .v4-memo-row:hover { background: var(--color-surface); }
+
+  .v4-memo-meta { display: flex; flex-direction: column; gap: 6px; }
+  .v4-memo-country {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-navy);
+  }
+  .v4-memo-date {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-ink-muted);
+  }
+  .v4-memo-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-ink);
+    margin: 0;
+    line-height: 1.3;
+  }
+</style>

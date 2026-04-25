@@ -1,156 +1,176 @@
 ---
-import Base from "../layouts/Base.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
-import WeeklyPulseSection from "../components/WeeklyPulseSection.astro";
-import NewsletterSubscribe from "../components/NewsletterSubscribe.astro";
-import NewsletterArchive from "../components/NewsletterArchive.astro";
+import V4Layout from "../components/v4/V4Layout.astro";
+import LatAmGlobe from "../components/v4/LatAmGlobe.astro";
+import TierRadar from "../components/v4/TierRadar.astro";
+import TierIsometric from "../components/v4/TierIsometric.astro";
+import TierNetwork from "../components/v4/TierNetwork.astro";
+import { platforms as allPlatforms } from "../data/platforms";
 
-const platforms = [
-  { name: "Site Selection Tool", desc: "Multi-criteria scoring across 76+ cities in Brazil, Chile, and Mexico.", url: "https://dcplatformcmp.web.app", showHost: true },
-  { name: "Land Intel", desc: "Land price intelligence across 25 active markets.", url: "https://land-price-dashboard.web.app", showHost: true },
-  { name: "TestFit Pro", desc: "Data center test-fit with 30+ reference presets.", url: "https://dc-testfit-pro.web.app", showHost: true },
-  { name: "DC Insights", desc: "Weekly LatAm data center newsletter.", url: "https://dcinsights.web.app", showHost: true },
-  { name: "Project Management Dashboard", desc: "Client project tracking, milestones, and deliverables across active engagements.", url: null, showHost: false },
-  { name: "Financial Model", desc: "DC financial modeling and scenario analysis.", url: null, showHost: false },
+const platforms = allPlatforms.slice(0, 6);
+
+const tiers = [
+  {
+    n: "01",
+    label: "Advisory",
+    title: "Site selection and feasibility, calibrated to LatAm reality.",
+    body: "We work the parts of a data center project that don't fit into a spreadsheet — regulatory path, grid context, environmental licensing, water and zoning. Brazil, Chile, Mexico, and the wider region.",
+    href: "/advisory",
+    cta: "Read advisory",
+    stats: [
+      { value: "76", label: "cities scored" },
+      { value: "3", label: "countries primary" },
+      { value: "30+", label: "test-fit presets" },
+    ],
+    visual: "radar" as const,
+  },
+  {
+    n: "02",
+    label: "Development",
+    title: "Project execution from term sheet to first power.",
+    body: "Owner-side support for sites under contract: permit strategy, land assembly, utility coordination, and construction governance — paced to a realistic timeline against a real grid.",
+    href: "/development",
+    cta: "Read development",
+    stats: [
+      { value: "8+", label: "active projects" },
+      { value: "120MW", label: "in pipeline" },
+      { value: "3", label: "countries deployed" },
+    ],
+    visual: "iso" as const,
+  },
+  {
+    n: "03",
+    label: "Intelligence",
+    title: "Research products and weekly market signal.",
+    body: "Technical memos, regulatory monitoring, and the DC Weekly Pulse — built on primary sources, audited before publication. Never US-centric. Always source-linked.",
+    href: "/intelligence",
+    cta: "Read intelligence",
+    stats: [
+      { value: "Weekly", label: "Pulse cadence" },
+      { value: "Monthly", label: "regulatory watch" },
+      { value: "5pp", label: "memo cap, 3+ sources" },
+    ],
+    visual: "network" as const,
+  },
 ];
 ---
 
-<Base title="Cloud Minds Partners — Data Center Advisory for Latin America">
-  <SiteHeader active="home" />
-
-  <main>
-    <!-- ——— Hero ————————————————————————————————— -->
-    <section class="pt-20 md:pt-28 pb-20 md:pb-28 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-6">Cloud Minds Partners · Est. 2024</div>
-        <h1 class="display-lg max-w-4xl text-[var(--color-ink)]">
-          Data center projects in Latin America,
-          <span class="text-[var(--color-navy)] italic">built on research.</span>
+<V4Layout title="Cloud Minds Partners — Data Center Advisory for Latin America" active="home">
+  <!-- ═══ HERO ═══ -->
+  <section class="v4-page-hero has-visual">
+    <div class="v4-page-hero-inner">
+      <div>
+        <span class="v4-eyebrow">Cloud Minds Partners · Established 2024</span>
+        <h1 class="v4-display-xl">
+          Data center projects in Latin America,<br/>
+          <em class="v4-italic-rust">built on research.</em>
         </h1>
-        <p class="lede mt-8 max-w-2xl">
-          We work with hyperscalers, colocators, developers, and funds on the
-          parts of the project that don't fit neatly into a spreadsheet —
-          site selection, feasibility, regulatory path, and market context.
+        <p class="v4-lede">
+          Advisory, development, and intelligence for hyperscalers,
+          colocators, developers, and funds — focused on Brazil, Chile,
+          and Mexico. We work the parts of a project that don't fit into
+          a spreadsheet.
         </p>
-        <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
-          <a href="/advisory" class="no-underline text-[var(--color-ink)] font-semibold">Advisory →</a>
-          <a href="/development" class="no-underline text-[var(--color-ink)] font-semibold">Development →</a>
-          <a href="/intelligence" class="no-underline text-[var(--color-ink)] font-semibold">Intelligence →</a>
+        <div class="v4-btn-row">
+          <a href="/advisory" class="v4-btn v4-btn-primary">Engage advisory →</a>
+          <a href="/platforms" class="v4-btn v4-btn-secondary">See platforms</a>
         </div>
       </div>
-    </section>
-
-    <!-- ——— 3 Pillars ———————————————————————————— -->
-    <Section eyebrow="What we do" title="Three practices, one thesis.">
-      <div class="grid md:grid-cols-3 gap-0 md:gap-px bg-[var(--color-rule)]">
-        <a href="/advisory" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
-          <div class="caption mb-4">01 / Advisory</div>
-          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Advisory</h3>
-          <p class="text-[var(--color-ink-muted)] leading-relaxed">
-            Site selection, feasibility studies, and market intelligence
-            tailored to the regulatory and infrastructure realities of
-            Brazil, Chile, Mexico, and the wider region.
-          </p>
-          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
-        </a>
-        <a href="/development" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
-          <div class="caption mb-4">02 / Project development</div>
-          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Development</h3>
-          <p class="text-[var(--color-ink-muted)] leading-relaxed">
-            Co-development, technical due diligence, and financial modeling
-            for greenfield and brownfield data center projects — from
-            pre-site through commissioning.
-          </p>
-          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
-        </a>
-        <a href="/intelligence" class="bg-[var(--color-canvas)] p-10 no-underline block group hover:bg-[var(--color-surface)]">
-          <div class="caption mb-4">03 / Intelligence</div>
-          <h3 class="display text-2xl mb-4 text-[var(--color-ink)]">Intelligence</h3>
-          <p class="text-[var(--color-ink-muted)] leading-relaxed">
-            Technical memos, weekly innovation radar, and monthly regulatory
-            digests — plus a set of proprietary platforms used in our own
-            engagements and by clients.
-          </p>
-          <span class="mt-6 inline-block text-[var(--color-navy)] text-sm font-semibold group-hover:text-[var(--color-accent)]">Read more →</span>
-        </a>
+      <div>
+        <LatAmGlobe />
       </div>
-    </Section>
+    </div>
+  </section>
 
-    <!-- ——— Platforms strip ————————————————————————— -->
-    <Section
-      eyebrow="Platforms"
-      title="Purpose-built tools."
-      lede="We productize the parts of our work that survive across engagements. Used internally by our team and available to clients under engagement."
-      tone="alt"
-    >
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--color-rule)]">
-        {platforms.map((p) => {
-          const inner = (
-            <>
-              <h3 class="display text-lg text-[var(--color-ink)] mb-2">{p.name}</h3>
-              <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.desc}</p>
-              {p.url && p.showHost && (
-                <span class="mt-4 inline-block caption text-[var(--color-navy)]">{new URL(p.url).host}</span>
-              )}
-            </>
-          );
-          return p.url ? (
-            <a
-              href={p.url}
-              target="_blank"
-              rel="noopener"
-              class="bg-[var(--color-surface)] p-7 no-underline block hover:bg-[var(--color-surface-alt)] transition-colors"
-            >
-              {inner}
-            </a>
-          ) : (
-            <div class="bg-[var(--color-surface)] p-7">
-              {inner}
+  <!-- ═══ TRUST STRIP ═══ -->
+  <section class="v4-trust">
+    <div class="v4-trust-inner">
+      <span class="v4-trust-label">Working contexts</span>
+      <div class="v4-trust-marquee">
+        <span>Hyperscaler site portfolio</span><span>·</span>
+        <span>Colocator development</span><span>·</span>
+        <span>Investment fund DD</span><span>·</span>
+        <span>Greenfield permitting</span><span>·</span>
+        <span>Brownfield reuse</span><span>·</span>
+        <span>ZPE / REDATA structuring</span><span>·</span>
+        <span>HV interconnection</span><span>·</span>
+        <span>Water-rights sourcing</span><span>·</span>
+        <span>Hyperscaler site portfolio</span><span>·</span>
+        <span>Colocator development</span><span>·</span>
+        <span>Investment fund DD</span><span>·</span>
+        <span>Greenfield permitting</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TIERS ═══ -->
+  {tiers.map((t, idx) => {
+    const isDark = idx % 2 === 0;
+    const sectionClass = isDark ? "v4-section v4-section-dark" : "v4-section v4-section-light";
+    const textRight = !isDark; // light tier has text on right
+    return (
+      <section class={sectionClass}>
+        <div class="v4-section-inner">
+          <div class="v4-tier-grid">
+            <div class={textRight ? "v4-tier-text-right" : ""}>
+              <div class="v4-tier-num">{t.n} / {t.label}</div>
+              <h2 class="v4-display-lg">{t.title}</h2>
+              <p class={isDark ? "v4-lede" : "v4-lede v4-lede-light"}>{t.body}</p>
+              <div class="v4-stats">
+                {t.stats.map((s) => (
+                  <div>
+                    <div class="v4-stat-value">{s.value}</div>
+                    <div class="v4-stat-label">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+              <a href={t.href} class={isDark ? "v4-btn v4-btn-primary" : "v4-btn v4-btn-primary-dark"}>
+                {t.cta} →
+              </a>
             </div>
-          );
-        })}
-      </div>
-    </Section>
-
-    <!-- ——— Weekly Pulse ———————————————————————————— -->
-    <Section>
-      <WeeklyPulseSection />
-    </Section>
-
-    <!-- ——— Newsletter ——————————————————————————————— -->
-    <Section tone="alt">
-      <div class="grid md:grid-cols-12 gap-12">
-        <div class="md:col-span-5">
-          <NewsletterSubscribe />
+            <div class="v4-tier-visual">
+              {t.visual === "radar" && <TierRadar />}
+              {t.visual === "iso" && <TierIsometric />}
+              {t.visual === "network" && <TierNetwork />}
+            </div>
+          </div>
         </div>
-        <div class="md:col-span-7">
-          <NewsletterArchive />
-        </div>
-      </div>
-    </Section>
+      </section>
+    );
+  })}
 
-    <!-- ——— Contact ————————————————————————————— -->
-    <Section tone="ink" compact>
-      <div class="grid md:grid-cols-12 gap-8 items-end">
-        <div class="md:col-span-8">
-          <div class="eyebrow text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)] mb-4">Engagement</div>
-          <h2 class="display text-3xl md:text-4xl max-w-2xl text-[var(--color-canvas)]">
-            Exploring a site, a feasibility question, or a regulatory path in Latin America?
-          </h2>
-        </div>
-        <div class="md:col-span-4 md:text-right">
-          <a
-            href="mailto:info@cloudmindspartners.com"
-            class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
-          >
-            info@cloudmindspartners.com
+  <!-- ═══ PLATFORMS ═══ -->
+  <section class="v4-section v4-section-light">
+    <div class="v4-section-inner">
+      <span class="v4-eyebrow v4-eyebrow-light">Platforms</span>
+      <h2 class="v4-display-lg" style="margin-bottom:16px;">Six tools we ship and maintain.</h2>
+      <p class="v4-lede v4-lede-light" style="margin-bottom:56px;">
+        Built for the work we do. Available to clients on engagement.
+      </p>
+      <div class="v4-card-grid">
+        {platforms.map((p, i) => (
+          <a href={p.url || "/platforms"} class="v4-card">
+            <div class="v4-card-num">{String(i + 1).padStart(2, "0")} / {p.tag.toUpperCase()}</div>
+            <h3 class="v4-card-name">{p.name}</h3>
+            <p class="v4-card-desc">{p.summary}</p>
+            <span class="v4-card-arrow">→</span>
           </a>
-        </div>
+        ))}
       </div>
-    </Section>
-  </main>
+    </div>
+  </section>
 
-  <SiteFooter />
-</Base>
+  <!-- ═══ BIG CTA ═══ -->
+  <section class="v4-big-cta">
+    <div class="v4-big-cta-inner">
+      <h2 class="v4-display-xl">
+        Have a site, deal, or thesis<br/>
+        <em class="v4-italic-rust">that needs unpacking?</em>
+      </h2>
+      <p class="v4-big-cta-body">
+        We engage on retainer, project, or success-fee depending on scope.
+        First conversation is on us.
+      </p>
+      <a href="/contact" class="v4-btn v4-btn-primary v4-btn-large">Start a conversation →</a>
+    </div>
+  </section>
+</V4Layout>

@@ -1,8 +1,5 @@
 ---
-import Base from "../layouts/Base.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
+import V4Layout from "../components/v4/V4Layout.astro";
 import { platforms } from "../data/platforms";
 
 const statusLabel: Record<string, string> = {
@@ -12,43 +9,52 @@ const statusLabel: Record<string, string> = {
 };
 ---
 
-<Base title="Platforms — Cloud Minds Partners" description="CMP proprietary platforms for data center site selection, market pricing, capacity modelling, and project tracking.">
-  <SiteHeader active="platforms" />
+<V4Layout title="Platforms — Cloud Minds Partners" description="CMP proprietary platforms for data center site selection, market pricing, capacity modelling, and project tracking." active="platforms">
+  <!-- ═══ HERO ═══ -->
+  <section class="v4-page-hero">
+    <div class="v4-page-hero-inner">
+      <span class="v4-eyebrow">Platforms</span>
+      <h1 class="v4-display-xl" style="max-width:1000px;">
+        We productize <em class="v4-italic-rust">what survives</em><br/>across engagements.
+      </h1>
+      <p class="v4-lede">
+        Our platforms are the tools we use on every project — not a separate business line.
+        They are available to clients under engagement and become deliverables in their own right.
+      </p>
+    </div>
+  </section>
 
-  <main>
-    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Platforms</div>
-        <h1 class="display-lg max-w-3xl">We productize what survives across engagements.</h1>
-        <p class="lede mt-6 max-w-2xl">
-          Our platforms are the tools we use on every project — not a
-          separate business line. They are available to clients under
-          engagement and become deliverables in their own right.
-        </p>
-      </div>
-    </section>
-
-    <Section compact>
-      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
-        {platforms.map((p) => (
-          <a href={`/platforms/${p.slug}`} class="block py-10 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-            <div class="grid md:grid-cols-12 gap-6">
-              <div class="md:col-span-3">
-                <div class="caption mb-2">{p.tag}</div>
-                {p.url && p.showHost && <div class="caption text-[var(--color-navy)]">{new URL(p.url).host}</div>}
-                <div class="caption mt-1 text-[var(--color-ink-quiet)]">{statusLabel[p.status]}</div>
-              </div>
-              <div class="md:col-span-9">
-                <h2 class="display text-2xl mb-3">{p.name}</h2>
-                <p class="text-[var(--color-ink)] leading-relaxed">{p.summary}</p>
-                <span class="inline-block mt-5 text-sm font-semibold text-[var(--color-navy)]">Learn more →</span>
-              </div>
+  <!-- ═══ PLATFORM GRID ═══ -->
+  <section class="v4-section v4-section-light">
+    <div class="v4-section-inner">
+      <div class="v4-card-grid">
+        {platforms.map((p, i) => (
+          <a href={`/platforms/${p.slug}`} class="v4-card">
+            <div class="v4-card-num">
+              {String(i+1).padStart(2,"0")} · {p.tag.toUpperCase()} · {statusLabel[p.status]}
             </div>
+            <h3 class="v4-card-name">{p.name}</h3>
+            <p class="v4-card-desc">{p.summary}</p>
+            {p.url && p.showHost && (
+              <span style="font-family:var(--font-mono); font-size:12px; color:var(--color-navy); margin-top:14px;">{new URL(p.url).host}</span>
+            )}
+            <span class="v4-card-arrow">Learn more →</span>
           </a>
         ))}
       </div>
-    </Section>
-  </main>
+    </div>
+  </section>
 
-  <SiteFooter />
-</Base>
+  <!-- ═══ BIG CTA ═══ -->
+  <section class="v4-big-cta">
+    <div class="v4-big-cta-inner">
+      <h2 class="v4-display-xl">
+        Need access for a <em class="v4-italic-rust">specific deal</em>?
+      </h2>
+      <p class="v4-big-cta-body">
+        Platform access is part of every CMP engagement. Reach out to discuss scope and timing.
+      </p>
+      <a href="/contact" class="v4-btn v4-btn-primary v4-btn-large">Talk to us →</a>
+    </div>
+  </section>
+</V4Layout>

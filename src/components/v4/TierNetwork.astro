@@ -1,0 +1,109 @@
+---
+// Knowledge graph — Intelligence tier visual.
+// Central "Pulse" hub with satellite nodes (Memo, Radar, Regwatch, Source, Region tags),
+// flowing data lines inward, animated emission.
+const sats = [
+  { angle: 0,    label: "Memo",     accent: true  },
+  { angle: 36,   label: "Radar",    accent: false },
+  { angle: 72,   label: "Regwatch", accent: true  },
+  { angle: 108,  label: "Source",   accent: false },
+  { angle: 144,  label: "BR",       accent: false },
+  { angle: 180,  label: "CL",       accent: false },
+  { angle: 216,  label: "MX",       accent: false },
+  { angle: 252,  label: "Pulse",    accent: true  },
+  { angle: 288,  label: "Brief",    accent: false },
+  { angle: 324,  label: "Audit",    accent: false },
+];
+const r = 90;
+function pos(angle: number) {
+  const a = (angle - 90) * Math.PI / 180;
+  return [Math.cos(a) * r, Math.sin(a) * r];
+}
+---
+
+<svg viewBox="-130 -130 260 260" class="tier-svg" aria-hidden="true">
+  <defs>
+    <radialGradient id="net-glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="rgba(193,71,42,0.20)"/>
+      <stop offset="60%" stop-color="rgba(15,43,92,0.10)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <filter id="glow-blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <circle cx="0" cy="0" r="120" fill="url(#net-glow)"/>
+
+  <!-- Concentric guide rings -->
+  <circle cx="0" cy="0" r="40" fill="none" stroke="rgba(245,241,232,0.08)" stroke-width="0.5"/>
+  <circle cx="0" cy="0" r="65" fill="none" stroke="rgba(245,241,232,0.06)" stroke-width="0.5" stroke-dasharray="2 4"/>
+  <circle cx="0" cy="0" r="90" fill="none" stroke="rgba(245,241,232,0.10)" stroke-width="0.5"/>
+
+  <!-- Connection lines from satellites to center, animated dash -->
+  {sats.map((s, i) => {
+    const [x, y] = pos(s.angle);
+    return (
+      <line x1={x} y1={y} x2="0" y2="0" stroke={s.accent ? "rgba(193,71,42,0.5)" : "rgba(29,66,137,0.45)"} stroke-width="1" stroke-dasharray="3 4">
+        <animate attributeName="stroke-dashoffset" from="0" to="-7" dur={`${1.5 + i * 0.13}s`} repeatCount="indefinite"/>
+      </line>
+    );
+  })}
+
+  <!-- Inter-satellite connections (web feel) -->
+  {[[0,2],[2,4],[4,6],[6,8],[1,3],[3,5],[5,7],[7,9],[0,5],[2,7]].map(([a, b]) => {
+    const [x1, y1] = pos(sats[a].angle);
+    const [x2, y2] = pos(sats[b].angle);
+    return (
+      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(245,241,232,0.06)" stroke-width="0.5"/>
+    );
+  })}
+
+  <!-- Satellite nodes -->
+  {sats.map((s, i) => {
+    const [x, y] = pos(s.angle);
+    const fill = s.accent ? "#C1472A" : "#1D4289";
+    return (
+      <g>
+        <circle cx={x} cy={y} r="9" fill="rgba(10,20,40,0.9)" stroke={fill} stroke-width="1.5"/>
+        <circle cx={x} cy={y} r="3.5" fill={fill}>
+          <animate attributeName="r" values="3.5;5;3.5" dur={`${2.5 + i * 0.2}s`} repeatCount="indefinite" begin={`${i * 0.15}s`}/>
+        </circle>
+        <text x={x} y={y + 22} fill="rgba(245,241,232,0.75)" font-size="8" font-family="Inter, sans-serif" text-anchor="middle" letter-spacing="0.06em">
+          {s.label.toUpperCase()}
+        </text>
+      </g>
+    );
+  })}
+
+  <!-- Center hub -->
+  <g filter="url(#glow-blur)">
+    <circle cx="0" cy="0" r="22" fill="rgba(193,71,42,0.14)" stroke="#C1472A" stroke-width="1"/>
+    <circle cx="0" cy="0" r="12" fill="#0A1428" stroke="#C1472A" stroke-width="1.2"/>
+    <circle cx="0" cy="0" r="5" fill="#C1472A">
+      <animate attributeName="r" values="5;7;5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  <text x="0" y="3" fill="#F5F1E8" font-size="9" font-family="Inter, sans-serif" font-weight="600" text-anchor="middle" letter-spacing="0.1em">
+    HUB
+  </text>
+
+  <!-- Outer pulse rings (slow) -->
+  <circle cx="0" cy="0" r="22" fill="none" stroke="#C1472A" stroke-width="0.8" opacity="0.5">
+    <animate attributeName="r" from="22" to="110" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" from="0.6" to="0" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="0" cy="0" r="22" fill="none" stroke="#C1472A" stroke-width="0.8" opacity="0.5">
+    <animate attributeName="r" from="22" to="110" dur="4s" begin="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" from="0.6" to="0" dur="4s" begin="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
+
+<style>
+  .tier-svg {
+    width: 100%; height: 100%;
+    max-width: 520px; max-height: 520px;
+    display: block; margin: 0 auto;
+  }
+</style>
