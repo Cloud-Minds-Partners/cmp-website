@@ -44,8 +44,10 @@ created: 2026-05-16
 |--------|----------|-----------|-------------------|-------------|--------|
 | FOUND-01 | `src/assets/photos/` contains 26 `.jpg` files | shell | `test "$(ls src/assets/photos/*.jpg 2>/dev/null \| wc -l)" -eq 26` | ❌ W0 | ⬜ |
 | FOUND-01 | Built HTML contains `.webp` URLs (Astro Image optimized) | shell | `grep -qr "\.webp" dist/ --include="*.html"` | ❌ W0 | ⬜ |
+| FOUND-01 | Built HTML contains `srcset=` attributes (responsive sizes) | shell | `grep -qr 'srcset=' dist/ --include="*.html"` | ❌ W0 | ⬜ |
 | FOUND-01 | No Unsplash CDN URLs in built HTML | shell | `! grep -qr "images.unsplash.com" dist/ --include="*.html"` | ❌ W0 | ⬜ |
 | FOUND-02 | `global.css` contains `--color-navy-0: #050E1D` (mock-26 token) | shell | `grep -q "\-\-color-navy-0: #050E1D" src/styles/global.css` | ❌ W0 | ⬜ |
+| FOUND-02 | `global.css` contains `--color-blue: #2D6BE4` (brand blue token) | shell | `grep -q "\-\-color-blue: #2D6BE4" src/styles/global.css` | ❌ W0 | ⬜ |
 | FOUND-02 | `global.css` does NOT contain v4 dark token `--color-bg-base` | shell | `! grep -q "\-\-color-bg-base" src/styles/global.css` | ❌ W0 | ⬜ |
 | FOUND-02 | Built CSS contains `--color-navy-0` | shell | `grep -qr "\-\-color-navy-0" dist/ --include="*.css"` | ❌ W0 | ⬜ |
 | FOUND-03 | `@fontsource-variable/space-grotesk` installed | shell | `test -d node_modules/@fontsource-variable/space-grotesk` | ❌ W0 | ⬜ |
@@ -59,9 +61,11 @@ created: 2026-05-16
 | I18N-01 | Build output contains `dist/pt/index.html` | shell | `test -f dist/pt/index.html` | ❌ W0 | ⬜ |
 | I18N-01 | Build output contains `dist/es/index.html` | shell | `test -f dist/es/index.html` | ❌ W0 | ⬜ |
 | I18N-01 | EN index at `dist/index.html` (no `/en/` prefix) | shell | `test -f dist/index.html && ! test -d dist/en/` | ❌ W0 | ⬜ |
-| I18N-02 | `src/i18n/en.json`, `pt.json`, `es.json` exist | shell | `test -f src/i18n/en.json && test -f src/i18n/pt.json && test -f src/i18n/es.json` | ❌ W0 | ⬜ |
+| I18N-02 | `src/i18n/en.json`, `pt.json`, `es.json` all exist | shell | `test -f src/i18n/en.json && test -f src/i18n/pt.json && test -f src/i18n/es.json` | ❌ W0 | ⬜ |
 | I18N-02 | `src/i18n/utils.ts` exports `getLangFromUrl` + `useTranslations` | shell | `grep -q "getLangFromUrl" src/i18n/utils.ts && grep -q "useTranslations" src/i18n/utils.ts` | ❌ W0 | ⬜ |
 | I18N-02 | `en.json` contains required nav keys | shell | `node -e "const t=require('./src/i18n/en.json'); ['nav.home','nav.advisory','cta.talk-to-us'].forEach(k=>{if(!t[k])throw new Error('Missing: '+k)})"` | ❌ W0 | ⬜ |
+
+**Shell check count:** 21 rows above marked `shell` (FOUND-01=4, FOUND-02=4, FOUND-03=4, FOUND-04=2, I18N-01=4, I18N-02=3). The Playwright row (FOUND-03 runtime) is separate and does NOT count toward the 21.
 
 *Status legend: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -88,7 +92,7 @@ created: 2026-05-16
 ## Phase Gate
 
 Phase 1 is complete when:
-1. ✅ All 20 automated checks in the table above pass (`bash scripts/validate-phase-1.sh` exits 0)
+1. ✅ All 21 automated shell checks in the table above pass (`bash scripts/validate-phase-1.sh` exits 0)
 2. ✅ Playwright network test passes (zero googleapis requests on home load)
 3. ✅ `npm run build` succeeds with zero TypeScript errors
 4. ✅ Both manual verifications pass eyeball check
@@ -96,4 +100,4 @@ Phase 1 is complete when:
 
 ---
 
-*Validation strategy version: 1.0 · Phase 01-foundation · 2026-05-16*
+*Validation strategy version: 1.1 · Phase 01-foundation · 2026-05-16 · Updated: srcset check added (FOUND-01), --color-blue check added (FOUND-02), I18N-02 checks compounded*
