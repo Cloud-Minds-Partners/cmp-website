@@ -30,7 +30,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Tailwind 4 config has `--color-cmp-blue: #2D6BE4`, navy, black, and cream tokens active — any `.astro` file can use them without a CSS import
   4. Navigating to `/pt/` and `/es/` returns 200 (or correct Astro i18n redirect) rather than 404
   5. `src/i18n/{en,pt,es}.json` exist with nav, CTA, footer, and common label keys — even if values are stub strings
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Test infrastructure: validate-phase-1.sh, playwright.config.ts, network spec
+- [ ] 01-02-PLAN.md — Fonts + design tokens + base styles: @fontsource-variable, @theme replacement, Google Fonts removal
+- [ ] 01-03-PLAN.md — Image pipeline: 26 photos downloaded to src/assets/photos/, INVENTORY.md, Astro Image WebP verification
+- [ ] 01-04-PLAN.md — i18n scaffold: astro.config.mjs i18n block, src/i18n/ translation files, PT/ES stub pages
 
 ### Phase 2: Components
 **Goal**: Every shared UI component from mock-26 is implemented, tested in isolation, and ready for page composition. Content collection schemas are refactored with the language field so pages can render locale-aware content.
@@ -86,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/4 | Not started | - |
 | 2. Components | 0/TBD | Not started | - |
 | 3. Pages | 0/TBD | Not started | - |
 | 4. Quality Gate | 0/TBD | Not started | - |
