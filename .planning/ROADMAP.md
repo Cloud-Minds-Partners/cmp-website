@@ -27,7 +27,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Success Criteria** (what must be TRUE):
   1. `npm run dev` renders a page with Space Grotesk and DM Sans loaded from local @fontsource packages (no Google Fonts network requests visible in DevTools)
   2. All 26 mock-26 photos exist at `src/assets/` and `<Image>` outputs WebP with responsive srcset in the build
-  3. Tailwind 4 config has `--color-cmp-blue: #2D6BE4`, navy, black, and cream tokens active — any `.astro` file can use them without a CSS import
+  3. Tailwind 4 config has `--color-blue: #2D6BE4`, navy, black, and cream tokens active — any `.astro` file can use them without a CSS import
   4. Navigating to `/pt/` and `/es/` returns 200 (or correct Astro i18n redirect) rather than 404
   5. `src/i18n/{en,pt,es}.json` exist with nav, CTA, footer, and common label keys — even if values are stub strings
 **Plans**: 4 plans

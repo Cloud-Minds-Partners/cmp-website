@@ -46,8 +46,9 @@ When Phase 1 is done, an empty Astro page can pull tokens/fonts/i18n strings wit
 
 ### Fonts
 
-- **Packages**: `@fontsource/space-grotesk` (weights 400, 500, 600, 700) + `@fontsource/dm-sans` (weights 400, 500, 700)
-- **Loading**: Import in `src/styles/global.css` with `@import "@fontsource/space-grotesk/400.css";` etc.
+- **Packages**: `@fontsource-variable/space-grotesk` + `@fontsource-variable/dm-sans` (variable fonts — single file covers all weights 300-700, smaller payload than per-weight static fonts)
+- **Loading**: Import in `src/styles/global.css` with `@import "@fontsource-variable/space-grotesk";` etc.
+- **Font family naming**: Variable fonts register as `"Space Grotesk Variable"` and `"DM Sans Variable"` — this exact string must be used in `@theme` font-family tokens, not `"Space Grotesk"`
 - **font-display**: Force `swap` to prevent FOIT (Flash of Invisible Text)
 - **Font CSS variables**: `--font-display: "Space Grotesk", ...fallbacks` + `--font-body: "DM Sans", ...fallbacks` — referenced from Tailwind via `font-display` / `font-body` utilities
 - **No mono font**: Mock-26 explicitly removes typewriter labels (per CURRENT.md). Do NOT add JetBrains Mono or similar.
