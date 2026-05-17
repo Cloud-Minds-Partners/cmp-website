@@ -22,11 +22,11 @@ echo "Phase 1 — Foundation validation"
 echo "================================"
 
 # ---------------------------------------------------------------------------
-# FOUND-01 (4 checks): Local photos — 26 JPGs, WebP output, srcset, no Unsplash CDN
+# FOUND-01 (4 checks): Local photos — 27 JPGs, WebP output, srcset, no Unsplash CDN
 # ---------------------------------------------------------------------------
 echo ""
 echo "FOUND-01: Image pipeline"
-check test "$(ls src/assets/photos/*.jpg 2>/dev/null | wc -l | tr -d ' ')" -eq 26
+check test "$(ls src/assets/photos/*.jpg 2>/dev/null | wc -l | tr -d ' ')" -eq 27
 check bash -c 'grep -qr "\.webp" dist/ --include="*.html"'
 check bash -c 'grep -qr "srcset=" dist/ --include="*.html"'
 check bash -c '! grep -qr "images.unsplash.com" dist/ --include="*.html"'
