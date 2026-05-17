@@ -33,8 +33,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Test infrastructure: validate-phase-1.sh, playwright.config.ts, network spec
-- [ ] 01-02-PLAN.md — Fonts + design tokens + base styles: @fontsource-variable, @theme replacement, Google Fonts removal
+- [x] 01-01-PLAN.md — Test infrastructure: validate-phase-1.sh, playwright.config.ts, network spec
+- [x] 01-02-PLAN.md — Fonts + design tokens + base styles: @fontsource-variable, @theme replacement, Google Fonts removal
 - [ ] 01-03-PLAN.md — Image pipeline: 26 photos downloaded to src/assets/photos/, INVENTORY.md, Astro Image WebP verification
 - [ ] 01-04-PLAN.md — i18n scaffold: astro.config.mjs i18n block, src/i18n/ translation files, PT/ES stub pages
 
@@ -92,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/4 | Not started | - |
+| 1. Foundation | 2/4 | In progress | - |
 | 2. Components | 0/TBD | Not started | - |
 | 3. Pages | 0/TBD | Not started | - |
 | 4. Quality Gate | 0/TBD | Not started | - |
