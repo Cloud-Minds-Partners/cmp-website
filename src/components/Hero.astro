@@ -1,0 +1,355 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface SlideImage {
+  src: ImageMetadata;
+  alt: string;
+}
+
+interface ActionButton {
+  label: string;
+  href: string;
+  variant: 'primary' | 'outline';
+}
+
+interface Props {
+  variant: 'home' | 'page';
+  // home variant props
+  slides?: SlideImage[];
+  // page variant props
+  image?: ImageMetadata | string;
+  eyebrow?: string;
+  live?: boolean;           // pulsing blue dot on eyebrow
+  // shared
+  heading: string;
+  subheading?: string;
+  actions?: ActionButton[];
+  class?: string;
+}
+
+const {
+  variant,
+  slides,
+  image,
+  eyebrow,
+  live = false,
+  heading,
+  subheading,
+  actions,
+  class: className = '',
+} = Astro.props;
+---
+
+{variant === 'home' ? (
+  <section class={`home-hero ${className}`} data-variant="home">
+    <!-- Background slides layer (z-index -3) -->
+    <div class="slides-layer" aria-hidden="true">
+      {slides?.map((slide, i) => (
+        <div class="slide" style={`animation-delay: ${i * 8}s`}>
+          <Image
+            src={slide.src}
+            alt={slide.alt}
+            widths={[1280, 1920]}
+            sizes="100vw"
+            format="webp"
+          />
+        </div>
+      ))}
+    </div>
+    <!-- Grid texture layer (z-index -2) -->
+    <div class="grid-texture" aria-hidden="true"></div>
+    <!-- Overlay gradients (z-index -1) -->
+    <div class="overlay" aria-hidden="true"></div>
+    <!-- Content -->
+    <div class="hero-content">
+      <h1>{heading}</h1>
+      {subheading && <p class="subhead">{subheading}</p>}
+      {actions && actions.length > 0 && (
+        <div class="actions">
+          {actions.map(action => (
+            <a href={action.href} class={`btn btn-${action.variant}`}>{action.label}</a>
+          ))}
+        </div>
+      )}
+    </div>
+    <!-- Progress indicators -->
+    <div class="progress-tracks" aria-hidden="true">
+      {slides?.map((_, i) => (
+        <div class="track">
+          <div class="fill" style={`animation-delay: ${i * 8 - 16}s`}></div>
+        </div>
+      ))}
+    </div>
+  </section>
+) : (
+  <section class={`page-hero ${className}`} data-variant="page">
+    <!-- Ken Burns background -->
+    {image && (
+      <div class="page-bg" aria-hidden="true">
+        <Image
+          src={image as ImageMetadata}
+          alt=""
+          class="page-bg-img"
+          widths={[1280, 1920]}
+          sizes="100vw"
+          format="webp"
+        />
+      </div>
+    )}
+    <div class="overlay" aria-hidden="true"></div>
+    <!-- Content -->
+    <div class="hero-content">
+      {eyebrow && (
+        <p class={`eyebrow${live ? ' live' : ''}`}>{eyebrow}</p>
+      )}
+      <h1>{heading}</h1>
+      {subheading && <p class="subhead">{subheading}</p>}
+      {actions && actions.length > 0 && (
+        <div class="actions">
+          {actions.map(action => (
+            <a href={action.href} class={`btn btn-${action.variant}`}>{action.label}</a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  /* ——— HOME HERO ——————————————————————————————— */
+  .home-hero {
+    position: relative;
+    min-height: calc(100vh - 72px);
+    padding: 80px 0;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    padding: 0 clamp(32px, 5vw, 96px);
+  }
+
+  .home-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.6vw, 60px);
+    line-height: 1.08;
+    font-weight: 600;
+    color: var(--color-cream-0);
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+  }
+
+  .subhead {
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 540px;
+    color: var(--color-cream-1);
+    margin: 0 0 32px;
+  }
+
+  /* Slides */
+  .slides-layer {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation: slideShow 24s linear infinite;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @keyframes slideShow {
+    0%   { opacity: 0; transform: scale(1.0); }
+    4%   { opacity: 1; }
+    29%  { opacity: 1; }
+    34%  { opacity: 0; transform: scale(1.08); }
+    100% { opacity: 0; transform: scale(1.08); }
+  }
+
+  /* Grid texture */
+  .grid-texture {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      linear-gradient(rgba(74, 143, 231, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74, 143, 231, 0.04) 1px, transparent 1px);
+    background-size: 88px 88px;
+    -webkit-mask-image: linear-gradient(180deg, transparent, black 25%, black 70%, transparent);
+    mask-image: linear-gradient(180deg, transparent, black 25%, black 70%, transparent);
+  }
+
+  /* Home overlay */
+  .home-hero .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 50% 40% at 0% 70%, rgba(74, 143, 231, 0.32), transparent 60%),
+      linear-gradient(180deg, rgba(5, 14, 29, 0.05) 0%, rgba(5, 14, 29, 0.22) 50%, rgba(5, 14, 29, 0.78) 100%),
+      linear-gradient(90deg, rgba(5, 14, 29, 0.52) 0%, rgba(5, 14, 29, 0.10) 55%, rgba(5, 14, 29, 0.0) 100%);
+  }
+
+  /* Progress tracks */
+  .progress-tracks {
+    position: absolute;
+    bottom: 32px;
+    left: clamp(32px, 5vw, 96px);
+    display: flex;
+    gap: 8px;
+    z-index: 1;
+  }
+
+  .track {
+    width: 56px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+  }
+
+  .fill {
+    height: 100%;
+    background: var(--color-cream-0);
+    animation: fillTrack 8s linear infinite;
+    transform-origin: left;
+  }
+
+  @keyframes fillTrack {
+    0%   { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+  }
+
+  /* ——— PAGE HERO ——————————————————————————————— */
+  .page-hero {
+    position: relative;
+    min-height: 66vh;
+    padding: 96px 0 80px;
+    overflow: hidden;
+  }
+
+  .page-hero .hero-content {
+    max-width: 620px;
+    padding: 0 clamp(32px, 5vw, 96px);
+  }
+
+  .page-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 4.2vw, 56px);
+    line-height: 1.08;
+    font-weight: 600;
+    color: var(--color-cream-0);
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+  }
+
+  .page-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+  }
+
+  .page-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.22) contrast(1.06) brightness(1.04);
+    animation: heroKen 18s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroKen {
+    0%   { transform: scale(1.0) translate(0, 0); }
+    100% { transform: scale(1.09) translate(-1.4%, -1.2%); }
+  }
+
+  /* Page overlay */
+  .page-hero .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 55% 45% at 0% 70%, rgba(74, 143, 231, 0.24), transparent 60%),
+      linear-gradient(180deg, rgba(5, 14, 29, 0.10) 0%, rgba(5, 14, 29, 0.25) 55%, rgba(5, 14, 29, 0.82) 100%),
+      linear-gradient(90deg, rgba(5, 14, 29, 0.55) 0%, rgba(5, 14, 29, 0.12) 55%, rgba(5, 14, 29, 0.02) 100%);
+  }
+
+  /* Eyebrow */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blue-bright);
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .eyebrow.live::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-blue-bright);
+    animation: eyebrow-pulse 2s ease-out infinite;
+  }
+
+  @keyframes eyebrow-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(74, 143, 231, 0.65); }
+    70%  { box-shadow: 0 0 0 12px rgba(74, 143, 231, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 143, 231, 0); }
+  }
+
+  /* ——— SHARED: Action buttons ———————————————— */
+  .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background: var(--color-blue);
+    color: var(--color-cream-0);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(250, 251, 253, 0.25);
+    color: var(--color-cream-0);
+  }
+
+  .btn-outline:hover {
+    border-color: rgba(250, 251, 253, 0.5);
+  }
+</style>
