@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+stopped_at: Completed 01-04-PLAN.md (i18n routing scaffold — astro config + translation files + locale stubs)
+last_updated: "2026-05-17T16:05:08.751Z"
+last_activity: "2026-05-17 — Plan 01-02 complete (Design tokens + fonts: mock-26 @theme block, fontsource variable fonts, Base.astro Google Fonts removed)"
+progress:
+  total_phases: 5
+  completed_phases: 0
+  total_plans: 4
+  completed_plans: 3
+  percent: 75
+---
+
 # Project State
 
 ## Project Reference
@@ -14,7 +30,7 @@ Plan: 2 of 4 in current phase
 Status: In progress
 Last activity: 2026-05-17 — Plan 01-02 complete (Design tokens + fonts: mock-26 @theme block, fontsource variable fonts, Base.astro Google Fonts removed)
 
-Progress: [██░░░░░░░░] 10%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -34,6 +50,7 @@ Progress: [██░░░░░░░░] 10%
 - Trend: Stable ~3 min/plan
 
 *Updated after each plan completion*
+| Phase 01-foundation P01-04 | 3 | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -52,6 +69,9 @@ Recent decisions affecting current work:
 - 01-02: Variable font string must be "Space Grotesk Variable" not "Space Grotesk" for @fontsource-variable packages
 - 01-02: No --font-mono token — mock-26 v0.8 removed typewriter labels
 - 01-02: lang prop in Base.astro is simple string passthrough, no i18n helpers at layout layer
+- [Phase 01-foundation]: prefixDefaultLocale: false — EN at /, not /en/ (locked in CONTEXT.md)
+- [Phase 01-foundation]: Flat JSON keys only for i18n (nav.home, cta.talk-to-us) — no YAML, no nested objects, no i18next library
+- [Phase 01-foundation]: PT/ES stubs with EN values in Phase 1 — real translations deferred to Phase 3
 
 ### Pending Todos
 
@@ -65,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-17
-Stopped at: Completed 01-02-PLAN.md (Design tokens + fonts — mock-26 @theme, fontsource variable fonts, Base.astro cleaned)
+Last session: 2026-05-17T16:05:08.749Z
+Stopped at: Completed 01-04-PLAN.md (i18n routing scaffold — astro config + translation files + locale stubs)
 Resume file: None
