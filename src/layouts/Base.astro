@@ -6,12 +6,14 @@ interface Props {
   title: string;
   description?: string;
   canonical?: string;
+  lang?: string;
 }
 
 const {
   title,
   description = "Cloud Minds Partners — data center advisory, project development, and intelligence for Latin America.",
   canonical,
+  lang = "en",
 } = Astro.props;
 
 const fullTitle = title.includes("Cloud Minds")
@@ -20,7 +22,7 @@ const fullTitle = title.includes("Cloud Minds")
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,13 +37,6 @@ const fullTitle = title.includes("Cloud Minds")
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Cloud Minds Partners" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
 
     <title>{fullTitle}</title>
   </head>
