@@ -1,0 +1,189 @@
+---
+import Base from '../../layouts/Base.astro';
+import SEO from '../../components/SEO.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Hero from '../../components/Hero.astro';
+import CapabilityCard from '../../components/CapabilityCard.astro';
+import NewsletterSubscribe from '../../components/NewsletterSubscribe.astro';
+import WhatsAppFab from '../../components/WhatsAppFab.astro';
+import LangSwitcher from '../../components/LangSwitcher.astro';
+import SocialLinks from '../../components/SocialLinks.astro';
+
+// Hero photos (verified against src/assets/photos/INVENTORY.md)
+import heroSP from '../../assets/photos/hero-sp-marginal.jpg';
+import heroSantiago from '../../assets/photos/hero-santiago.jpg';
+import heroCDMX from '../../assets/photos/hero-cdmx.jpg';
+
+// Card photos (verified against src/assets/photos/INVENTORY.md)
+import cardSiteSelection from '../../assets/photos/card-home-site-selection.jpg';
+import cardGridIntel from '../../assets/photos/card-home-grid-intel.jpg';
+import cardAdvisory from '../../assets/photos/card-adv-market-intel.jpg';
+
+// PROD guard: in production builds import.meta.env.PROD is true - render nothing useful
+const isProd = import.meta.env.PROD;
+---
+
+{isProd ? (
+  <html lang="en"><head><meta charset="utf-8" /><meta http-equiv="refresh" content="0;url=/404" /></head><body></body></html>
+) : (
+<Base title="Dev: Component Preview" lang="en">
+  <SEO
+    slot="head"
+    title="Dev: Component Preview"
+    description="Phase 2 component preview - dev mode only"
+    noindex={true}
+  />
+
+  <!-- COMP-01: SiteHeader (default state) -->
+  <section data-component="SiteHeader" style="margin-bottom: 48px;">
+    <p class="label">COMP-01: SiteHeader (default state)</p>
+    <SiteHeader />
+  </section>
+
+  <!-- COMP-01: SiteHeader with subnav -->
+  <section data-component="SiteHeader-subnav" style="margin-bottom: 48px;">
+    <p class="label">COMP-01: SiteHeader with subnav</p>
+    <SiteHeader subnav={[
+      { href: '/intelligence/memos', label: 'Memos', active: true },
+      { href: '/intelligence/radar', label: 'Innovation Radar' },
+      { href: '/intelligence/regwatch', label: 'Regulatory Watch' },
+    ]} />
+  </section>
+
+  <!-- COMP-03: Hero (home variant - 3-city rotation) -->
+  <section data-component="Hero-home" style="margin-bottom: 48px;">
+    <p class="label">COMP-03: Hero (home variant - 3-city rotation)</p>
+    <Hero
+      variant="home"
+      slides={[
+        { src: heroSP, alt: 'Sao Paulo skyline - Marginal Pinheiros' },
+        { src: heroSantiago, alt: 'Santiago skyline with Cordillera de los Andes' },
+        { src: heroCDMX, alt: 'Mexico City - Paseo de la Reforma aerial view' },
+      ]}
+      heading="The LatAm Data Center Intelligence Firm"
+      subheading="We help investors and developers navigate Latin America's data center market."
+      actions={[
+        { label: 'Talk to us', href: '/contact', variant: 'primary' },
+        { label: 'Our capabilities', href: '/advisory', variant: 'outline' },
+      ]}
+    />
+  </section>
+
+  <!-- COMP-03: Hero (page variant - static Ken Burns) -->
+  <section data-component="Hero-page" style="margin-bottom: 48px;">
+    <p class="label">COMP-03: Hero (page variant - static Ken Burns)</p>
+    <Hero
+      variant="page"
+      image={heroSP}
+      eyebrow="Advisory"
+      heading="Powering Latin America's Data Center Market"
+      subheading="Strategic advisory for investors and developers navigating the LatAm DC opportunity."
+    />
+  </section>
+
+  <!-- COMP-03: Hero (page variant - live eyebrow pulse) -->
+  <section data-component="Hero-page-live" style="margin-bottom: 48px;">
+    <p class="label">COMP-03: Hero (page variant - live eyebrow pulse)</p>
+    <Hero
+      variant="page"
+      image={heroSantiago}
+      eyebrow="Intelligence"
+      live={true}
+      heading="Intelligence Platform"
+    />
+  </section>
+
+  <!-- COMP-04: CapabilityCard (dark variant) -->
+  <section data-component="CapabilityCard" style="background: var(--color-navy-0); padding: 48px clamp(32px,5vw,96px);">
+    <p class="label" style="color: var(--color-cream-2); margin-bottom: 24px;">COMP-04: CapabilityCard (dark variant)</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <CapabilityCard
+        num="01 - Site"
+        title="Site Selection"
+        description="Proprietary scoring across 76 LatAm cities using live grid data, regulatory status, and infrastructure coverage."
+        photo={cardSiteSelection}
+        href="/platforms/site-selection"
+      />
+      <CapabilityCard
+        num="02 - Grid"
+        title="Grid Intelligence"
+        description="Real-time transmission capacity, N-1 headroom, and interconnection feasibility for every candidate site."
+        photo={cardGridIntel}
+      />
+      <CapabilityCard
+        num="03 - Advisory"
+        title="Advisory"
+        description="Market entry, regulatory approvals, and stakeholder navigation for DC investors and developers."
+        photo={cardAdvisory}
+        href="/advisory"
+      />
+    </div>
+  </section>
+
+  <!-- COMP-04: CapabilityCard (on-cream variant) -->
+  <section data-component="CapabilityCard-cream" style="background: var(--color-cream-0); padding: 48px clamp(32px,5vw,96px);">
+    <p class="label" style="color: var(--color-navy-0); margin-bottom: 24px;">COMP-04: CapabilityCard (on-cream variant)</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+      <CapabilityCard
+        num="01"
+        title="On-Cream Card"
+        description="Light background variant for cream-section contexts."
+        photo={cardSiteSelection}
+        onCream={true}
+      />
+    </div>
+  </section>
+
+  <!-- COMP-05: NewsletterSubscribe -->
+  <section data-component="NewsletterSubscribe" style="background: var(--color-navy-1); padding: 64px clamp(32px,5vw,96px);">
+    <p class="label">COMP-05: NewsletterSubscribe</p>
+    <h2 style="font-family: var(--font-display); font-size: 28px; color: var(--color-cream-0); margin: 0 0 8px;">Stay ahead of the LatAm DC market</h2>
+    <p style="color: var(--color-cream-1); margin-bottom: 24px;">Daily intelligence from Cloud Minds Partners.</p>
+    <NewsletterSubscribe />
+  </section>
+
+  <!-- COMP-07: LangSwitcher -->
+  <section data-component="LangSwitcher" style="background: var(--color-navy-0); padding: 32px clamp(32px,5vw,96px);">
+    <p class="label">COMP-07: LangSwitcher (EN active on /dev/components)</p>
+    <LangSwitcher />
+  </section>
+
+  <!-- COMP-08: SocialLinks (footer variant) -->
+  <section data-component="SocialLinks-footer" style="background: var(--color-navy-0); padding: 32px clamp(32px,5vw,96px);">
+    <p class="label">COMP-08: SocialLinks (footer variant)</p>
+    <SocialLinks variant="footer" />
+  </section>
+
+  <!-- COMP-08: SocialLinks (header variant) -->
+  <section data-component="SocialLinks-header" style="background: var(--color-navy-0); padding: 32px clamp(32px,5vw,96px);">
+    <p class="label">COMP-08: SocialLinks (header variant)</p>
+    <SocialLinks variant="header" />
+  </section>
+
+  <!-- COMP-02: SiteFooter -->
+  <section data-component="SiteFooter" style="margin-top: 48px;">
+    <p class="label">COMP-02: SiteFooter</p>
+    <SiteFooter />
+  </section>
+
+  <!-- COMP-06: WhatsAppFab - fixed bottom-right, visible if PUBLIC_WHATSAPP_NUMBER set -->
+  <WhatsAppFab />
+</Base>
+)}
+
+<style>
+  .label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-blue-bright);
+    margin: 0 0 16px;
+    padding: 4px 8px;
+    background: rgba(45, 107, 228, 0.1);
+    border-radius: 4px;
+    display: inline-block;
+  }
+</style>

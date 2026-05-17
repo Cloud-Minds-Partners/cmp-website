@@ -92,7 +92,7 @@ const navLinks = [
     toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
   });
 
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !nav?.classList.contains('hidden')) {
       nav?.classList.add('hidden');
       toggle?.setAttribute('aria-expanded', 'false');
