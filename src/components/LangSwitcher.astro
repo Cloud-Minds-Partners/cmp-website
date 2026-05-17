@@ -1,0 +1,79 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const currentLocale = Astro.currentLocale ?? "en";
+
+// Strip locale prefix from current path to get bare path for getRelativeLocaleUrl.
+// Handles: /pt/team → /team, /es/ → /, /pt → /, /dev/components → /dev/components
+const rawPath = Astro.url.pathname
+  .replace(/^\/(pt|es)(\/|$)/, "/")
+  .replace(/\/$/, "") || "/";
+
+// getRelativeLocaleUrl expects path without leading slash; '' = locale root
+const barePath = rawPath.replace(/^\//, "") || "";
+
+const locales = [
+  { code: "en", label: "EN" },
+  { code: "pt", label: "PT" },
+  { code: "es", label: "ES" },
+] as const;
+---
+
+<div class="nav-lang" role="navigation" aria-label="Language selector">
+  {locales.map((loc, i) => (
+    <>
+      <a
+        href={getRelativeLocaleUrl(loc.code, barePath)}
+        class={`lang-link${currentLocale === loc.code ? " active" : ""}`}
+        aria-current={currentLocale === loc.code ? "page" : undefined}
+      >{loc.label}</a>
+      {i < locales.length - 1 && <span class="sep" aria-hidden="true">·</span>}
+    </>
+  ))}
+</div>
+
+<style>
+  .nav-lang {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 24px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-cream-2);
+  }
+  .lang-link {
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: color 0.15s;
+  }
+  .lang-link:hover {
+    color: var(--color-cream-0);
+  }
+  .lang-link.active {
+    color: var(--color-cream-0);
+    font-weight: 600;
+  }
+  .lang-link.active::after {
+    content: "";
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 1px;
+    height: 1px;
+    background: var(--color-blue-bright);
+  }
+  .sep {
+    color: var(--color-line-1);
+    font-size: 11px;
+  }
+  /* Hidden below 880px — desktop nav only (mock-26 pattern) */
+  @media (max-width: 880px) {
+    .nav-lang {
+      display: none;
+    }
+  }
+</style>

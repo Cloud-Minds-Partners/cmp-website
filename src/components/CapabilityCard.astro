@@ -1,0 +1,156 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  num: string;          // e.g. "01 — Site"
+  title: string;
+  description: string;
+  photo: ImageMetadata; // from src/assets/photos/
+  href?: string;        // optional — makes entire card a link
+  onCream?: boolean;    // switches to light-bg variant
+  class?: string;
+}
+
+const {
+  num,
+  title,
+  description,
+  photo,
+  href,
+  onCream = false,
+  class: className = "",
+} = Astro.props;
+
+const Tag = href ? "a" : "article";
+---
+
+<Tag
+  href={href}
+  class={`cap-card${onCream ? " on-cream" : ""}${href ? " cap-card--link" : ""}${className ? ` ${className}` : ""}`}
+  data-component="capcard"
+  data-on-cream={onCream ? "true" : undefined}
+>
+  <!-- Photo container with overlay -->
+  <div class="cap-card-photo">
+    <Image
+      src={photo}
+      alt=""
+      class="cap-photo-img"
+      widths={[320, 640, 960]}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      style="filter: saturate(1.18) contrast(1.05);"
+    />
+    <div class="cap-photo-overlay" aria-hidden="true"></div>
+  </div>
+
+  <!-- Card body -->
+  <div class="cap-card-body">
+    <p class="cap-num">{num}</p>
+    <h3 class="cap-title">{title}</h3>
+    <p class="cap-desc">{description}</p>
+  </div>
+</Tag>
+
+<style>
+  /* Base card (mock-26 .cap-card) */
+  .cap-card {
+    display: block;
+    background: var(--color-navy-1);
+    border: 1px solid var(--color-line-1);
+    border-radius: 20px;
+    min-height: 380px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Link hover lift */
+  .cap-card--link {
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .cap-card--link:hover {
+    transform: translateY(-3px);
+  }
+
+  /* On-cream variant */
+  .cap-card.on-cream {
+    background: transparent;
+    border: 1px solid rgba(5, 14, 29, 0.12);
+  }
+
+  /* Photo container (mock-26 .cap-card-photo) */
+  .cap-card-photo {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    border-radius: 19px 19px 0 0;
+    overflow: hidden;
+  }
+
+  /* Photo img — fills container */
+  .cap-photo-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Photo gradient overlay (mock-26 ::after equivalent) */
+  .cap-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(5, 14, 29, 0.05) 0%,
+      rgba(10, 30, 56, 0.45) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Card body (mock-26 .cap-card-body) */
+  .cap-card-body {
+    padding: 28px 28px 32px;
+  }
+
+  /* Number label (mock-26 .cap-num) */
+  .cap-num {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-blue-bright);
+    margin: 0 0 8px;
+  }
+
+  /* Title (mock-26 .cap-title) */
+  .cap-title {
+    font-size: 26px;
+    letter-spacing: -0.018em;
+    font-weight: 600;
+    color: var(--color-cream-0);
+    margin: 0 0 12px;
+    line-height: 1.18;
+  }
+
+  /* On-cream title override */
+  .cap-card.on-cream .cap-title {
+    color: var(--color-navy-0);
+  }
+
+  /* Description (mock-26 .cap-desc) */
+  .cap-desc {
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 36ch;
+    color: var(--color-cream-1);
+    margin: 0;
+  }
+
+  /* On-cream description override */
+  .cap-card.on-cream .cap-desc {
+    color: #4D5F7A;
+  }
+</style>
