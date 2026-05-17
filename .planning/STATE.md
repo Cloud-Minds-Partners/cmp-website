@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: "Completed 02-02-PLAN.md (Wave 1a: SocialLinks, WhatsAppFab, LangSwitcher, CapabilityCard)"
-last_updated: "2026-05-17T18:11:49.504Z"
+stopped_at: "Completed 02-03-PLAN.md (Wave 1b: Hero, SEO, NewsletterSubscribe, CONT-01 schema)"
+last_updated: "2026-05-17T18:17:00Z"
 last_activity: "2026-05-17 — Plan 01-03 complete (Photo pipeline: 27 JPEGs, INVENTORY.md, _image-pipeline-test.astro, Astro Image WebP+srcset verified)"
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
   percent: 100
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-16)
 Phase: 1 of 5 (Foundation) — COMPLETE
 Plan: 4 of 4 in current phase (all complete)
 Status: Phase 1 done — ready for Phase 2
-Last activity: 2026-05-17 — Plan 01-03 complete (Photo pipeline: 27 JPEGs, INVENTORY.md, _image-pipeline-test.astro, Astro Image WebP+srcset verified)
+Last activity: 2026-05-17 — Plan 02-03 complete (Hero.astro, SEO.astro, NewsletterSubscribe.astro, CONT-01 language schema field, i18n newsletter keys)
 
 Progress: [██████████] 100% (Phase 1)
 
@@ -52,6 +52,7 @@ Progress: [██████████] 100% (Phase 1)
 *Updated after each plan completion*
 | Phase 02-components P02-01 | 3 | 2 tasks | 13 files |
 | Phase 02-components P02-02 | 8 | 2 tasks | 4 files |
+| Phase 02-components P02-03 | 14 | 2 tasks | 21 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,10 @@ Recent decisions affecting current work:
 - [Phase 02-components]: 02-02: WhatsAppFab personal number removed entirely — only PUBLIC_WHATSAPP_NUMBER env var path
 - [Phase 02-components]: 02-02: CapabilityCard uses Astro Image in overflow:hidden container, not CSS background-image
 - [Phase 02-components]: 02-02: LangSwitcher barePath empty string for home page = locale root in getRelativeLocaleUrl
+- [Phase 02-components]: 02-03: Base.astro now owns only structural head tags (charset, viewport, color-scheme, theme-color, favicon); SEO.astro owns all per-page meta
+- [Phase 02-components]: 02-03: Hero single-file two-variant pattern (variant='home'|'page') rather than separate files
+- [Phase 02-components]: 02-03: SEO barePath strips /pt and /es prefix before getAbsoluteLocaleUrl to prevent double-prefix on hreflang alternates
+- [Phase 02-components]: 02-03: NewsletterSubscribe uses uid per instance to prevent DOM ID conflicts on multi-embed pages
 
 ### Pending Todos
 
@@ -95,6 +100,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-17T18:11:49.501Z
-Stopped at: Completed 02-02-PLAN.md (Wave 1a: SocialLinks, WhatsAppFab, LangSwitcher, CapabilityCard)
+Last session: 2026-05-17T18:17:00Z
+Stopped at: Completed 02-03-PLAN.md (Wave 1b: Hero, SEO, NewsletterSubscribe, CONT-01 schema)
 Resume file: None
