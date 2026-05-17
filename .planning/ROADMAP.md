@@ -61,12 +61,20 @@ Plans:
 **Depends on**: Phase 2
 **Requirements**: PAGE-01, PAGE-02, PAGE-03, PAGE-04, PAGE-05, PAGE-06, PAGE-07, CONT-02, CONT-03, CONT-04, CONT-05, CONT-06, CONT-07, I18N-03, I18N-04, I18N-05
 **Success Criteria** (what must be TRUE):
-  1. Home page hero rotates across SP/Santiago/CDMX images on a timer; capabilities, stats, team teaser, and Newsletter sections are all present and match mock-26 layout
+  1. Home page hero rotates across SP/Santiago/CDMX images on a timer; capabilities, stats, and Newsletter sections are all present and match mock-26 layout (no team teaser — omitted per mock-26 verbatim)
   2. Advisory, Development, Intelligence, Platforms, Team, and Contact pages each render at `/[slug]` with correct hero image and section content from mock-26
-  3. `/intelligence/memos/` shows "Memo library expanding — first publication coming soon" when collection is empty; `/intelligence/radar/` renders the existing radar entry; `/intelligence/regwatch/` handles empty state gracefully
-  4. Navigating to `/pt/` shows Spanish Português home page copy; navigating to `/es/` shows Spanish copy; `/pt/advisory` displays the EN advisory content with a visible "Translated version coming soon" fallback banner
+  3. `/intelligence/memos/` shows "Memo library expanding — first publication coming soon" when collection is empty; `/intelligence/radar/` renders the existing radar entry (2026-W20); `/intelligence/regwatch/` handles empty state gracefully
+  4. Navigating to `/pt/` shows Portuguese home page copy; navigating to `/es/` shows Spanish copy; `/pt/advisory` displays the EN advisory content with a visible "Translated version coming soon" fallback banner
   5. Every page emits correct `hreflang` alternates for `en`, `pt`, and `es` (visible in page source)
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 03-00-PLAN.md — Wave 0: Playwright spec stubs (3 files), delete image-pipeline-test.astro + newsletter.astro, platforms/[slug].astro redirect
+- [ ] 03-01-PLAN.md — Wave 1: Foundation fixes — SiteHeader active nav state, LocaleBanner component, 3 layout SEO upgrades, PT/ES i18n translations, radar gate flip (2026-W20 published: true)
+- [ ] 03-02-PLAN.md — Wave 1 (parallel): Marketing pages — home (mock-26 verbatim), advisory, development, platforms
+- [ ] 03-03-PLAN.md — Wave 2: People pages — team (from cmp-knowledge people collection) + contact
+- [ ] 03-04-PLAN.md — Wave 2 (parallel): Intelligence hub + all 6 collection routes (memos, radar, regwatch index + detail)
+- [ ] 03-05-PLAN.md — Wave 3: PT/ES locale home pages + full test suite + visual verification checkpoint
 
 ### Phase 4: Quality Gate
 **Goal**: The built site passes Lighthouse SEO ≥95, Accessibility ≥95, and Performance ≥90 (mobile) on the home page and at least one sub-page, with all SEO metadata, structured data, image optimization, and accessibility requirements verified.
@@ -100,6 +108,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | Complete |  |
 | 2. Components | 4/4 | Complete |  |
-| 3. Pages | 0/TBD | Not started | - |
+| 3. Pages | 0/6 | Not started | - |
 | 4. Quality Gate | 0/TBD | Not started | - |
 | 5. Deploy | 0/TBD | Not started | - |
