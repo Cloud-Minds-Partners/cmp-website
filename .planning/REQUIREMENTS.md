@@ -7,10 +7,10 @@
 
 ### Foundation
 
-- [ ] **FOUND-01**: 26 mock-26 photos downloaded to `src/assets/` and referenced via Astro `<Image>` — WebP/AVIF output with responsive srcset and lazy loading
-- [ ] **FOUND-02**: Design tokens from `mock-26/tokens.css` translated to Tailwind 4 config (palette navy/black/cream + brand blue `#2D6BE4`, spacing, radii, shadows)
-- [ ] **FOUND-03**: Space Grotesk + DM Sans fonts loaded via `@fontsource` packages (local, not Google Fonts CDN) with `font-display: swap`
-- [ ] **FOUND-04**: Base styles + reset migrated from `mock-26/site.css` into Tailwind utilities + `global.css`
+- [x] **FOUND-01**: 26 mock-26 photos downloaded to `src/assets/` and referenced via Astro `<Image>` — WebP/AVIF output with responsive srcset and lazy loading
+- [x] **FOUND-02**: Design tokens from `mock-26/tokens.css` translated to Tailwind 4 config (palette navy/black/cream + brand blue `#2D6BE4`, spacing, radii, shadows)
+- [x] **FOUND-03**: Space Grotesk + DM Sans fonts loaded via `@fontsource` packages (local, not Google Fonts CDN) with `font-display: swap`
+- [x] **FOUND-04**: Base styles + reset migrated from `mock-26/site.css` into Tailwind utilities + `global.css`
 
 ### Components
 
@@ -46,8 +46,8 @@
 
 ### Internationalization
 
-- [ ] **I18N-01**: Astro native i18n routing configured in `astro.config.mjs` — default locale `en`, secondary `pt`, `es`, routes `/`, `/pt/`, `/es/`
-- [ ] **I18N-02**: Translation file structure created — `src/i18n/{en,pt,es}.json` with all UI strings (nav, CTAs, footer, common labels)
+- [x] **I18N-01**: Astro native i18n routing configured in `astro.config.mjs` — default locale `en`, secondary `pt`, `es`, routes `/`, `/pt/`, `/es/`
+- [x] **I18N-02**: Translation file structure created — `src/i18n/{en,pt,es}.json` with all UI strings (nav, CTAs, footer, common labels)
 - [ ] **I18N-03**: Locale-aware `LangSwitcher` — clicking PT on `/team` routes to `/pt/team`; preserves deep links
 - [ ] **I18N-04**: `hreflang` tags emitted on every page (canonical, alternates)
 - [ ] **I18N-05**: At least the home page has translated copy in PT and ES at launch; other pages may fall back to EN (acceptable interim state, flagged in UX with subtle banner)
@@ -125,12 +125,12 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
-| I18N-01 | Phase 1 | Pending |
-| I18N-02 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
+| FOUND-02 | Phase 1 | Complete |
+| FOUND-03 | Phase 1 | Complete |
+| FOUND-04 | Phase 1 | Complete |
+| I18N-01 | Phase 1 | Complete |
+| I18N-02 | Phase 1 | Complete |
 | COMP-01 | Phase 2 | Pending |
 | COMP-02 | Phase 2 | Pending |
 | COMP-03 | Phase 2 | Pending |
