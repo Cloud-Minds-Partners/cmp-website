@@ -54,7 +54,7 @@ Plans:
 - [ ] 02-01-PLAN.md — Wave 0: Test infrastructure (9 spec stubs, playwright webServer, Base.astro head slot, .env.example)
 - [ ] 02-02-PLAN.md — Wave 1a: Leaf components (SocialLinks, WhatsAppFab, LangSwitcher, CapabilityCard)
 - [ ] 02-03-PLAN.md — Wave 1b: Hero, SEO, NewsletterSubscribe, CONT-01 schema refactor (parallel with 02-02)
-- [ ] 02-04-PLAN.md — Wave 2: Composites (SiteHeader, SiteFooter, /dev/components preview page) + human verify checkpoint
+- [x] 02-04-PLAN.md — Wave 2: Composites (SiteHeader, SiteFooter, /dev/components preview page) + human verify checkpoint
 
 ### Phase 3: Pages
 **Goal**: All six canonical pages and the three intelligence collection routes are live and pixel-faithful to mock-26, with home page PT and ES locale copy complete and remaining pages falling back to EN with a visible banner.
@@ -99,7 +99,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | Complete |  |
-| 2. Components | 3/4 | In Progress|  |
+| 2. Components | 4/4 | Complete |  |
 | 3. Pages | 0/TBD | Not started | - |
 | 4. Quality Gate | 0/TBD | Not started | - |
 | 5. Deploy | 0/TBD | Not started | - |
