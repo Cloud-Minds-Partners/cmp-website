@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 01-03-PLAN.md (image pipeline — 27 photos, INVENTORY.md, _image-pipeline-test.astro, FOUND-01 gates green)
-last_updated: "2026-05-17T16:16:38.022Z"
+stopped_at: "Completed 02-01-PLAN.md (Wave 0: 9 Playwright spec stubs, head slot, webServer)"
+last_updated: "2026-05-17T18:01:05.557Z"
 last_activity: "2026-05-17 — Plan 01-03 complete (Photo pipeline: 27 JPEGs, INVENTORY.md, _image-pipeline-test.astro, Astro Image WebP+srcset verified)"
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 4
-  completed_plans: 4
+  total_plans: 8
+  completed_plans: 5
   percent: 100
 ---
 
@@ -50,6 +50,7 @@ Progress: [██████████] 100% (Phase 1)
 - Trend: Stable ~4 min/plan
 
 *Updated after each plan completion*
+| Phase 02-components P02-01 | 3 | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: PT/ES stubs with EN values in Phase 1 — real translations deferred to Phase 3
 - 01-03: Photo count is 27 not 26 — plan must_haves.truths had typo; corrected validate-phase-1.sh accordingly
 - 01-03: _image-pipeline-test.astro is intentional Phase 1 scaffolding (not temporary) — keeps FOUND-01 WebP+srcset gates green until Phase 3
+- [Phase 02-components]: Removed SEO-managed meta tags from Base.astro — delegated to SEO.astro via named head slot
+- [Phase 02-components]: comp-07-langswitcher.spec.ts uses test.use viewport 1280px — LangSwitcher hidden below 880px per mock-26
+- [Phase 02-components]: TDD spec stubs skip gracefully when /dev/components 404 (Wave 2 pending)
 
 ### Pending Todos
 
@@ -86,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-17T16:06:09Z
-Stopped at: Completed 01-03-PLAN.md (image pipeline — 27 photos, INVENTORY.md, _image-pipeline-test.astro, FOUND-01 gates green)
+Last session: 2026-05-17T18:01:05.554Z
+Stopped at: Completed 02-01-PLAN.md (Wave 0: 9 Playwright spec stubs, head slot, webServer)
 Resume file: None

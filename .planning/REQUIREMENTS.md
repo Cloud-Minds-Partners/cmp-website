@@ -14,15 +14,15 @@
 
 ### Components
 
-- [ ] **COMP-01**: `SiteHeader` component — full-width edge-to-edge, logo, primary nav, EN/PT/ES `LangSwitcher`, "Talk to us" CTA pill, mobile menu with keyboard escape support
-- [ ] **COMP-02**: `SiteFooter` component — single unified row with 5 columns (brand cell + 4 link cols), LinkedIn + WhatsApp icons in brand cell, copyright line
-- [ ] **COMP-03**: `Hero` component — flush-left content (max-width 820px, padding `clamp(32px,5vw,96px)`), supports static or rotating background images (3-city LatAm rotation on home)
-- [ ] **COMP-04**: `CapabilityCard` component — rounded 20–24px, transparent background on cream sections, photo on top with `border-radius: 19px 19px 0 0`, title + description + optional link
-- [ ] **COMP-05**: `NewsletterSubscribe` component — inline section embed, posts to existing dcinsights Cloud Function, in-place success/error states, no external redirect
-- [ ] **COMP-06**: `WhatsAppFab` component — bottom-right floating button, number from env var (placeholder until CMP business number allocated), pulse animation
-- [ ] **COMP-07**: `LangSwitcher` component — EN · PT · ES inline switch, routes to `/`, `/pt/`, `/es/` preserving current path
-- [ ] **COMP-08**: `SocialLinks` component — LinkedIn + WhatsApp icons, reusable in header/footer/fab
-- [ ] **COMP-09**: `SEO` component — meta tags, OG, Twitter Card, canonical, JSON-LD slot, hreflang — used in every page layout
+- [x] **COMP-01**: `SiteHeader` component — full-width edge-to-edge, logo, primary nav, EN/PT/ES `LangSwitcher`, "Talk to us" CTA pill, mobile menu with keyboard escape support
+- [x] **COMP-02**: `SiteFooter` component — single unified row with 5 columns (brand cell + 4 link cols), LinkedIn + WhatsApp icons in brand cell, copyright line
+- [x] **COMP-03**: `Hero` component — flush-left content (max-width 820px, padding `clamp(32px,5vw,96px)`), supports static or rotating background images (3-city LatAm rotation on home)
+- [x] **COMP-04**: `CapabilityCard` component — rounded 20–24px, transparent background on cream sections, photo on top with `border-radius: 19px 19px 0 0`, title + description + optional link
+- [x] **COMP-05**: `NewsletterSubscribe` component — inline section embed, posts to existing dcinsights Cloud Function, in-place success/error states, no external redirect
+- [x] **COMP-06**: `WhatsAppFab` component — bottom-right floating button, number from env var (placeholder until CMP business number allocated), pulse animation
+- [x] **COMP-07**: `LangSwitcher` component — EN · PT · ES inline switch, routes to `/`, `/pt/`, `/es/` preserving current path
+- [x] **COMP-08**: `SocialLinks` component — LinkedIn + WhatsApp icons, reusable in header/footer/fab
+- [x] **COMP-09**: `SEO` component — meta tags, OG, Twitter Card, canonical, JSON-LD slot, hreflang — used in every page layout
 
 ### Pages
 
@@ -36,7 +36,7 @@
 
 ### Content collections
 
-- [ ] **CONT-01**: Zod schemas for `memos`, `radar`, `regwatch` refactored with `language` field (en/pt/es enum) + locale-aware slugs
+- [x] **CONT-01**: Zod schemas for `memos`, `radar`, `regwatch` refactored with `language` field (en/pt/es enum) + locale-aware slugs
 - [ ] **CONT-02**: Memos index page (`/intelligence/memos/`) — renders list from collection, gracefully shows "Memo library expanding — first publication coming soon" when empty
 - [ ] **CONT-03**: Memo detail page (`/intelligence/memos/[slug]`) — uses `MemoLayout`, includes `Article` JSON-LD, related memos
 - [ ] **CONT-04**: Radar index page — preserves existing 1 entry, list view
@@ -131,16 +131,16 @@
 | FOUND-04 | Phase 1 | Complete |
 | I18N-01 | Phase 1 | Complete |
 | I18N-02 | Phase 1 | Complete |
-| COMP-01 | Phase 2 | Pending |
-| COMP-02 | Phase 2 | Pending |
-| COMP-03 | Phase 2 | Pending |
-| COMP-04 | Phase 2 | Pending |
-| COMP-05 | Phase 2 | Pending |
-| COMP-06 | Phase 2 | Pending |
-| COMP-07 | Phase 2 | Pending |
-| COMP-08 | Phase 2 | Pending |
-| COMP-09 | Phase 2 | Pending |
-| CONT-01 | Phase 2 | Pending |
+| COMP-01 | Phase 2 | Complete |
+| COMP-02 | Phase 2 | Complete |
+| COMP-03 | Phase 2 | Complete |
+| COMP-04 | Phase 2 | Complete |
+| COMP-05 | Phase 2 | Complete |
+| COMP-06 | Phase 2 | Complete |
+| COMP-07 | Phase 2 | Complete |
+| COMP-08 | Phase 2 | Complete |
+| COMP-09 | Phase 2 | Complete |
+| CONT-01 | Phase 2 | Complete |
 | PAGE-01 | Phase 3 | Pending |
 | PAGE-02 | Phase 3 | Pending |
 | PAGE-03 | Phase 3 | Pending |
