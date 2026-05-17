@@ -1,78 +1,130 @@
 ---
-import { social } from "../config/social";
-interface Props {
-  showHeadline?: boolean;
-}
-const { showHeadline = true } = Astro.props;
+import { social } from '../config/social';
+
+// Unique ID per instance (prevents form conflicts if multiple embeds on a page)
 const uid = `nl-${Math.random().toString(36).slice(2, 8)}`;
+const endpoint = social.subscribeEndpoint;
+// endpoint = "https://us-central1-dcplatformcmp.cloudfunctions.net/subscribe"
 ---
-
-<div>
-  {showHeadline && (
-    <div class="mb-7">
-      <div class="eyebrow mb-3">Newsletter</div>
-      <h3 style="font-family:var(--font-display);" class="text-[1.875rem] font-medium text-[var(--color-ink)]">DC Insights.</h3>
-      <p class="mt-4 text-[15px] leading-relaxed text-[var(--color-ink-secondary)] max-w-md">
-        A weekly digest of data center developments across Latin America —
-        deals, regulation, infrastructure, and market signals. Free.
-      </p>
-    </div>
-  )}
-
-  <form id={uid} class="flex flex-col sm:flex-row gap-2 max-w-md" novalidate>
+<div class="nl-wrap" id={uid + '-wrap'}>
+  <form
+    id={uid}
+    class="nl-form"
+    method="post"
+    action="/newsletter?thanks=1"
+    novalidate
+  >
     <input
       type="email"
       name="email"
-      required
+      id={uid + '-email'}
+      class="nl-input"
       placeholder="you@company.com"
+      required
       autocomplete="email"
-      class="flex-1 bg-[var(--color-bg-surface)] border border-[var(--color-border)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-quiet)] px-4 py-3 text-[14px] outline-none focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[color:color-mix(in_srgb,var(--color-accent)_20%,transparent)] transition-all rounded-md"
     />
-    <button type="submit" class="btn btn-primary whitespace-nowrap">
+    <button type="submit" class="nl-btn" id={uid + '-btn'}>
       Subscribe
     </button>
   </form>
-  <p id={`${uid}-msg`} class="mt-3 text-sm hidden"></p>
+  <p id={uid + '-msg'} class="nl-msg" hidden></p>
 </div>
 
-<script is:inline define:vars={{ uid, endpoint: social.subscribeEndpoint }}>
-  const form = document.getElementById(uid);
-  const msg = document.getElementById(`${uid}-msg`);
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = new FormData(form).get("email");
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email))) {
-      show("Please enter a valid email.", "error");
-      return;
-    }
-    const btn = form.querySelector("button");
-    btn.disabled = true;
-    const original = btn.textContent;
-    btn.textContent = "Sending…";
-    try {
-      const r = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: String(email).trim().toLowerCase() }),
-      });
-      const data = await r.json().catch(() => ({}));
-      if (r.ok && (data.status === "subscribed" || data.status === "already_subscribed")) {
-        show(data.status === "already_subscribed" ? "You're already on the list. See you Friday." : "Thanks — you're in. Check your inbox for confirmation.", "ok");
-        form.reset();
-      } else {
-        show(data.error || "Something went wrong. Try again in a minute.", "error");
+<script is:inline define:vars={{ uid, endpoint }}>
+  (function() {
+    const form   = document.getElementById(uid);
+    const btn    = document.getElementById(uid + '-btn');
+    const msg    = document.getElementById(uid + '-msg');
+    const wrap   = document.getElementById(uid + '-wrap');
+
+    if (!form || !btn || !msg) return;
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const emailInput = form.querySelector('input[name="email"]');
+      const email = emailInput ? emailInput.value.trim() : '';
+      if (!email) return;
+
+      btn.disabled = true;
+      btn.textContent = '...';
+      msg.hidden = true;
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json().catch(function() { return {}; });
+
+        if (res.ok && (data.status === 'subscribed' || data.status === 'already_subscribed')) {
+          // Success: replace form with success message
+          if (wrap) {
+            wrap.innerHTML = '<p class="nl-success">✓ You\'re in. Welcome to DC Insights.</p>';
+          }
+        } else {
+          // API error
+          msg.textContent = data.error || 'Something went wrong. Try again in a minute.';
+          msg.className = 'nl-msg nl-error';
+          msg.hidden = false;
+          btn.disabled = false;
+          btn.textContent = 'Subscribe';
+        }
+      } catch (_) {
+        // Network error
+        msg.textContent = "Couldn't reach the server. Try again shortly.";
+        msg.className = 'nl-msg nl-error';
+        msg.hidden = false;
+        btn.disabled = false;
+        btn.textContent = 'Subscribe';
       }
-    } catch {
-      show("Couldn't reach the server. Try again in a minute.", "error");
-    } finally {
-      btn.disabled = false;
-      btn.textContent = original;
-    }
-  });
-  function show(text, kind) {
-    if (!msg) return;
-    msg.textContent = text;
-    msg.classList.remove("hidden");
-    msg.style.color = kind === "error" ? "#E05252" : "#00B8A9";
-  }
+    });
+  })();
 </script>
+
+<style>
+  .nl-wrap { width: 100%; }
+  .nl-form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nl-input {
+    flex: 1 1 220px;
+    height: 48px;
+    padding: 0 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-line-1);
+    border-radius: 8px;
+    color: var(--color-cream-0);
+    font-family: var(--font-body);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .nl-input::placeholder { color: var(--color-cream-2); }
+  .nl-input:focus { border-color: var(--color-blue); }
+  .nl-btn {
+    height: 48px;
+    padding: 0 24px;
+    background: var(--color-blue);
+    border: none;
+    border-radius: 8px;
+    color: var(--color-cream-0);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .nl-btn:hover:not(:disabled) { opacity: 0.85; }
+  .nl-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .nl-msg { font-size: 14px; margin-top: 8px; }
+  .nl-error { color: #FF6B6B; }
+  .nl-success {
+    font-size: 16px;
+    color: var(--color-cream-0);
+    padding: 16px 0;
+  }
+</style>

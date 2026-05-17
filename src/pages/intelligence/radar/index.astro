@@ -1,5 +1,6 @@
 ---
 import Base from "../../../layouts/Base.astro";
+import SEO from "../../../components/SEO.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import Section from "../../../components/Section.astro";
@@ -15,7 +16,8 @@ const fmt = (d: Date | undefined) =>
   d ? d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "";
 ---
 
-<Base title="Innovation Radar — Cloud Minds Partners">
+<Base>
+  <SEO slot="head" title="Innovation Radar — Cloud Minds Partners" description="Weekly radar of technology and market signals shaping Latin America's data center landscape." />
   <SiteHeader
     active="intelligence"
     subnav={[

@@ -46,6 +46,13 @@
   "common.newsletter-success": "You're in. Watch your inbox.",
   "common.newsletter-error": "Something went wrong. Try again in a minute.",
 
+  "newsletter.submit": "Subscribe",
+  "newsletter.success": "You're in. Welcome to DC Insights.",
+  "newsletter.already": "You're already on the list.",
+  "newsletter.error": "Something went wrong. Try again in a minute.",
+  "newsletter.network": "Couldn't reach the server. Try again shortly.",
+  "newsletter.placeholder": "you@company.com",
+
   "home.hero.headline": "The LatAm Data Center Intelligence Firm",
   "home.hero.subhead": "We help investors and developers navigate Latin America's data center market with proprietary intelligence, advisory services, and purpose-built platforms.",
   "home.capabilities.heading": "Our Capabilities",

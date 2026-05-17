@@ -39,6 +39,7 @@ const memos = defineCollection({
     audit_notes: z.string().optional().default(""),
     tags: z.array(z.string()).optional().default([]),
     carousel_data: z.string().optional().default(""),
+    language: z.enum(['en', 'pt', 'es']).default('en'),
   }),
 });
 
@@ -60,6 +61,7 @@ const radar = defineCollection({
     published: z.boolean().default(false),
     sources_scanned: z.record(z.string(), z.boolean()).optional(),
     tags: z.array(z.string()).optional().default([]),
+    language: z.enum(['en', 'pt', 'es']).default('en'),
   }),
 });
 
@@ -76,6 +78,7 @@ const regwatch = defineCollection({
     published: z.boolean().default(false),
     jurisdictions_scanned: z.record(z.string(), z.boolean()).optional(),
     tags: z.array(z.string()).optional().default([]),
+    language: z.enum(['en', 'pt', 'es']).default('en'),
   }),
 });
 

@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
@@ -12,7 +13,8 @@ const statusLabel: Record<string, string> = {
 };
 ---
 
-<Base title="Platforms — Cloud Minds Partners" description="CMP proprietary platforms for data center site selection, market pricing, capacity modelling, and project tracking.">
+<Base>
+  <SEO slot="head" title="Platforms — Cloud Minds Partners" description="CMP proprietary platforms for data center site selection, market pricing, capacity modelling, and project tracking." />
   <SiteHeader active="platforms" />
 
   <main>

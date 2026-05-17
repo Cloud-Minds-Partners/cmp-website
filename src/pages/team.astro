@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
@@ -41,7 +42,8 @@ const renderedAdvisors = await Promise.all(
 );
 ---
 
-<Base title="Team — Cloud Minds Partners" description="Partners and advisors at Cloud Minds Partners — data center advisory and development for Latin America.">
+<Base>
+  <SEO slot="head" title="Team — Cloud Minds Partners" description="Partners and advisors at Cloud Minds Partners — data center advisory and development for Latin America." />
   <SiteHeader active="team" />
 
 

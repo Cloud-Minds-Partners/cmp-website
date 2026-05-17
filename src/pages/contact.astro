@@ -1,11 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
 ---
 
-<Base title="Contact — Cloud Minds Partners">
+<Base>
+  <SEO slot="head" title="Contact — Cloud Minds Partners" description="Get in touch with Cloud Minds Partners — data center advisory and intelligence for Latin America." />
   <SiteHeader active="contact" />
 
   <main>

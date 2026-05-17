@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
@@ -7,7 +8,8 @@ import NewsletterSubscribe from "../components/NewsletterSubscribe.astro";
 import NewsletterArchive from "../components/NewsletterArchive.astro";
 ---
 
-<Base title="Newsletter — DC Insights" description="DC Insights — weekly digest of data center developments across Latin America.">
+<Base>
+  <SEO slot="head" title="Newsletter — DC Insights" description="DC Insights — weekly digest of data center developments across Latin America." />
   <SiteHeader active="intelligence" />
 
   <main>

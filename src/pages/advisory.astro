@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
@@ -28,7 +29,8 @@ const capabilities = [
 ];
 ---
 
-<Base title="Advisory — Cloud Minds Partners" description="Site selection, feasibility studies, market intelligence, and regulatory path mapping for data center projects in Latin America.">
+<Base>
+  <SEO slot="head" title="Advisory — Cloud Minds Partners" description="Site selection, feasibility studies, market intelligence, and regulatory path mapping for data center projects in Latin America." />
   <SiteHeader active="advisory" />
 
   <main>

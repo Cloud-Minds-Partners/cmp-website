@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
@@ -16,7 +17,8 @@ const stats = [
 ];
 ---
 
-<Base title="Cloud Minds Partners — Data Center Intelligence for Latin America">
+<Base>
+  <SEO slot="head" title="Cloud Minds Partners — Data Center Intelligence for Latin America" description="Cloud Minds Partners — data center advisory, project development, and intelligence for Latin America." />
   <SiteHeader active="home" />
 
   <main>

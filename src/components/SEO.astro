@@ -1,0 +1,86 @@
+---
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;          // defaults to '/og/default.png' (Phase 4 generates real OGs)
+  canonical?: string;      // auto-computed from Astro.url if absent
+  lang?: string;           // defaults to Astro.currentLocale
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/og/default.png',
+  canonical,
+  lang,
+  type = 'website',
+  noindex = false,
+} = Astro.props;
+
+const currentLocale = lang ?? Astro.currentLocale ?? 'en';
+const ogLocaleMap: Record<string, string> = { en: 'en_US', pt: 'pt_BR', es: 'es_LA' };
+const ogLocale = ogLocaleMap[currentLocale] ?? 'en_US';
+
+const fullTitle = title.includes('Cloud Minds') ? title : `${title} — Cloud Minds Partners`;
+const site = 'https://dcplatformcmp.web.app';
+const canonicalUrl = canonical ?? `${site}${Astro.url.pathname}`;
+
+// Strip locale prefix for computing cross-locale hreflang URLs
+const rawPath = Astro.url.pathname
+  .replace(/^\/(pt|es)(\/|$)/, '/')
+  .replace(/\/$/, '') || '/';
+const barePath = rawPath.replace(/^\//, '') || '';
+
+const hreflangs = [
+  { hreflang: 'en',        href: getAbsoluteLocaleUrl('en', barePath) },
+  { hreflang: 'pt-BR',     href: getAbsoluteLocaleUrl('pt', barePath) },
+  { hreflang: 'es',        href: getAbsoluteLocaleUrl('es', barePath) },
+  { hreflang: 'x-default', href: getAbsoluteLocaleUrl('en', barePath) },
+];
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Cloud Minds Partners',
+  url: site,
+  logo: `${site}/brand/cmp-logo-white.svg`,
+  description: 'The LatAm DC intelligence firm — advisory, development, and intelligence platforms.',
+  sameAs: ['https://www.linkedin.com/company/cloud-minds-partners'],
+};
+---
+<!-- Primary meta -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+
+<!-- Canonical -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image.startsWith('http') ? image : `${site}${image}`} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:type" content={type} />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:site_name" content="Cloud Minds Partners" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image.startsWith('http') ? image : `${site}${image}`} />
+
+<!-- hreflang alternates -->
+{hreflangs.map(h => (
+  <link rel="alternate" hreflang={h.hreflang} href={h.href} />
+))}
+
+<!-- JSON-LD slot: default Organization schema; pages can override via slot -->
+<slot name="json-ld">
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+</slot>

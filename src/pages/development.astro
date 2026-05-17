@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Section from "../components/Section.astro";
@@ -28,7 +29,8 @@ const phases = [
 ];
 ---
 
-<Base title="Development — Cloud Minds Partners" description="Co-development, technical due diligence, and financial modeling for data center projects from pre-site through commissioning.">
+<Base>
+  <SEO slot="head" title="Development — Cloud Minds Partners" description="Co-development, technical due diligence, and financial modeling for data center projects from pre-site through commissioning." />
   <SiteHeader active="development" />
 
   <main>

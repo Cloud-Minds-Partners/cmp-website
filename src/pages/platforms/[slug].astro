@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import SEO from "../../components/SEO.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import Section from "../../components/Section.astro";
@@ -26,7 +27,8 @@ const clientsLabel: Record<string, string> = {
 };
 ---
 
-<Base title={`${platform.name} — Cloud Minds Partners`} description={platform.summary}>
+<Base>
+  <SEO slot="head" title={`${platform.name} — Cloud Minds Partners`} description={platform.summary} />
   <SiteHeader active="platforms" />
 
   <main>

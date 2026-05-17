@@ -1,5 +1,6 @@
 ---
 import Base from "../../../layouts/Base.astro";
+import SEO from "../../../components/SEO.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import Section from "../../../components/Section.astro";
@@ -17,7 +18,8 @@ const countryName: Record<string, string> = {
 const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short" });
 ---
 
-<Base title="Technical Memos — Cloud Minds Partners">
+<Base>
+  <SEO slot="head" title="Technical Memos — Cloud Minds Partners" description="In-depth technical analysis of data center regulatory and infrastructure topics across Latin America." />
   <SiteHeader
     active="intelligence"
     subnav={[

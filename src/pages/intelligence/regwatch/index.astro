@@ -1,5 +1,6 @@
 ---
 import Base from "../../../layouts/Base.astro";
+import SEO from "../../../components/SEO.astro";
 import SiteHeader from "../../../components/SiteHeader.astro";
 import SiteFooter from "../../../components/SiteFooter.astro";
 import Section from "../../../components/Section.astro";
@@ -16,7 +17,8 @@ const fmtMonth = (m: string) => {
 };
 ---
 
-<Base title="Regulatory Watch — Cloud Minds Partners">
+<Base>
+  <SEO slot="head" title="Regulatory Watch — Cloud Minds Partners" description="Monthly regulatory intelligence digest tracking data center permitting and policy developments in Latin America." />
   <SiteHeader
     active="intelligence"
     subnav={[

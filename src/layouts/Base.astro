@@ -3,22 +3,10 @@ import "../styles/global.css";
 import WhatsAppFab from "../components/WhatsAppFab.astro";
 
 interface Props {
-  title: string;
-  description?: string;
-  canonical?: string;
   lang?: string;
 }
 
-const {
-  title,
-  description = "Cloud Minds Partners — data center advisory, project development, and intelligence for Latin America.",
-  canonical,
-  lang = "en",
-} = Astro.props;
-
-const fullTitle = title.includes("Cloud Minds")
-  ? title
-  : `${title} — Cloud Minds Partners`;
+const { lang = "en" } = Astro.props;
 ---
 
 <!doctype html>
@@ -26,11 +14,10 @@ const fullTitle = title.includes("Cloud Minds")
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#FAFBFD" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#05111D" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{fullTitle}</title>
-    <!-- Per-page SEO meta (description, OG, canonical, hreflang) injected via SEO.astro -->
+    <!-- Per-page SEO meta (title, description, OG, canonical, hreflang) injected via SEO.astro -->
     <slot name="head" />
   </head>
   <body>

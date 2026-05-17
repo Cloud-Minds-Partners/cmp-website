@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import SEO from "../../components/SEO.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import Section from "../../components/Section.astro";
@@ -10,7 +11,8 @@ const radar = (await getCollection("radar", (r) => r.data.published)).length;
 const regwatch = (await getCollection("regwatch", (r) => r.data.published)).length;
 ---
 
-<Base title="Intelligence — Cloud Minds Partners">
+<Base>
+  <SEO slot="head" title="Intelligence — Cloud Minds Partners" description="Technical memos, innovation radar, and regulatory watch for the Latin America data center market." />
   <SiteHeader
     active="intelligence"
     subnav={[
