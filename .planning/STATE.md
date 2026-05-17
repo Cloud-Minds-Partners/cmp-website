@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: "Completed 02-01-PLAN.md (Wave 0: 9 Playwright spec stubs, head slot, webServer)"
-last_updated: "2026-05-17T18:01:05.557Z"
+stopped_at: "Completed 02-02-PLAN.md (Wave 1a: SocialLinks, WhatsAppFab, LangSwitcher, CapabilityCard)"
+last_updated: "2026-05-17T18:11:49.504Z"
 last_activity: "2026-05-17 — Plan 01-03 complete (Photo pipeline: 27 JPEGs, INVENTORY.md, _image-pipeline-test.astro, Astro Image WebP+srcset verified)"
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 8
-  completed_plans: 5
+  completed_plans: 6
   percent: 100
 ---
 
@@ -51,6 +51,7 @@ Progress: [██████████] 100% (Phase 1)
 
 *Updated after each plan completion*
 | Phase 02-components P02-01 | 3 | 2 tasks | 13 files |
+| Phase 02-components P02-02 | 8 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,10 @@ Recent decisions affecting current work:
 - [Phase 02-components]: Removed SEO-managed meta tags from Base.astro — delegated to SEO.astro via named head slot
 - [Phase 02-components]: comp-07-langswitcher.spec.ts uses test.use viewport 1280px — LangSwitcher hidden below 880px per mock-26
 - [Phase 02-components]: TDD spec stubs skip gracefully when /dev/components 404 (Wave 2 pending)
+- [Phase 02-components]: 02-02: SocialLinks header/footer variant replaces v4 light/dark — aligns with mock-26 context spec
+- [Phase 02-components]: 02-02: WhatsAppFab personal number removed entirely — only PUBLIC_WHATSAPP_NUMBER env var path
+- [Phase 02-components]: 02-02: CapabilityCard uses Astro Image in overflow:hidden container, not CSS background-image
+- [Phase 02-components]: 02-02: LangSwitcher barePath empty string for home page = locale root in getRelativeLocaleUrl
 
 ### Pending Todos
 
@@ -90,6 +95,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-17T18:01:05.554Z
-Stopped at: Completed 02-01-PLAN.md (Wave 0: 9 Playwright spec stubs, head slot, webServer)
+Last session: 2026-05-17T18:11:49.501Z
+Stopped at: Completed 02-02-PLAN.md (Wave 1a: SocialLinks, WhatsAppFab, LangSwitcher, CapabilityCard)
 Resume file: None
