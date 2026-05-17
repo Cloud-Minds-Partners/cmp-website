@@ -26,19 +26,12 @@ const fullTitle = title.includes("Cloud Minds")
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
     <meta name="color-scheme" content="light" />
     <meta name="theme-color" content="#FAFBFD" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {canonical && <link rel="canonical" href={canonical} />}
-
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Cloud Minds Partners" />
-
     <title>{fullTitle}</title>
+    <!-- Per-page SEO meta (description, OG, canonical, hreflang) injected via SEO.astro -->
+    <slot name="head" />
   </head>
   <body>
     <slot />
