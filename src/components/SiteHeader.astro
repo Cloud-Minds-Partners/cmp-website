@@ -1,91 +1,292 @@
 ---
-import SocialLinks from "./SocialLinks.astro";
-import Logo from "./Logo.astro";
+import Logo from './Logo.astro';
+import LangSwitcher from './LangSwitcher.astro';
+
+interface SubNavItem {
+  href: string;
+  label: string;
+  active?: boolean;
+}
 
 interface Props {
-  active?: "home" | "advisory" | "development" | "intelligence" | "platforms" | "team" | "contact";
-  subnav?: Array<{ href: string; label: string; active?: boolean }>;
+  subnav?: SubNavItem[];
 }
-const { active = "home", subnav } = Astro.props;
+const { subnav } = Astro.props;
 
-const primary = [
-  { href: "/advisory", label: "Advisory", key: "advisory" as const },
-  { href: "/development", label: "Development", key: "development" as const },
-  { href: "/intelligence", label: "Intelligence", key: "intelligence" as const },
-  { href: "/platforms", label: "Platforms", key: "platforms" as const },
-  { href: "/team", label: "Team", key: "team" as const },
+// Nav links hardcoded (i18n Phase 3 adds t() calls)
+const navLinks = [
+  { href: '/advisory',     label: 'Advisory' },
+  { href: '/development',  label: 'Development' },
+  { href: '/intelligence', label: 'Intelligence' },
+  { href: '/platforms',    label: 'Platforms' },
+  { href: '/team',         label: 'Team' },
+  { href: '/contact',      label: 'Contact' },
 ];
-
-const linkCls = (k: string) =>
-  active === k
-    ? "text-[var(--color-ink)] font-medium"
-    : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]";
 ---
-
-<header class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[color:color-mix(in_srgb,var(--color-bg)_85%,transparent)] backdrop-blur-lg">
-  <div class="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-[68px]">
-    <a href="/" class="flex items-center no-underline" aria-label="Cloud Minds Partners — Home">
-      <Logo variant="navy" height={28} />
+<header class="site-header">
+  <div class="header-inner">
+    <!-- Brand -->
+    <a href="/" class="brand" aria-label="Cloud Minds Partners home">
+      <Logo variant="white" height={28} />
+      <span class="brand-tag">The LatAm DC intelligence firm.</span>
     </a>
 
-    <nav class="hidden md:flex items-center gap-8 text-[14px]">
-      {primary.map((item) => (
-        <a href={item.href} class={`link-slide transition-colors ${linkCls(item.key)}`}>
-          {item.label}
-        </a>
+    <!-- Desktop nav -->
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {navLinks.map(link => (
+        <a href={link.href} class="nav-link">{link.label}</a>
       ))}
-      <a
-        href="/contact"
-        class={`btn btn-primary !py-2 !px-4 !text-[13px] ${active === "contact" ? "bg-[var(--color-accent)]" : ""}`}
-      >
-        Contact
-      </a>
-      <span class="w-px h-5 bg-[var(--color-border)]"></span>
-      <SocialLinks />
     </nav>
 
+    <!-- Right side: LangSwitcher + CTA -->
+    <div class="header-right">
+      <LangSwitcher />
+      <a href="/contact" class="cta-pill">Talk to us</a>
+    </div>
+
+    <!-- Mobile hamburger -->
     <button
       id="mobile-toggle"
-      class="md:hidden text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition-colors"
-      aria-label="Menu"
+      class="hamburger"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Open menu"
     >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-        <line x1="4" y1="8" x2="20" y2="8"/>
-        <line x1="4" y1="16" x2="20" y2="16"/>
-      </svg>
+      <span></span><span></span><span></span>
     </button>
   </div>
 
-  <nav id="mobile-nav" class="md:hidden hidden border-t border-[var(--color-border)] bg-[var(--color-bg-surface)]">
-    <div class="max-w-[1280px] mx-auto px-6 py-5 flex flex-col gap-4 text-[15px]">
-      {primary.map((item) => (
-        <a href={item.href} class={`no-underline ${linkCls(item.key)}`}>{item.label}</a>
-      ))}
-      <a href="/contact" class="no-underline text-[var(--color-accent)] font-medium">Contact</a>
-      <div class="pt-3 border-t border-[var(--color-border)]">
-        <SocialLinks />
-      </div>
+  <!-- Mobile nav -->
+  <nav id="mobile-nav" class="mobile-nav hidden" aria-label="Mobile navigation">
+    {navLinks.map(link => (
+      <a href={link.href} class="mobile-link">{link.label}</a>
+    ))}
+    <div class="mobile-lang">
+      <LangSwitcher />
     </div>
   </nav>
 
+  <!-- Optional subnav bar -->
   {subnav && subnav.length > 0 && (
-    <div class="border-t border-[var(--color-border)] bg-[var(--color-bg-subtle)]">
-      <div class="max-w-[1280px] mx-auto px-6 h-10 flex items-center gap-6 text-xs overflow-x-auto">
-        {subnav.map((s) => (
+    <nav class="subnav" aria-label="Section navigation">
+      <div class="subnav-inner">
+        {subnav.map(item => (
           <a
-            href={s.href}
-            class={`no-underline whitespace-nowrap link-slide ${s.active ? "text-[var(--color-accent)] font-medium" : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"}`}
-          >
-            {s.label}
-          </a>
+            href={item.href}
+            class={`subnav-link${item.active ? ' active' : ''}`}
+            aria-current={item.active ? 'page' : undefined}
+          >{item.label}</a>
         ))}
       </div>
-    </div>
+    </nav>
   )}
 </header>
 
 <script>
-  const toggle = document.getElementById("mobile-toggle");
-  const nav = document.getElementById("mobile-nav");
-  toggle?.addEventListener("click", () => nav?.classList.toggle("hidden"));
+  const toggle = document.getElementById('mobile-toggle');
+  const nav = document.getElementById('mobile-nav');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = nav?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  });
+
+  document.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && !nav?.classList.contains('hidden')) {
+      nav?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.setAttribute('aria-label', 'Open menu');
+      toggle?.focus();
+    }
+  });
 </script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    border-bottom: 1px solid var(--color-line-0);
+    background: rgba(5, 14, 29, 0.78);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    height: 72px;
+    padding: 0 clamp(28px, 4vw, 64px);
+    gap: 0;
+  }
+  /* Brand */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .brand-tag {
+    display: block;
+    margin-left: 14px;
+    padding-left: 14px;
+    border-left: 1px solid var(--color-line-1);
+    font-family: var(--font-display);
+    font-size: 13px;
+    color: var(--color-cream-2);
+    white-space: nowrap;
+  }
+  /* Desktop nav */
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    margin-left: 40px;
+    flex: 1;
+  }
+  .nav-link {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--color-cream-1);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.15s;
+  }
+  .nav-link:hover {
+    color: var(--color-cream-0);
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: -1px;
+    height: 1px;
+    background: var(--color-blue-bright);
+    transition: right 0.25s ease;
+  }
+  .nav-link:hover::after {
+    right: 0;
+  }
+  /* Right side */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+  }
+  /* CTA pill */
+  .cta-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--color-blue);
+    color: var(--color-cream-0);
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .cta-pill:hover {
+    opacity: 0.85;
+  }
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--color-cream-0);
+    border-radius: 1px;
+    transition: transform 0.2s;
+  }
+  /* Mobile nav */
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 16px clamp(28px, 4vw, 64px) 24px;
+    border-top: 1px solid var(--color-line-0);
+    gap: 0;
+  }
+  .mobile-nav.hidden {
+    display: none;
+  }
+  .mobile-link {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--color-cream-1);
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: color 0.15s;
+  }
+  .mobile-link:hover {
+    color: var(--color-cream-0);
+  }
+  .mobile-lang {
+    padding-top: 16px;
+  }
+  /* Override LangSwitcher display: none at 880px for mobile context */
+  .mobile-lang :global(.nav-lang) {
+    display: inline-flex !important;
+  }
+  /* Subnav */
+  .subnav {
+    border-top: 1px solid var(--color-line-0);
+    background: rgba(5, 14, 29, 0.92);
+  }
+  .subnav-inner {
+    display: flex;
+    gap: 32px;
+    padding: 0 clamp(28px, 4vw, 64px);
+    height: 48px;
+    align-items: center;
+  }
+  .subnav-link {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--color-cream-2);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .subnav-link:hover,
+  .subnav-link.active {
+    color: var(--color-cream-0);
+  }
+  /* Responsive: hide desktop nav + right at 880px, show hamburger */
+  @media (max-width: 880px) {
+    .desktop-nav {
+      display: none;
+    }
+    .header-right {
+      display: none;
+    }
+    .hamburger {
+      display: flex;
+    }
+    .brand-tag {
+      display: none;
+    }
+  }
+</style>

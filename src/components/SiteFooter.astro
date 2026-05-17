@@ -1,59 +1,133 @@
 ---
-import SocialLinks from "./SocialLinks.astro";
-import Logo from "./Logo.astro";
-const year = new Date().getFullYear();
+import Logo from './Logo.astro';
+import SocialLinks from './SocialLinks.astro';
+import { social } from '../config/social';
+
+const currentYear = new Date().getFullYear();
 ---
-
-<footer class="mt-32 bg-[var(--color-dark-bg)] text-[var(--color-dark-ink)] relative overflow-hidden">
-  <div class="absolute inset-0 dot-grid-dark opacity-40" aria-hidden="true"></div>
-
-  <div class="relative max-w-[1280px] mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-5 gap-10 text-sm">
-    <div class="col-span-2 md:col-span-2">
+<footer class="site-footer">
+  <div class="foot-links">
+    <!-- Brand cell -->
+    <div class="foot-brand">
       <Logo variant="white" height={28} />
-      <p class="mt-5 text-[var(--color-dark-ink-muted)] max-w-xs leading-relaxed">
-        Data center advisory, project development, and intelligence across Latin America.
-      </p>
-      <a href="mailto:info@cloudmindspartners.com" class="mt-4 inline-block caption text-[var(--color-accent-bright)]">
-        info@cloudmindspartners.com
-      </a>
-      <div class="mt-6">
-        <SocialLinks variant="dark" />
-      </div>
+      <p class="foot-tagline">The LatAm DC intelligence firm.</p>
+      <SocialLinks variant="footer" />
     </div>
 
-    <div>
-      <div class="eyebrow-dark mb-4">Services</div>
-      <ul class="space-y-2 text-[var(--color-dark-ink-muted)]">
-        <li><a href="/advisory" class="hover:text-[var(--color-dark-ink)] transition-colors">Advisory</a></li>
-        <li><a href="/development" class="hover:text-[var(--color-dark-ink)] transition-colors">Development</a></li>
-        <li><a href="/intelligence" class="hover:text-[var(--color-dark-ink)] transition-colors">Intelligence</a></li>
-      </ul>
+    <!-- Platforms column -->
+    <div class="foot-col">
+      <p class="foot-heading">Platforms</p>
+      <a href="/platforms/site-selection">Site Selection</a>
+      <a href="/platforms/grid-intelligence">Grid Intelligence</a>
+      <a href="/platforms/dc-financial">Financial Model</a>
+      <a href="/platforms/test-fit-pro">Test Fit Pro</a>
     </div>
 
-    <div>
-      <div class="eyebrow-dark mb-4">Intelligence</div>
-      <ul class="space-y-2 text-[var(--color-dark-ink-muted)]">
-        <li><a href="/intelligence/memos" class="hover:text-[var(--color-dark-ink)] transition-colors">Technical Memos</a></li>
-        <li><a href="/intelligence/radar" class="hover:text-[var(--color-dark-ink)] transition-colors">Innovation Radar</a></li>
-        <li><a href="/intelligence/regwatch" class="hover:text-[var(--color-dark-ink)] transition-colors">Regulatory Watch</a></li>
-        <li><a href="/newsletter" class="hover:text-[var(--color-dark-ink)] transition-colors">Newsletter</a></li>
-      </ul>
+    <!-- Intelligence column -->
+    <div class="foot-col">
+      <p class="foot-heading">Intelligence</p>
+      <a href="/intelligence/memos">Technical Memos</a>
+      <a href="/intelligence/radar">Innovation Radar</a>
+      <a href="/intelligence/regwatch">Regulatory Watch</a>
+      <a href="/intelligence/pulse">Weekly Pulse</a>
     </div>
 
-    <div>
-      <div class="eyebrow-dark mb-4">About</div>
-      <ul class="space-y-2 text-[var(--color-dark-ink-muted)]">
-        <li><a href="/team" class="hover:text-[var(--color-dark-ink)] transition-colors">Team</a></li>
-        <li><a href="/platforms" class="hover:text-[var(--color-dark-ink)] transition-colors">Platforms</a></li>
-        <li><a href="/contact" class="hover:text-[var(--color-dark-ink)] transition-colors">Contact</a></li>
-      </ul>
+    <!-- Company column -->
+    <div class="foot-col">
+      <p class="foot-heading">Company</p>
+      <a href="/advisory">Advisory</a>
+      <a href="/development">Development</a>
+      <a href="/team">Team</a>
+    </div>
+
+    <!-- Contact column -->
+    <div class="foot-col">
+      <p class="foot-heading">Contact</p>
+      <a href={`mailto:${social.emailGeneral}`}>{social.emailGeneral}</a>
+      <span>São Paulo · BR</span>
+      <span>Santiago · CL</span>
+      <span>Mexico City · MX</span>
     </div>
   </div>
 
-  <div class="relative border-t border-[var(--color-dark-border)]">
-    <div class="max-w-[1280px] mx-auto px-6 py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-2 text-xs text-[color:color-mix(in_srgb,var(--color-dark-ink-muted)_70%,transparent)]">
-      <span>© {year} Cloud Minds Partners · All rights reserved</span>
-      <span class="caption !text-[color:color-mix(in_srgb,var(--color-dark-ink-muted)_70%,transparent)]">São Paulo · Data Center Advisory for LatAm</span>
-    </div>
+  <!-- Copyright row -->
+  <div class="foot-bottom">
+    <span>© {currentYear} Cloud Minds Partners. All rights reserved.</span>
+    <span>The LatAm DC intelligence firm.</span>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    background: var(--color-navy-0);
+    padding-top: 80px;
+  }
+  .foot-links {
+    display: grid;
+    grid-template-columns: minmax(280px, 1.4fr) 1fr 1fr 1fr 1fr;
+    gap: clamp(40px, 4vw, 80px);
+    padding: 0 clamp(32px, 5vw, 96px) 64px;
+  }
+  /* Brand cell */
+  .foot-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .foot-tagline {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-cream-2);
+    margin: 0;
+    line-height: 1.5;
+  }
+  /* Link columns */
+  .foot-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .foot-heading {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--color-cream-0);
+    margin: 0 0 6px;
+  }
+  .foot-col a,
+  .foot-col span {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-cream-1);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .foot-col a:hover {
+    color: var(--color-blue-bright);
+  }
+  /* Copyright */
+  .foot-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px clamp(32px, 5vw, 96px);
+    border-top: 1px solid var(--color-line-0);
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-cream-2);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  /* Responsive: stack footer columns on mobile */
+  @media (max-width: 768px) {
+    .foot-links {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .foot-links {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
