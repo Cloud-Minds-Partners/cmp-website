@@ -1,7 +1,9 @@
 ---
 import Base from "./Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
   title: string;
@@ -24,22 +26,44 @@ const countryName: Record<string, string> = {
   BR: "Brazil", MX: "Mexico", CL: "Chile", AR: "Argentina",
   CO: "Colombia", PE: "Peru", UY: "Uruguay",
 };
+
+const locale = Astro.currentLocale ?? "en";
+
+// Article JSON-LD (CONT-03)
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  author: { "@type": "Person", name: author },
+  datePublished: created.toISOString(),
+  dateModified: updated.toISOString(),
+  publisher: { "@type": "Organization", name: "Cloud Minds Partners" },
+};
 ---
 
-<Base title={`${title} — CMP Technical Memo`} description={description}>
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title={`${title} — CMP Technical Memo`}
+    description={description ?? title}
+    type="article"
+    lang={locale}
+  >
+    <script slot="json-ld" type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  </SEO>
+
   <SiteHeader
-    active="intelligence"
     subnav={[
-      { href: "/intelligence", label: "Overview" },
-      { href: "/intelligence/memos", label: "Technical Memos", active: true },
-      { href: "/intelligence/radar", label: "Innovation Radar" },
-      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
+      { href: getRelativeLocaleUrl(locale, "intelligence"), label: "Overview" },
+      { href: getRelativeLocaleUrl(locale, "intelligence/memos"), label: "Technical Memos", active: true },
+      { href: getRelativeLocaleUrl(locale, "intelligence/radar"), label: "Innovation Radar" },
+      { href: getRelativeLocaleUrl(locale, "intelligence/regwatch"), label: "Regulatory Watch" },
     ]}
   />
 
   <main class="max-w-[720px] mx-auto px-6 py-16">
     <nav class="caption mb-10">
-      <a href="/intelligence/memos" class="no-underline">← All memos</a>
+      <a href={getRelativeLocaleUrl(locale, "intelligence/memos")} class="no-underline">← All memos</a>
     </nav>
 
     <header class="mb-12 pb-8 border-b border-[var(--color-rule)]">

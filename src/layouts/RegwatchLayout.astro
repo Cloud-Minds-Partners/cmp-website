@@ -1,7 +1,9 @@
 ---
 import Base from "./Base.astro";
+import SEO from "../components/SEO.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
   month: string;
@@ -15,22 +17,45 @@ const [y, m] = month.split("-").map(Number);
 const label = y && m
   ? new Date(y, m - 1, 1).toLocaleDateString("en-US", { year: "numeric", month: "long" })
   : month;
+
+const locale = Astro.currentLocale ?? "en";
+
+// Article JSON-LD (CONT-07)
+const datePublished = (y && m) ? new Date(y, m - 1, 1).toISOString() : new Date().toISOString();
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: `${label} Regulatory Watch`,
+  author: { "@type": "Person", name: author },
+  datePublished,
+  dateModified: datePublished,
+  publisher: { "@type": "Organization", name: "Cloud Minds Partners" },
+};
 ---
 
-<Base title={`Regulatory Watch — ${label}`} description={description}>
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title={`Regulatory Watch — ${label}`}
+    description={description ?? `CMP Regulatory Watch digest for ${label}.`}
+    type="article"
+    lang={locale}
+  >
+    <script slot="json-ld" type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  </SEO>
+
   <SiteHeader
-    active="intelligence"
     subnav={[
-      { href: "/intelligence", label: "Overview" },
-      { href: "/intelligence/memos", label: "Technical Memos" },
-      { href: "/intelligence/radar", label: "Innovation Radar" },
-      { href: "/intelligence/regwatch", label: "Regulatory Watch", active: true },
+      { href: getRelativeLocaleUrl(locale, "intelligence"), label: "Overview" },
+      { href: getRelativeLocaleUrl(locale, "intelligence/memos"), label: "Technical Memos" },
+      { href: getRelativeLocaleUrl(locale, "intelligence/radar"), label: "Innovation Radar" },
+      { href: getRelativeLocaleUrl(locale, "intelligence/regwatch"), label: "Regulatory Watch", active: true },
     ]}
   />
 
   <main class="max-w-[720px] mx-auto px-6 py-16">
     <nav class="caption mb-10">
-      <a href="/intelligence/regwatch" class="no-underline">← All digests</a>
+      <a href={getRelativeLocaleUrl(locale, "intelligence/regwatch")} class="no-underline">← All digests</a>
     </nav>
 
     <header class="mb-12 pb-8 border-b border-[var(--color-rule)]">
