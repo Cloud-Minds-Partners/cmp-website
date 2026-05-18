@@ -1,49 +1,363 @@
 ---
-import Base from "../layouts/Base.astro";
-import SEO from "../components/SEO.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
+import Base from '../layouts/Base.astro';
+import SEO from '../components/SEO.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Hero from '../components/Hero.astro';
+import { useTranslations } from '../i18n/utils';
+import { social, whatsappLink } from '../config/social';
+
+import heroContact from '../assets/photos/hero-intelligence.jpg';
+
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
+
+// WhatsApp URL sourced from env var (same pattern as WhatsAppFab)
+// Degrades gracefully when PUBLIC_WHATSAPP_NUMBER is not set
+const waUrl = social.whatsappNumber ? whatsappLink() : null;
 ---
 
-<Base>
-  <SEO slot="head" title="Contact — Cloud Minds Partners" description="Get in touch with Cloud Minds Partners — data center advisory and intelligence for Latin America." />
-  <SiteHeader active="contact" />
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title="Contact — Cloud Minds Partners"
+    description="Get in touch with Cloud Minds Partners. Email, WhatsApp, or LinkedIn — we respond within 24 hours."
+    lang={locale}
+  />
+  <SiteHeader />
 
-  <main>
-    <section class="pt-24 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Contact</div>
-        <h1 class="display-lg max-w-3xl">Tell us about the project.</h1>
-        <p class="lede mt-6 max-w-2xl">
-          The fastest path is email. Include the market, the stage, and
-          anything NDA-worthy only after we've exchanged a mutual.
-        </p>
-      </div>
-    </section>
+  <Hero
+    variant="page"
+    image={heroContact}
+    eyebrow="Contact"
+    heading="Let's talk."
+    subheading="We're practitioners, not a sales team. Bring a question and we'll answer it straight."
+  />
 
-    <Section compact>
-      <div class="grid md:grid-cols-2 gap-10 max-w-4xl">
-        <div>
-          <div class="eyebrow mb-3">General</div>
-          <a href="mailto:info@cloudmindspartners.com" class="display text-2xl no-underline block">
-            info@cloudmindspartners.com
-          </a>
+  <!-- Contact options (cream bg, 3-col) -->
+  <section class="contact-options">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div class="contact-option">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3>Email</h3>
+          <p>Primary channel for advisory inquiries and project scoping.</p>
+          <a href={`mailto:${social.emailGeneral}`} class="contact-link">{social.emailGeneral}</a>
         </div>
 
-        <div class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-          <div class="eyebrow mb-3">Office</div>
-          <p>São Paulo, Brazil</p>
+        <div class="contact-option">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>WhatsApp</h3>
+          <p>Quick questions and scheduling — direct line to the team.</p>
+          {waUrl ? (
+            <a href={waUrl} class="contact-link" target="_blank" rel="noopener noreferrer">Open WhatsApp</a>
+          ) : (
+            <span class="contact-link-placeholder">Available on request</span>
+          )}
+        </div>
 
-          <div class="eyebrow mt-8 mb-3">Coverage</div>
-          <p>Primary markets: Brazil, Chile, Mexico.<br/>Secondary: Argentina, Colombia, Peru, Uruguay.</p>
-
-          <div class="eyebrow mt-8 mb-3">Response</div>
-          <p>Within one business day.</p>
+        <div class="contact-option">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+          <h3>LinkedIn</h3>
+          <p>Follow our research and market intelligence updates.</p>
+          <a href={social.linkedin} class="contact-link" target="_blank" rel="noopener noreferrer">Cloud Minds Partners</a>
         </div>
       </div>
-    </Section>
-  </main>
+    </div>
+  </section>
+
+  <!-- Inquiry form (navy bg) — mailto fallback, no backend CF in Phase 3 -->
+  <section class="inquiry-section">
+    <div class="section-inner">
+      <div class="inquiry-header">
+        <p class="section-eyebrow">Inquire</p>
+        <h2>Send a project brief</h2>
+        <p class="inquiry-note">We respond to every inquiry within 24 hours on business days.</p>
+      </div>
+      <form
+        class="inquiry-form"
+        action={`mailto:${social.emailGeneral}`}
+        method="get"
+        enctype="text/plain"
+      >
+        <div class="form-row two-col">
+          <div class="form-field">
+            <label for="contact-name">Name</label>
+            <input
+              id="contact-name"
+              name="name"
+              type="text"
+              placeholder="Your name"
+              required
+              autocomplete="name"
+            />
+          </div>
+          <div class="form-field">
+            <label for="contact-company">Company</label>
+            <input
+              id="contact-company"
+              name="company"
+              type="text"
+              placeholder="Company or fund"
+              autocomplete="organization"
+            />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="contact-email">Email</label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            placeholder="you@company.com"
+            required
+            autocomplete="email"
+          />
+        </div>
+        <div class="form-field">
+          <label for="contact-message">Message</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            rows="5"
+            placeholder="Tell us about your project or question — market, stage, and what you need."
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn-submit">{t('cta.get-in-touch')}</button>
+      </form>
+    </div>
+  </section>
 
   <SiteFooter />
 </Base>
+
+<style>
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(28px, 4vw, 64px);
+  }
+
+  /* ——— Contact options (cream bg) ——— */
+  .contact-options {
+    background: var(--color-cream-bg, #f5f4f0);
+    color: var(--color-navy-0);
+    padding: clamp(80px, 10vh, 128px) 0;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+
+  .contact-option {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(5, 14, 29, 0.06);
+    color: var(--color-navy-0);
+    margin-bottom: 4px;
+  }
+
+  .contact-option h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-navy-0);
+    margin: 0;
+  }
+
+  .contact-option p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #4d5f7a;
+    margin: 0;
+    max-width: 280px;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-blue, #2d6be4);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.15s;
+    margin-top: 4px;
+  }
+
+  .contact-link:hover {
+    opacity: 0.75;
+  }
+
+  .contact-link-placeholder {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: #677793;
+    margin-top: 4px;
+  }
+
+  /* ——— Inquiry form (navy bg) ——— */
+  .inquiry-section {
+    background: var(--color-navy-0);
+    color: var(--color-cream-0);
+    padding: clamp(80px, 10vh, 128px) 0 clamp(96px, 14vh, 160px);
+  }
+
+  .inquiry-section .section-inner {
+    max-width: 760px;
+  }
+
+  .inquiry-header {
+    margin-bottom: 48px;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blue-bright, #4a8fe7);
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .inquiry-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 600;
+    color: var(--color-cream-0);
+    margin: 0 0 12px;
+    line-height: 1.1;
+  }
+
+  .inquiry-note {
+    font-size: 15px;
+    color: var(--color-cream-2);
+    margin: 0;
+  }
+
+  .inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .form-row.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-field label {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-cream-2);
+  }
+
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    background: rgba(250, 251, 253, 0.04);
+    border: 1px solid rgba(250, 251, 253, 0.12);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--color-cream-0);
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+  }
+
+  .form-field input::placeholder,
+  .form-field textarea::placeholder {
+    color: rgba(250, 251, 253, 0.25);
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: rgba(74, 143, 231, 0.55);
+    background: rgba(250, 251, 253, 0.06);
+  }
+
+  .form-field textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    padding: 14px 32px;
+    border-radius: 999px;
+    background: var(--color-blue);
+    color: var(--color-cream-0);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-submit:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 880px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .form-row.two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
