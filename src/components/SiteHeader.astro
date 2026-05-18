@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import LangSwitcher from './LangSwitcher.astro';
+import { useTranslations } from '../i18n/utils';
 
 interface SubNavItem {
   href: string;
@@ -13,15 +14,26 @@ interface Props {
 }
 const { subnav } = Astro.props;
 
-// Nav links hardcoded (i18n Phase 3 adds t() calls)
+const t = useTranslations((Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es');
+
+// Nav links with i18n labels (Phase 3 I18N-03)
 const navLinks = [
-  { href: '/advisory',     label: 'Advisory' },
-  { href: '/development',  label: 'Development' },
-  { href: '/intelligence', label: 'Intelligence' },
-  { href: '/platforms',    label: 'Platforms' },
-  { href: '/team',         label: 'Team' },
-  { href: '/contact',      label: 'Contact' },
+  { href: '/advisory',     label: t('nav.advisory') },
+  { href: '/development',  label: t('nav.development') },
+  { href: '/intelligence', label: t('nav.intelligence') },
+  { href: '/platforms',    label: t('nav.platforms') },
+  { href: '/team',         label: t('nav.team') },
+  { href: '/contact',      label: t('nav.contact') },
 ];
+
+// Auto-detect active nav link from current pathname (I18N-03, Phase 3)
+const currentPath = Astro.url.pathname;
+// Strip locale prefix so /pt/advisory matches href="/advisory"
+const barePath = currentPath.replace(/^\/(pt|es)(\/|$)/, '/');
+const isActive = (href: string): boolean => {
+  if (href === '/') return barePath === '/';
+  return barePath.startsWith(href);
+};
 ---
 <header class="site-header">
   <div class="header-inner">
@@ -34,14 +46,18 @@ const navLinks = [
     <!-- Desktop nav -->
     <nav class="desktop-nav" aria-label="Primary navigation">
       {navLinks.map(link => (
-        <a href={link.href} class="nav-link">{link.label}</a>
+        <a
+          href={link.href}
+          class:list={['nav-link', { active: isActive(link.href) }]}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >{link.label}</a>
       ))}
     </nav>
 
     <!-- Right side: LangSwitcher + CTA -->
     <div class="header-right">
       <LangSwitcher />
-      <a href="/contact" class="cta-pill">Talk to us</a>
+      <a href="/contact" class="cta-pill">{t('cta.talk-to-us')}</a>
     </div>
 
     <!-- Mobile hamburger -->
@@ -59,7 +75,11 @@ const navLinks = [
   <!-- Mobile nav -->
   <nav id="mobile-nav" class="mobile-nav hidden" aria-label="Mobile navigation">
     {navLinks.map(link => (
-      <a href={link.href} class="mobile-link">{link.label}</a>
+      <a
+        href={link.href}
+        class:list={['mobile-link', { active: isActive(link.href) }]}
+        aria-current={isActive(link.href) ? 'page' : undefined}
+      >{link.label}</a>
     ))}
     <div class="mobile-lang">
       <LangSwitcher />
@@ -171,6 +191,16 @@ const navLinks = [
   }
   .nav-link:hover::after {
     right: 0;
+  }
+  /* Active nav link — always show underline */
+  .nav-link.active {
+    color: var(--color-cream-0);
+  }
+  .nav-link.active::after {
+    right: 0;
+  }
+  .mobile-link.active {
+    color: var(--color-cream-0);
   }
   /* Right side */
   .header-right {

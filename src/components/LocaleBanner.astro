@@ -1,0 +1,20 @@
+---
+// LocaleBanner — shown on PT/ES URLs when the page falls back to EN content.
+// Renders the common.fallback-banner i18n key in the current locale.
+import { useTranslations } from '../i18n/utils';
+const t = useTranslations((Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es');
+---
+<div class="locale-banner" role="status" aria-live="polite">
+  {t('common.fallback-banner')}
+</div>
+<style>
+  .locale-banner {
+    background: rgba(45, 107, 228, 0.08);
+    border-bottom: 1px solid rgba(45, 107, 228, 0.18);
+    padding: 10px clamp(28px, 4vw, 64px);
+    font-size: 13px;
+    color: var(--color-cream-2);
+    text-align: center;
+    font-family: var(--font-display);
+  }
+</style>
