@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dcplatformcmp.web.app/sitemap-index.xml
