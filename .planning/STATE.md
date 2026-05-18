@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Completed 03-01-PLAN.md (Foundation fixes — SiteHeader active nav + LocaleBanner + layouts SEO slot + PT/ES translations + radar gate flipped)
-last_updated: "2026-05-17T21:40:00.000Z"
-last_activity: 2026-05-17 — Plan 03-01 complete (SiteHeader i18n+active state, LocaleBanner, 3 layouts SEO slot + locale-aware links, pt/es JSONs translated, 2026-W20 published)
+status: Wave 1 page composition landed — home/advisory/development/platforms pages rebuilt per mock-26, build passes
+stopped_at: Completed 03-02-PLAN.md (Wave 1 — home, advisory, development, platforms pages)
+last_updated: "2026-05-18T00:45:00.000Z"
+last_activity: 2026-05-17 — Plan 03-02 complete (4 marketing pages rebuilt per mock-26 verbatim)
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 14
-  completed_plans: 9
-  percent: 100
+  completed_plans: 11
+  percent: 79
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-05-16)
 ## Current Position
 
 Phase: 3 of 5 (Pages) — IN PROGRESS
-Plan: 2 of 6 in current phase (03-01 complete; next 03-02 in parallel)
-Status: Wave 1 foundation fixes landed — SiteHeader active nav, LocaleBanner, layouts upgrade, PT/ES translations, radar gate flipped
-Last activity: 2026-05-17 — Plan 03-01 complete (SiteHeader i18n+active state, LocaleBanner, 3 layouts SEO slot + locale-aware links, pt/es JSONs translated, 2026-W20 published)
+Plan: 3 of 6 in current phase (03-00/01/02 complete; next 03-03)
+Status: Wave 1 page composition landed — home/advisory/development/platforms pages built per mock-26, build passes
+Last activity: 2026-05-17 — Plan 03-02 complete (4 marketing pages rebuilt: home with 3-city hero + stats + capabilities + principles + insight + newsletter; advisory hero+figures+6-card+timeline+CTA; development hero+3 roles+lifecycle; platforms hero+4 alternating products)
 
-Progress: [███████░░░] 71% (overall: 10/14 plans)
+Progress: [████████░░] 79% (overall: 11/14 plans)
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [███████░░░] 71% (overall: 10/14 plans)
 | Phase 02-components P02-03 | 14 | 2 tasks | 21 files |
 | Phase 03-pages P00 | 15min | 2 tasks | 6 files |
 | Phase 03-pages P01 | 5min  | 2 tasks | 9 files |
+| Phase 03-pages P02 | 22min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,10 @@ Recent decisions affecting current work:
 - 03-01: pt.json/es.json _meta.draft_keys CSV string flags 37 home keys awaiting Edgard review; en.json _meta.draft_keys empty
 - 03-01: Stat numerics (76/251/508/+18 GW) identical across all 3 locales per Rule #9 (zero data invention)
 - 03-01: Only 2026-W20 radar entry flipped to published: true — 5 older entries stay private until Edgard reviews
+- [Phase 03-pages]: 03-02: Newsletter section placed as last home section before footer per locked CONTEXT.md (mock-26 has no newsletter, CMP marketing canon requires inline embed)
+- [Phase 03-pages]: 03-02: Insight section hardcoded EN per ROADMAP #4 exemption (Memo 011 specific verifiable claims)
+- [Phase 03-pages]: 03-02: Role cards on development.astro use inline scoped CSS (not CapabilityCard) — distinct min-height 420px centered text pattern per RESEARCH.md
+- [Phase 03-pages]: 03-02: Platforms uses .product alternating CSS grid (not CapabilityCard) — full-width 50/50 split with order swap for photo-left even rows
 
 ### Pending Todos
 
@@ -110,6 +115,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-17T21:40:00.000Z
-Stopped at: Completed 03-01-PLAN.md (Foundation fixes — SiteHeader active nav, LocaleBanner, layouts SEO slot, PT/ES translations, radar gate flipped)
+Last session: 2026-05-18T00:44:57.006Z
+Stopped at: Completed 03-02-PLAN.md (Wave 1 — home, advisory, development, platforms pages)
 Resume file: None
