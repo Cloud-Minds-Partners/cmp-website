@@ -64,7 +64,7 @@ Plans:
   1. Home page hero rotates across SP/Santiago/CDMX images on a timer; capabilities, stats, and Newsletter sections are all present and match mock-26 layout (no team teaser — omitted per mock-26 verbatim)
   2. Advisory, Development, Intelligence, Platforms, Team, and Contact pages each render at `/[slug]` with correct hero image and section content from mock-26
   3. `/intelligence/memos/` shows "Memo library expanding — first publication coming soon" when collection is empty; `/intelligence/radar/` renders the existing radar entry (2026-W20); `/intelligence/regwatch/` handles empty state gracefully
-  4. Navigating to `/pt/` shows Portuguese home page copy; navigating to `/es/` shows Spanish copy; `/pt/advisory` displays the EN advisory content with a visible "Translated version coming soon" fallback banner
+  4. Navigating to `/pt/` shows Portuguese home page copy; navigating to `/es/` shows Spanish copy (UI chrome, hero, capabilities, stats, newsletter section). The featured-memo insight section is intentionally EN in all locales because it references a specific published English memo with concrete claims — this is in-scope only for v2 once memos are localized. `/pt/advisory` displays the EN advisory content with a visible "Translated version coming soon" fallback banner
   5. Every page emits correct `hreflang` alternates for `en`, `pt`, and `es` (visible in page source)
 **Plans**: 6 plans
 
