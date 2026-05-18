@@ -1,174 +1,566 @@
 ---
-import Base from "../layouts/Base.astro";
-import SEO from "../components/SEO.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
-import LatamPulseMap from "../components/LatamPulseMap.astro";
-import WeeklyPulseSection from "../components/WeeklyPulseSection.astro";
-import NewsletterSubscribe from "../components/NewsletterSubscribe.astro";
-import NewsletterArchive from "../components/NewsletterArchive.astro";
-import { platforms } from "../data/platforms";
+import Base from '../layouts/Base.astro';
+import SEO from '../components/SEO.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Hero from '../components/Hero.astro';
+import CapabilityCard from '../components/CapabilityCard.astro';
+import NewsletterSubscribe from '../components/NewsletterSubscribe.astro';
+import { useTranslations } from '../i18n/utils';
+import { Image } from 'astro:assets';
 
-const stats = [
-  { value: "76+", label: "Cities scored · BR · CL · MX" },
-  { value: "251", label: "Land parcels benchmarked" },
-  { value: "18 GW", label: "Interconnection mapped" },
-];
+import heroSp from '../assets/photos/hero-sp-marginal.jpg';
+import heroSantiago from '../assets/photos/hero-santiago.jpg';
+import heroCdmx from '../assets/photos/hero-cdmx.jpg';
+import cardSiteSelection from '../assets/photos/card-home-site-selection.jpg';
+import cardGridIntel from '../assets/photos/card-home-grid-intel.jpg';
+import cardDcFinancial from '../assets/photos/card-home-dc-financial.jpg';
+import cardTestFit from '../assets/photos/card-home-testfit-pro.jpg';
+import memoImg from '../assets/photos/memo-home-grid-headroom.jpg';
+
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
 ---
 
-<Base>
-  <SEO slot="head" title="Cloud Minds Partners — Data Center Intelligence for Latin America" description="Cloud Minds Partners — data center advisory, project development, and intelligence for Latin America." />
-  <SiteHeader active="home" />
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title="Cloud Minds Partners — Data Center Intelligence for Latin America"
+    description={t('home.hero.subhead')}
+    lang={locale}
+  />
+  <SiteHeader />
 
-  <main>
-    <!-- ═══ HERO (DARK) — dramatic entry ═══ -->
-    <section class="relative overflow-hidden bg-[var(--color-dark-bg)] text-[var(--color-dark-ink)]">
-      <div class="absolute inset-0 dot-grid-dark opacity-50" aria-hidden="true"></div>
-      <div class="absolute inset-0 hero-glow-dark" aria-hidden="true"></div>
+  <!-- 1. HERO: 3-city rotation -->
+  <Hero
+    variant="home"
+    slides={[
+      { src: heroSp, alt: 'São Paulo skyline — Marginal Pinheiros' },
+      { src: heroSantiago, alt: 'Santiago skyline with Cordillera de los Andes' },
+      { src: heroCdmx, alt: 'Mexico City — Paseo de la Reforma aerial' },
+    ]}
+    heading={t('home.hero.headline')}
+    subheading={t('home.hero.subhead')}
+    actions={[
+      { label: t('home.hero.cta-primary'), href: 'mailto:info@cloudmindspartners.com', variant: 'primary' },
+      { label: t('home.hero.cta-secondary'), href: '/platforms', variant: 'outline' },
+    ]}
+  />
 
-      <div class="relative max-w-[1280px] mx-auto px-6 pt-28 pb-32 md:pt-36 md:pb-40">
-        <div class="grid md:grid-cols-12 gap-10 items-center">
-          <div class="md:col-span-7">
-            <div class="glass-badge mb-8">
-              <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-green)] animate-pulse"></span>
-              <span class="caption !text-[var(--color-dark-ink-muted)]">Live · Data center intelligence · LatAm</span>
-            </div>
+  <!-- 2. STATS: near-black bg, 4-col grid -->
+  <section class="stats" aria-label="Coverage statistics">
+    <div class="stats-inner">
+      <div class="stat">
+        <div class="stat-num">
+          <span class="stat-value">{t('home.stat.cities.value')}</span>
+          <span class="unit">{t('home.stat.cities.unit')}</span>
+        </div>
+        <div class="stat-label">{t('home.stat.cities.label')}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">
+          <span class="stat-value">{t('home.stat.sites.value')}</span>
+          <span class="unit">{t('home.stat.sites.unit')}</span>
+        </div>
+        <div class="stat-label">{t('home.stat.sites.label')}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">
+          <span class="stat-value">{t('home.stat.studies.value')}</span>
+          <span class="unit">{t('home.stat.studies.unit')}</span>
+        </div>
+        <div class="stat-label">{t('home.stat.studies.label')}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">
+          <span class="stat-value">{t('home.stat.headroom.value')}</span>
+          <span class="unit">{t('home.stat.headroom.unit')}</span>
+        </div>
+        <div class="stat-label">{t('home.stat.headroom.label')}</div>
+      </div>
+    </div>
+  </section>
 
-            <h1 class="display-lg">
-              <span class="block text-[var(--color-dark-ink)]">Data center projects,</span>
-              <span class="block bg-gradient-to-r from-[var(--color-accent-bright)] via-[#6AA5F0] to-[var(--color-purple)] bg-clip-text text-transparent">built on primary research.</span>
-            </h1>
+  <!-- 3. CAPABILITIES / PLATFORMS: cream bg, 2x2 CapabilityCard grid -->
+  <section class="capabilities on-cream" id="platforms">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="section-eyebrow">{t('home.capabilities.eyebrow')}</p>
+        <h2>{t('home.capabilities.heading')}</h2>
+        <p class="section-sub">{t('home.capabilities.subhead')} {t('home.capabilities.subhead-detail')}</p>
+      </div>
+      <div class="cap-grid">
+        <CapabilityCard
+          onCream
+          num={t('home.card.site-selection.num')}
+          title={t('home.card.site-selection.title')}
+          description={t('home.card.site-selection.desc')}
+          photo={cardSiteSelection}
+          href="/platforms"
+        />
+        <CapabilityCard
+          onCream
+          num={t('home.card.grid-intel.num')}
+          title={t('home.card.grid-intel.title')}
+          description={t('home.card.grid-intel.desc')}
+          photo={cardGridIntel}
+          href="/platforms"
+        />
+        <CapabilityCard
+          onCream
+          num={t('home.card.dc-financial.num')}
+          title={t('home.card.dc-financial.title')}
+          description={t('home.card.dc-financial.desc')}
+          photo={cardDcFinancial}
+          href="/platforms"
+        />
+        <CapabilityCard
+          onCream
+          num={t('home.card.testfit-pro.num')}
+          title={t('home.card.testfit-pro.title')}
+          description={t('home.card.testfit-pro.desc')}
+          photo={cardTestFit}
+          href="/platforms"
+        />
+      </div>
+    </div>
+  </section>
 
-            <p class="lede mt-8 max-w-xl !text-[var(--color-dark-ink-muted)]">
-              We work with hyperscalers, colocators, developers, and funds on
-              the parts of the project that don't fit into a spreadsheet —
-              site selection, feasibility, regulatory path, market context.
-            </p>
-
-            <div class="mt-10 flex flex-wrap items-center gap-3">
-              <a href="/platforms" class="btn btn-primary-dark">
-                Explore platforms
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-              <a href="/contact" class="btn btn-ghost-dark">Talk to us</a>
-            </div>
-
-            <!-- Hero metrics -->
-            <div class="mt-16 grid grid-cols-3 gap-6 max-w-xl">
-              {stats.map((s) => (
-                <div>
-                  <div style="font-family:var(--font-display);" class="text-2xl md:text-3xl font-medium text-[var(--color-dark-ink)] tabular-nums">{s.value}</div>
-                  <div class="caption mt-2 !text-[color:color-mix(in_srgb,var(--color-dark-ink-muted)_65%,transparent)]">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div class="md:col-span-5 relative">
-            <div class="relative aspect-square max-w-[460px] mx-auto">
-              <LatamPulseMap />
-            </div>
-          </div>
+  <!-- 4. PRINCIPLES: cream bg, 3-col grid -->
+  <section class="principles on-cream">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="section-eyebrow">{t('home.principles.eyebrow')}</p>
+        <h2>{t('home.principles.heading')}</h2>
+      </div>
+      <div class="principles-grid">
+        <div class="principle">
+          <div class="principle-num">{t('home.principle.sources.num')}</div>
+          <h3>{t('home.principle.sources.title')}</h3>
+          <p>{t('home.principle.sources.desc')}</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">{t('home.principle.partners.num')}</div>
+          <h3>{t('home.principle.partners.title')}</h3>
+          <p>{t('home.principle.partners.desc')}</p>
+        </div>
+        <div class="principle">
+          <div class="principle-num">{t('home.principle.audited.num')}</div>
+          <h3>{t('home.principle.audited.title')}</h3>
+          <p>{t('home.principle.audited.desc')}</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ═══ 3 PILLARS (LIGHT) ═══ -->
-    <Section eyebrow="What we do" title="Three practices, one thesis.">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {[
-          { num: "01", tag: "Advisory", href: "/advisory", desc: "Site selection, feasibility studies, and market intelligence tailored to the regulatory and infrastructure realities of Brazil, Chile, Mexico, and the wider region." },
-          { num: "02", tag: "Development", href: "/development", desc: "Co-development, technical due diligence, and financial modeling for greenfield and brownfield data center projects — from pre-site through commissioning." },
-          { num: "03", tag: "Intelligence", href: "/intelligence", desc: "Technical memos, weekly innovation radar, and monthly regulatory digests — plus proprietary platforms used in our own engagements and by clients." },
-        ].map((pillar) => (
-          <a href={pillar.href} class="card card-link p-8 no-underline block group rounded-lg">
-            <div class="flex items-center justify-between mb-6">
-              <span class="caption">{pillar.num}</span>
-              <span class="w-8 h-8 rounded-md border border-[var(--color-border)] inline-flex items-center justify-center group-hover:border-[var(--color-accent)] transition-colors">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-[var(--color-ink-muted)] group-hover:text-[var(--color-accent)] transition-colors" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-              </span>
-            </div>
-            <h3 style="font-family:var(--font-display);" class="text-[1.5rem] font-medium mb-3 text-[var(--color-ink)]">{pillar.tag}</h3>
-            <p class="text-[var(--color-ink-secondary)] leading-relaxed text-[15px]">{pillar.desc}</p>
-          </a>
-        ))}
-      </div>
-    </Section>
-
-    <!-- ═══ PLATFORMS (BENTO) ═══ -->
-    <Section
-      eyebrow="Platforms"
-      title="Purpose-built tools."
-      lede="We productize the parts of our work that survive across engagements. Used internally and available to clients under engagement."
-      tone="subtle"
-    >
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-5 auto-rows-[minmax(220px,auto)]">
-        {platforms.map((p, i) => {
-          const colSpan = i === 0 ? "md:col-span-6 md:row-span-2" : i === 3 ? "md:col-span-6" : "md:col-span-3";
-          return (
-            <a href={`/platforms/${p.slug}`} class={`card card-link p-7 no-underline block group relative overflow-hidden rounded-lg col-span-12 ${colSpan}`}>
-              <div class="flex items-center justify-between mb-5">
-                <span class="caption">{p.tag}</span>
-                <span class={`inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                  p.status === "live" ? "bg-[color:color-mix(in_srgb,var(--color-green)_12%,transparent)] text-[var(--color-green)]" :
-                  p.status === "beta" ? "bg-[color:color-mix(in_srgb,var(--color-amber)_12%,transparent)] text-[var(--color-amber)]" :
-                  "bg-[color:color-mix(in_srgb,var(--color-ink-quiet)_15%,transparent)] text-[var(--color-ink-muted)]"
-                }`}>
-                  <span class={`w-1 h-1 rounded-full ${p.status === "live" ? "bg-[var(--color-green)]" : p.status === "beta" ? "bg-[var(--color-amber)]" : "bg-[var(--color-ink-muted)]"}`}></span>
-                  {p.status === "live" ? "Live" : p.status === "beta" ? "Beta" : "In dev"}
-                </span>
-              </div>
-              <h3 style="font-family:var(--font-display);" class={`font-medium mb-3 text-[var(--color-ink)] ${i === 0 ? "text-[1.75rem]" : "text-[1.25rem]"}`}>{p.name}</h3>
-              <p class={`text-[var(--color-ink-secondary)] leading-relaxed ${i === 0 ? "text-[16px]" : "text-[14px]"}`}>{p.summary}</p>
-              <div class="mt-5 flex items-center gap-2 text-[13px] text-[var(--color-accent)] font-medium group-hover:gap-3 transition-all">
-                <span>Learn more</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </div>
-            </a>
-          );
-        })}
-      </div>
-    </Section>
-
-    <!-- ═══ WEEKLY PULSE (LIGHT) ═══ -->
-    <Section>
-      <WeeklyPulseSection />
-    </Section>
-
-    <!-- ═══ NEWSLETTER (SUBTLE) ═══ -->
-    <Section tone="subtle">
-      <div class="grid md:grid-cols-12 gap-12">
-        <div class="md:col-span-5">
-          <NewsletterSubscribe />
-        </div>
-        <div class="md:col-span-7">
-          <NewsletterArchive />
+  <!-- 5. INSIGHT / FEATURED MEMO: pure black bg.
+       Per ROADMAP #4 exemption: memo body copy hardcoded EN (specific
+       published memo reference); only eyebrow + CTA label translated. -->
+  <section class="insight" id="intelligence">
+    <div class="insight-inner">
+      <div class="insight-img">
+        <Image
+          src={memoImg}
+          alt="Grid headroom analysis visualization"
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 880px) 100vw, 50vw"
+          format="webp"
+          class="insight-img-bg"
+        />
+        <span class="insight-tag">Memo 011 · Live</span>
+        <div class="insight-stat-overlay">
+          <span><strong class="blue">8</strong>Substations mapped</span>
+          <span><strong>+18 GW</strong>Headroom identified</span>
+          <span><strong>2028</strong>Operative cycle</span>
         </div>
       </div>
-    </Section>
-
-    <!-- ═══ CONTACT CTA (DARK — mirror hero) ═══ -->
-    <section class="relative overflow-hidden bg-[var(--color-dark-bg)] text-[var(--color-dark-ink)]">
-      <div class="absolute inset-0 dot-grid-dark opacity-40" aria-hidden="true"></div>
-      <div class="absolute inset-0 hero-glow-dark opacity-60" aria-hidden="true"></div>
-
-      <div class="relative max-w-[1280px] mx-auto px-6 py-24 md:py-28 text-center">
-        <div class="eyebrow-dark mb-5">Engagement</div>
-        <h2 class="display text-[2rem] md:text-[2.75rem] max-w-3xl mx-auto text-[var(--color-dark-ink)]">
-          Exploring a site, a feasibility question,
-          <br class="hidden md:block" />
-          or a regulatory path in Latin America?
-        </h2>
-        <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <a href="mailto:info@cloudmindspartners.com" class="btn btn-primary-dark">
-            info@cloudmindspartners.com
-          </a>
-          <a href="/contact" class="btn btn-ghost-dark">More contact options</a>
+      <div class="insight-text">
+        <p class="section-eyebrow">{t('home.insight.eyebrow')}</p>
+        <h3>Where Brazil's 2028 grid headroom actually sits — and why Vespasiano matters more than Uberlândia.</h3>
+        <p class="insight-desc">PARPEL Cycle 2027–2031 cross-referenced with N-1 contingency across four target sites. The operative capacity story is being mispriced. We map the eight substations that change the math.</p>
+        <div class="insight-meta">
+          <span><strong>Memo 011</strong>Power · Brazil</span>
+          <span><strong>14 pages</strong>7 primary sources</span>
+          <span><strong>May 2026</strong>Members only</span>
         </div>
+        <a href="/intelligence" class="insight-cta" aria-label="Read memo 011">
+          {t('home.insight.cta')}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
+        </a>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <!-- 6. NEWSLETTER: locked CONTEXT.md decision — last section before footer -->
+  <section class="newsletter-section">
+    <div class="section-inner">
+      <div class="newsletter-head">
+        <h2>{t('home.newsletter.heading')}</h2>
+        <p>{t('home.newsletter.subhead')}</p>
+      </div>
+      <NewsletterSubscribe />
+    </div>
+  </section>
 
   <SiteFooter />
 </Base>
+
+<style>
+  /* Section rhythm shared across home sections */
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: clamp(64px, 7vw, 112px) clamp(28px, 4vw, 64px);
+  }
+  .section-head {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blue-bright);
+    margin: 0 0 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.6vw, 44px);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 auto;
+    max-width: 720px;
+  }
+  .section-sub {
+    margin: 24px auto 0;
+    max-width: 560px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* ——— STATS — near-black bar ——————————————————— */
+  .stats {
+    background: rgba(5, 14, 29, 0.97);
+    border-top: 1px solid var(--color-line-0);
+    border-bottom: 1px solid var(--color-line-0);
+  }
+  .stats-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(28px, 4vw, 64px);
+  }
+  .stat {
+    padding: 60px 32px 60px 0;
+    border-right: 1px solid var(--color-line-0);
+  }
+  .stat:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 4.6vw, 64px);
+    line-height: 0.95;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-cream-0);
+    font-feature-settings: "tnum", "lnum";
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .stat-num .unit {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-cream-2);
+    font-weight: 500;
+    margin-left: 6px;
+  }
+  .stat-label {
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: var(--color-cream-1);
+    line-height: 1.5;
+    max-width: 240px;
+  }
+
+  /* ——— CAPABILITIES / PRINCIPLES — cream sections ——— */
+  .capabilities,
+  .principles {
+    background: var(--color-cream-bg, #f5f0e8);
+    color: var(--color-navy-0);
+  }
+  .capabilities .section-head h2,
+  .principles .section-head h2 {
+    color: var(--color-navy-0);
+  }
+  .capabilities .section-sub {
+    color: #4D5F7A;
+  }
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  /* Principles */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 24px;
+  }
+  .principle {
+    padding: 32px 0;
+    text-align: left;
+  }
+  .principle-num {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 600;
+    color: var(--color-blue-bright);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .principle h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    color: var(--color-navy-0);
+    margin: 0 0 12px;
+  }
+  .principle p {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: #4D5F7A;
+    margin: 0;
+    max-width: 32ch;
+  }
+
+  /* ——— INSIGHT — near-black memo highlight ——————— */
+  .insight {
+    background: #0a0e18;
+    border-top: 1px solid var(--color-line-0);
+    padding: clamp(80px, 12vh, 144px) 0;
+  }
+  .insight-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(48px, 6vw, 96px);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(28px, 4vw, 64px);
+    align-items: center;
+  }
+  .insight-img {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    border: 1px solid var(--color-line-1);
+  }
+  .insight-img :global(.insight-img-bg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.05) contrast(1.05);
+  }
+  .insight-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(5, 14, 29, 0.65) 100%);
+    z-index: 1;
+  }
+  .insight-tag {
+    position: absolute;
+    top: 22px;
+    left: 22px;
+    z-index: 2;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--color-cream-0);
+    background: rgba(5, 14, 29, 0.78);
+    backdrop-filter: blur(10px);
+    padding: 7px 11px;
+    border: 1px solid var(--color-blue-bright);
+  }
+  .insight-tag::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-blue-bright);
+    margin-right: 8px;
+    vertical-align: middle;
+    box-shadow: 0 0 6px var(--color-blue-bright);
+  }
+  .insight-stat-overlay {
+    position: absolute;
+    bottom: 22px;
+    left: 22px;
+    right: 22px;
+    z-index: 2;
+    background: rgba(5, 14, 29, 0.82);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-line-1);
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+  .insight-stat-overlay > span {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--color-cream-3);
+  }
+  .insight-stat-overlay strong {
+    font-family: var(--font-display);
+    color: var(--color-cream-0);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    font-size: 20px;
+  }
+  .insight-stat-overlay strong.blue {
+    color: var(--color-blue-bright);
+  }
+  .insight-text .section-eyebrow {
+    justify-content: flex-start;
+    margin-bottom: 18px;
+  }
+  .insight-text h3 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3.2vw, 40px);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--color-cream-0);
+    max-width: 580px;
+  }
+  .insight-desc {
+    margin: 24px 0 0;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-cream-1);
+    max-width: 500px;
+  }
+  .insight-meta {
+    margin-top: 36px;
+    display: flex;
+    gap: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-line-0);
+    flex-wrap: wrap;
+  }
+  .insight-meta span {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--color-cream-3);
+  }
+  .insight-meta strong {
+    color: var(--color-cream-0);
+    font-weight: 600;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+  }
+  .insight-cta {
+    margin-top: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--color-blue-bright);
+    font-weight: 600;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--color-blue-bright);
+    text-decoration: none;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .insight-cta:hover {
+    gap: 18px;
+    color: var(--color-cream-0);
+  }
+
+  /* ——— NEWSLETTER ———————————————————————————— */
+  .newsletter-section {
+    background: var(--color-navy-0, #05111d);
+    border-top: 1px solid var(--color-line-0);
+  }
+  .newsletter-section .section-inner {
+    max-width: 720px;
+    text-align: center;
+  }
+  .newsletter-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+    color: var(--color-cream-0);
+  }
+  .newsletter-head p {
+    margin: 0 0 32px;
+    font-size: 16px;
+    color: var(--color-cream-1);
+    line-height: 1.55;
+  }
+
+  /* ——— Responsive ——————————————————————————— */
+  @media (max-width: 1100px) {
+    .stats-inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat {
+      padding: 36px 24px 36px 0;
+    }
+    .stat:nth-child(2) {
+      padding-right: 0;
+      border-right: 0;
+    }
+    .stat:nth-child(3) {
+      border-top: 1px solid var(--color-line-0);
+    }
+    .stat:nth-child(4) {
+      border-top: 1px solid var(--color-line-0);
+      border-right: 0;
+      padding-right: 0;
+    }
+  }
+  @media (max-width: 880px) {
+    .stats-inner,
+    .cap-grid,
+    .principles-grid,
+    .insight-inner {
+      grid-template-columns: 1fr;
+    }
+    .insight-img {
+      aspect-ratio: 16 / 10;
+    }
+    .insight-stat-overlay {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+</style>
