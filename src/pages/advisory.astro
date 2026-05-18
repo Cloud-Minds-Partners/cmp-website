@@ -1,143 +1,176 @@
 ---
 import Base from '../layouts/Base.astro';
 import SEO from '../components/SEO.astro';
-import SiteHeader from '../components/SiteHeader.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-import Hero from '../components/Hero.astro';
-import CapabilityCard from '../components/CapabilityCard.astro';
-import { useTranslations } from '../i18n/utils';
-
-import heroAdvisory from '../assets/photos/hero-advisory.jpg';
-import cardSite from '../assets/photos/card-adv-site-selection.jpg';
-import cardPower from '../assets/photos/card-adv-power-grid.jpg';
-import cardWater from '../assets/photos/card-adv-water-climate.jpg';
-import cardRegulatory from '../assets/photos/card-adv-regulatory.jpg';
-import cardFinancial from '../assets/photos/card-adv-financial.jpg';
-import cardMarket from '../assets/photos/card-adv-market-intel.jpg';
-
-const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
-const t = useTranslations(locale);
 ---
 
-<Base lang={locale}>
+<Base lang="en">
   <SEO
     slot="head"
     title="Advisory — Cloud Minds Partners"
-    description="LatAm data center advisory — site selection, power & grid, water & climate, regulatory & tax, financial structuring, and market intelligence. Six lenses. One picture."
-    lang={locale}
-  />
-  <SiteHeader />
-
-  <!-- 1. HERO -->
-  <Hero
-    variant="page"
-    image={heroAdvisory}
-    eyebrow={t('nav.advisory')}
-    live
-    heading="The work that sits before a CFO and an EPC."
-    subheading="Site, power, water, regulatory, capital — pressure-tested before the bid."
+    description="The work that sits before a CFO and an EPC. Site, power, water, regulatory, capital — pressure-tested before the bid."
+    image="/og/advisory.png"
   />
 
-  <!-- 2. FIGURES on near-black -->
-  <section class="figures-strip">
+  <style slot="head" is:global>
+    .page-hero-bg { background-image: url("/photos/hero-advisory.jpg"); }
+
+    .figures-inner {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      max-width: none; width: 100%;
+      padding: 64px clamp(28px, 4vw, 64px);
+      gap: 0;
+    }
+    .figure {
+      padding: 8px 32px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+    .figure:last-child { border-right: 0; }
+    .figure-num { font-family: var(--font-display); font-size: clamp(34px, 3.6vw, 48px); line-height: 1; font-weight: 600; letter-spacing: var(--track-tight); color: var(--cream-0); }
+    .figure-unit { font-size: 13px; color: var(--cream-2); font-weight: 400; font-family: var(--font-body); margin-left: 4px; }
+    .figure-label { margin-top: 12px; font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0; color: var(--cream-2); }
+
+    @media (max-width: 880px) {
+      .figures-inner { grid-template-columns: 1fr 1fr; gap: 28px; padding: 40px var(--gutter); }
+      .figure { border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 0; }
+    }
+  </style>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/">
+        <img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" />
+        <span class="brand-tag">Data Center Advisory · LatAm</span>
+      </a>
+      <div class="nav-links">
+        <a href="/advisory" class="active">Advisory</a>
+        <a href="/development">Development</a>
+        <a href="/intelligence">Intelligence</a>
+        <a href="/platforms">Platforms</a>
+        <a href="/team">Team</a>
+      </div>
+      <div class="nav-right">
+        <div class="nav-lang">
+          <a href="/advisory" class="active">EN</a><span class="sep">·</span><a href="/pt/">PT</a><span class="sep">·</span><a href="/es/">ES</a>
+        </div>
+        <a href="mailto:info@cloudmindspartners.com" class="nav-cta">Talk to us
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="page-hero-bg" aria-hidden="true"></div>
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="page-hero-content">
+        <div class="page-eyebrow live">Advisory</div>
+        <h1>The work that sits <em>before</em> a CFO and an EPC.</h1>
+        <p>Site, power, water, regulatory, capital — pressure-tested before the bid.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="sec-near">
     <div class="figures-inner">
-      <div class="figure">
-        <div class="figure-num">76</div>
-        <div class="figure-label">Cities</div>
-      </div>
-      <div class="figure">
-        <div class="figure-num">30<span class="figure-unit">+</span></div>
-        <div class="figure-label">Engagements</div>
-      </div>
-      <div class="figure">
-        <div class="figure-num">1<span class="figure-unit">B+</span></div>
-        <div class="figure-label">USD informed</div>
-      </div>
-      <div class="figure">
-        <div class="figure-num">3</div>
-        <div class="figure-label">Markets</div>
-      </div>
+      <div class="figure"><div class="figure-num">76</div><div class="figure-label">Cities</div></div>
+      <div class="figure"><div class="figure-num">30<span class="figure-unit">+</span></div><div class="figure-label">Engagements</div></div>
+      <div class="figure"><div class="figure-num">1<span class="figure-unit">B+</span></div><div class="figure-label">USD informed</div></div>
+      <div class="figure"><div class="figure-num">3</div><div class="figure-label">Markets</div></div>
     </div>
   </section>
 
-  <!-- 3. CAPABILITIES on cream — 2x3 grid -->
-  <section class="capabilities on-cream">
-    <div class="section-inner">
-      <div class="section-head">
-        <p class="section-eyebrow">Capabilities</p>
-        <h2>Six lenses. One picture.</h2>
+  <section class="sec-cream sec-pad on-cream">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center; margin-bottom: 56px;">
+        <div class="section-eyebrow" style="justify-content:center;">Capabilities</div>
+        <h2 class="section-heading" style="margin: 0 auto; max-width: 720px;">Six lenses. <span class="blue">One picture.</span></h2>
       </div>
+
       <div class="cap-grid">
-        <CapabilityCard onCream
-          num="01 — Site"
-          title="Site selection"
-          description="LatAm cities scored by land, grid, water, fiber and fiscal incentives."
-          photo={cardSite}
-        />
-        <CapabilityCard onCream
-          num="02 — Power"
-          title="Power & grid"
-          description="Feasibility, N-1 contingency, PARPEL 2027–2031 modeling."
-          photo={cardPower}
-        />
-        <CapabilityCard onCream
-          num="03 — Water"
-          title="Water & climate"
-          description="Outorga lead times and WUE under regional drought stress."
-          photo={cardWater}
-        />
-        <CapabilityCard onCream
-          num="04 — Regulatory"
-          title="Regulatory & tax"
-          description="EIAR, Anatel, REIDI and state-level incentive structuring."
-          photo={cardRegulatory}
-        />
-        <CapabilityCard onCream
-          num="05 — Capital"
-          title="Financial structuring"
-          description="TCO, IRR and FX stress — numbers a credit committee passes."
-          photo={cardFinancial}
-        />
-        <CapabilityCard onCream
-          num="06 — Intelligence"
-          title="Market intelligence"
-          description="Demand signals, PPAs and competitor mapping — primary sources."
-          photo={cardMarket}
-        />
+        <div class="cap-card reveal reveal-delay-1" tabindex="0">
+          <div class="cap-card-photo" style="background-image:url('/photos/card-adv-site-selection.jpg');"></div>
+          <div class="cap-card-body">
+            <div class="cap-num">01 — Site</div>
+            <h3 class="cap-title">Site selection</h3>
+            <p class="cap-desc">LatAm cities scored by land, grid, water, fiber and fiscal incentives.</p>
+          </div>
+        </div>
+        <div class="cap-card reveal reveal-delay-2" tabindex="0">
+          <div class="cap-card-photo" style="background-image:url('/photos/card-adv-power-grid.jpg');"></div>
+          <div class="cap-card-body">
+            <div class="cap-num">02 — Power</div>
+            <h3 class="cap-title">Power &amp; grid</h3>
+            <p class="cap-desc">Feasibility, N-1 contingency, PARPEL 2027–2031 modeling.</p>
+          </div>
+        </div>
+        <div class="cap-card reveal reveal-delay-3" tabindex="0">
+          <div class="cap-card-photo" style="background-image:url('/photos/card-adv-water-climate.jpg');"></div>
+          <div class="cap-card-body">
+            <div class="cap-num">03 — Water</div>
+            <h3 class="cap-title">Water &amp; climate</h3>
+            <p class="cap-desc">Outorga lead times and WUE under regional drought stress.</p>
+          </div>
+        </div>
+        <div class="cap-card reveal reveal-delay-1" tabindex="0">
+          <div class="cap-card-photo" style="background-image:url('/photos/card-adv-regulatory.jpg');"></div>
+          <div class="cap-card-body">
+            <div class="cap-num">04 — Regulatory</div>
+            <h3 class="cap-title">Regulatory &amp; tax</h3>
+            <p class="cap-desc">EIAR, Anatel, REIDI and state-level incentive structuring.</p>
+          </div>
+        </div>
+        <div class="cap-card reveal reveal-delay-2" tabindex="0">
+          <div class="cap-card-photo" style="background-image:url('/photos/card-adv-financial.jpg');"></div>
+          <div class="cap-card-body">
+            <div class="cap-num">05 — Capital</div>
+            <h3 class="cap-title">Financial structuring</h3>
+            <p class="cap-desc">TCO, IRR and FX stress — numbers a credit committee passes.</p>
+          </div>
+        </div>
+        <div class="cap-card reveal reveal-delay-3" tabindex="0">
+          <div class="cap-card-photo" style="background-image:url('/photos/card-adv-market-intel.jpg');"></div>
+          <div class="cap-card-body">
+            <div class="cap-num">06 — Intelligence</div>
+            <h3 class="cap-title">Market intelligence</h3>
+            <p class="cap-desc">Demand signals, PPAs and competitor mapping — primary sources.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 4. ENGAGEMENT MODEL on navy — 4-step timeline -->
-  <section class="engagement">
-    <div class="section-inner">
-      <div class="section-head">
-        <p class="section-eyebrow">Engagement</p>
-        <h2>Four phases. One owner.</h2>
+  <section class="sec-navy sec-pad">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center; margin-bottom: 56px;">
+        <div class="section-eyebrow" style="justify-content:center;">Engagement</div>
+        <h2 class="section-heading" style="margin: 0 auto; max-width: 720px;">Four phases. <span class="blue">One owner.</span></h2>
       </div>
-      <div class="engagement-timeline">
-        <div class="model-step">
+
+      <div class="model">
+        <div class="model-step reveal reveal-delay-1">
           <div class="model-step-dot"></div>
           <div class="model-step-num">Phase 01</div>
           <h4>Thesis</h4>
           <p>Investment thesis, market sizing, scoring rubric.</p>
           <div class="model-step-time">3–4 weeks</div>
         </div>
-        <div class="model-step">
+        <div class="model-step reveal reveal-delay-2">
           <div class="model-step-dot"></div>
           <div class="model-step-num">Phase 02</div>
           <h4>Shortlist</h4>
           <p>Primary research across 20–60 candidate sites.</p>
           <div class="model-step-time">6–10 weeks</div>
         </div>
-        <div class="model-step">
+        <div class="model-step reveal reveal-delay-3">
           <div class="model-step-dot"></div>
           <div class="model-step-num">Phase 03</div>
           <h4>Diligence</h4>
           <p>3–5 preferred sites. Engineering, financial, regulatory.</p>
           <div class="model-step-time">4–8 weeks</div>
         </div>
-        <div class="model-step">
+        <div class="model-step reveal reveal-delay-3">
           <div class="model-step-dot"></div>
           <div class="model-step-num">Phase 04</div>
           <h4>Close</h4>
@@ -148,250 +181,41 @@ const t = useTranslations(locale);
     </div>
   </section>
 
-  <!-- 5. CTA bar on cream -->
-  <section class="adv-cta on-cream">
-    <div class="adv-cta-inner">
-      <div class="adv-cta-text">
-        <p class="section-eyebrow">Ready when you are</p>
-        <h2>Bring a thesis. We'll pressure-test it.</h2>
+  <section class="sec-cream sec-pad-sm on-cream">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:48px; flex-wrap:wrap; padding: 0 clamp(28px, 4vw, 64px);">
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:18px;">Ready when you are</div>
+        <h2 class="section-heading">Bring a thesis. <span class="blue">We'll pressure-test it.</span></h2>
       </div>
-      <div class="adv-cta-actions">
-        <a class="btn-primary" href="mailto:info@cloudmindspartners.com">
-          Engage advisory
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a class="btn-primary" href="mailto:info@cloudmindspartners.com">Engage advisory
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
         </a>
-        <a class="btn-outline" href="/intelligence/memos">Read a memo</a>
+        <a class="btn-outline" href="/intelligence">Read a memo</a>
       </div>
     </div>
   </section>
 
-  <SiteFooter />
+  <footer>
+    <div class="foot-links">
+      <div class="foot-brand-cell">
+        <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
+        <p>Data center intelligence for Latin America.</p>
+        <div class="foot-social" aria-label="Follow us">
+          <a href="https://www.linkedin.com/company/cloud-minds-partners" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.97 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0z"/></svg></a>
+          <a href="https://wa.me/5511999999999" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.5-.3zM12 22a10 10 0 0 1-5-1.3L2 22l1.3-5A10 10 0 1 1 12 22zm0-18.2A8.2 8.2 0 0 0 4.6 16l-.2.5-.8 3 3-.8.5.2c1.2.7 2.6 1.1 4 1.1 4.5 0 8.2-3.7 8.2-8.2S16.5 3.8 12 3.8z"/></svg></a>
+        </div>
+      </div>
+      <div><h4>Platforms</h4><ul><li><a href="/platforms">Site Selection</a></li><li><a href="/platforms">Grid Intelligence</a></li><li><a href="/platforms">Financial Model</a></li><li><a href="/platforms">Test Fit Pro</a></li></ul></div>
+      <div><h4>Intelligence</h4><ul><li><a href="/intelligence">Technical Memos</a></li><li><a href="/intelligence">Innovation Radar</a></li><li><a href="/intelligence">Regulatory Watch</a></li><li><a href="/intelligence">Weekly Pulse</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="/advisory">Advisory</a></li><li><a href="/development">Development</a></li><li><a href="/team">Team</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Mexico City · MX</li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>All rights reserved.</span></div>
+  </footer>
+
+  <script is:inline>
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </Base>
-
-<style>
-  .section-inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: clamp(64px, 7vw, 112px) clamp(28px, 4vw, 64px);
-  }
-  .section-head {
-    text-align: center;
-    margin-bottom: 56px;
-  }
-  .section-eyebrow {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-blue-bright);
-    margin: 0 0 16px;
-  }
-  .section-head h2 {
-    font-family: var(--font-display);
-    font-size: clamp(30px, 3.6vw, 44px);
-    line-height: 1.1;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin: 0 auto;
-    max-width: 720px;
-  }
-
-  /* ——— FIGURES STRIP — near-black ——————————————— */
-  .figures-strip {
-    background: rgba(5, 14, 29, 0.97);
-    border-top: 1px solid var(--color-line-0);
-    border-bottom: 1px solid var(--color-line-0);
-  }
-  .figures-inner {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 64px clamp(28px, 4vw, 64px);
-    gap: 0;
-  }
-  .figure {
-    padding: 8px 32px;
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
-    text-align: center;
-  }
-  .figure:last-child {
-    border-right: 0;
-  }
-  .figure-num {
-    font-family: var(--font-display);
-    font-size: clamp(34px, 3.6vw, 48px);
-    line-height: 1;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: var(--color-cream-0);
-  }
-  .figure-unit {
-    font-size: 13px;
-    color: var(--color-cream-2);
-    font-weight: 400;
-    font-family: var(--font-body);
-    margin-left: 4px;
-  }
-  .figure-label {
-    margin-top: 12px;
-    font-family: var(--font-body);
-    font-size: 12.5px;
-    color: var(--color-cream-2);
-  }
-
-  /* ——— CAPABILITIES on cream — 3-col grid ——————— */
-  .capabilities {
-    background: var(--color-cream-bg, #f5f0e8);
-    color: var(--color-navy-0);
-  }
-  .capabilities .section-head h2 {
-    color: var(--color-navy-0);
-  }
-  .cap-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  /* ——— ENGAGEMENT MODEL on navy ———————————————— */
-  .engagement {
-    background: var(--color-navy-0, #05111d);
-    border-top: 1px solid var(--color-line-0);
-  }
-  .engagement .section-head h2 {
-    color: var(--color-cream-0);
-  }
-  .engagement-timeline {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-  }
-  .model-step {
-    padding: 24px 20px;
-    border-left: 1px solid var(--color-line-0);
-    position: relative;
-  }
-  .model-step-dot {
-    position: absolute;
-    top: 24px;
-    left: -5px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--color-blue-bright);
-    box-shadow: 0 0 0 3px rgba(5, 14, 29, 0.97);
-  }
-  .model-step-num {
-    font-family: var(--font-body);
-    font-size: 12.5px;
-    color: var(--color-cream-2);
-    margin-bottom: 12px;
-  }
-  .model-step h4 {
-    font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.018em;
-    color: var(--color-cream-0);
-    margin: 0 0 12px;
-  }
-  .model-step p {
-    font-size: 14.5px;
-    line-height: 1.55;
-    color: var(--color-cream-1);
-    margin: 0 0 20px;
-    max-width: 28ch;
-  }
-  .model-step-time {
-    font-family: var(--font-body);
-    font-size: 12px;
-    color: var(--color-blue-bright);
-    letter-spacing: 0.02em;
-  }
-
-  /* ——— CTA bar on cream ———————————————————————— */
-  .adv-cta {
-    background: var(--color-cream-bg, #f5f0e8);
-    color: var(--color-navy-0);
-  }
-  .adv-cta-inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: clamp(48px, 6vw, 80px) clamp(28px, 4vw, 64px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-  .adv-cta-text .section-eyebrow {
-    margin-bottom: 18px;
-  }
-  .adv-cta-text h2 {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 3.4vw, 40px);
-    line-height: 1.1;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin: 0;
-    color: var(--color-navy-0);
-    max-width: 22ch;
-  }
-  .adv-cta-actions {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-  .btn-primary,
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 999px;
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: opacity 0.2s, transform 0.2s;
-  }
-  .btn-primary {
-    background: var(--color-blue);
-    color: var(--color-cream-0);
-  }
-  .btn-outline {
-    background: transparent;
-    border: 1px solid rgba(5, 14, 29, 0.25);
-    color: var(--color-navy-0);
-  }
-  .btn-primary:hover,
-  .btn-outline:hover {
-    opacity: 0.85;
-    transform: translateY(-1px);
-  }
-
-  /* ——— Responsive ——————————————————————————— */
-  @media (max-width: 1100px) {
-    .cap-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 880px) {
-    .figures-inner,
-    .cap-grid,
-    .engagement-timeline {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    .figure {
-      border-right: 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 16px 0;
-    }
-    .figure:last-child {
-      border-bottom: 0;
-    }
-  }
-</style>

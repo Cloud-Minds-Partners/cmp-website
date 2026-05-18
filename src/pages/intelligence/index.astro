@@ -1,307 +1,156 @@
 ---
 import Base from '../../layouts/Base.astro';
 import SEO from '../../components/SEO.astro';
-import SiteHeader from '../../components/SiteHeader.astro';
-import SiteFooter from '../../components/SiteFooter.astro';
-import Hero from '../../components/Hero.astro';
-import LocaleBanner from '../../components/LocaleBanner.astro';
-import { getCollection } from 'astro:content';
-import { useTranslations } from '../../i18n/utils';
-import { Image } from 'astro:assets';
-
-import heroIntelligence from '../../assets/photos/hero-intelligence.jpg';
-import memoFeaturedImg from '../../assets/photos/memo-intelligence-grid.jpg';
-
-const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
-const t = useTranslations(locale);
-
-const allMemos = await getCollection('memos', (m) => m.data.publish);
-const localeMemos = allMemos.filter((m) => m.data.language === locale);
-const memos = (localeMemos.length > 0 ? localeMemos : allMemos)
-  .sort((a, b) => b.data.created.valueOf() - a.data.created.valueOf());
-const showFallbackBanner = localeMemos.length === 0 && locale !== 'en';
-
-// Streams subnav links to the 3 collection index pages
-const streams = [
-  { href: '/intelligence', label: 'Overview' },
-  { href: '/intelligence/memos', label: 'Technical Memos' },
-  { href: '/intelligence/radar', label: 'Innovation Radar' },
-  { href: '/intelligence/regwatch', label: 'Regulatory Watch' },
-];
-
-const fmtMonth = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
 ---
 
-<Base lang={locale}>
+<Base lang="en">
   <SEO
     slot="head"
     title="Intelligence — Cloud Minds Partners"
-    description="Technical memos, innovation radar, and regulatory watch covering LatAm data center markets."
-    lang={locale}
-  />
-  <SiteHeader subnav={streams} />
-
-  {showFallbackBanner && <LocaleBanner />}
-
-  <Hero
-    variant="page"
-    image={heroIntelligence}
-    eyebrow="Intelligence"
-    live={true}
-    heading="Primary-source intelligence on LatAm data centers."
-    subheading="Three streams — technical memos, innovation radar, regulatory watch. Audited claim-by-claim before delivery."
+    description="Research on LatAm data center markets. Three streams. Primary sources. Audited claim-by-claim."
+    image="/og/intelligence.png"
   />
 
-  <!-- Featured memo (cream bg, 2-col grid) -->
-  <section class="featured on-cream" id="memos">
-    <div class="section-inner">
-      <div class="featured-grid">
-        <div class="featured-visual">
-          <Image
-            src={memoFeaturedImg}
-            alt="Grid intelligence visualization"
-            widths={[640, 960, 1280]}
-            sizes="(max-width: 880px) 100vw, 50vw"
-            format="webp"
-            class="featured-img"
-          />
-        </div>
-        <div class="featured-text">
-          <p class="section-eyebrow">Latest memo</p>
-          <h2>Where Brazil's 2028 grid headroom actually sits — and why Vespasiano matters more than Uberlândia.</h2>
-          <p class="featured-lede">PARPEL Cycle 2027–2031 cross-referenced with N-1 contingency analysis across four target Brazilian sites. We map the eight substations that change the math.</p>
-          <div class="featured-meta">
-            <span><strong>14 pages</strong>Primary sources</span>
-            <span><strong>May 2026</strong>Published</span>
-            <span><strong>Members only</strong>Request access</span>
-          </div>
-          <a href="/intelligence/memos" class="btn-read">Read all memos →</a>
+  <style slot="head" is:global>
+    .page-hero-bg { background-image: url("/photos/hero-intelligence.jpg"); filter: saturate(1.1) contrast(1.05) brightness(0.85); }
+
+    .streams { background: var(--navy-1); border-bottom: 1px solid var(--line-0); position: sticky; top: 72px; z-index: 30; }
+    .streams-inner { display: flex; max-width: var(--max-w); margin: 0 auto; }
+    .streams-tab { padding: 18px clamp(20px, 3vw, 36px); font-size: 15px; color: var(--cream-1); font-weight: 600; font-family: var(--font-display); letter-spacing: -0.005em; border-right: 1px solid var(--line-0); transition: background var(--t-fast), color var(--t-fast); position: relative; cursor: pointer; }
+    .streams-tab:first-child { border-left: 1px solid var(--line-0); margin-left: var(--gutter); }
+    .streams-tab:hover { background: var(--navy-2); color: var(--cream-0); }
+    .streams-tab.active { color: var(--cream-0); background: var(--navy-2); }
+    .streams-tab.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--blue-bright); }
+    .streams-count { display: inline-block; margin-left: 8px; font-family: var(--font-body); font-size: 13px; color: var(--cream-3); letter-spacing: 0; }
+
+    .featured { background: var(--cream-bg); color: var(--navy-0); padding: clamp(72px, 10vh, 120px) 0; }
+    .featured h3 { color: var(--navy-0) !important; }
+    .featured h3 .blue { color: var(--blue) !important; }
+    .featured p { color: #4D5F7A !important; }
+    .featured .section-eyebrow { color: var(--blue-deep) !important; }
+    .featured .section-eyebrow::before { background: var(--blue-deep); }
+    .featured-meta { border-top-color: rgba(5,14,29,0.10) !important; color: #677793 !important; }
+    .featured-meta strong { color: var(--navy-0) !important; }
+    .featured-img { border-radius: 20px; border-color: rgba(5,14,29,0.12) !important; }
+    .featured-inner { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(48px, 6vw, 96px); max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); align-items: center; }
+    .featured-img { border-radius: 20px; aspect-ratio: 5/4; position: relative; overflow: hidden; border: 1px solid var(--line-1); }
+    .featured-img-bg { position: absolute; inset: 0; background: url("/photos/memo-intelligence-grid.jpg") center/cover no-repeat; animation: ken 22s ease-in-out infinite alternate; filter: saturate(1.05); }
+    @keyframes ken { 0% { transform: scale(1) translate(0,0); } 100% { transform: scale(1.08) translate(-1.5%,-1%); } }
+    .featured-tag { position: absolute; top: 22px; left: 22px; z-index: 2; font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0; text-transform: none; color: var(--cream-0); background: rgba(5,14,29,0.78); backdrop-filter: blur(10px); padding: 7px 11px; border: 1px solid var(--blue-bright); }
+    .featured h3 { font-family: var(--font-display); font-size: clamp(26px, 3.2vw, 40px); line-height: 1.1; letter-spacing: var(--track-display); font-weight: 600; margin: 0; color: var(--cream-0); max-width: 600px; }
+    .featured h3 .blue { color: var(--blue-bright); }
+    .featured p { margin: 24px 0 0; font-size: 15.5px; line-height: 1.65; color: var(--cream-1); max-width: 500px; }
+    .featured-meta { margin-top: 32px; display: flex; gap: 28px; padding-top: 22px; border-top: 1px solid var(--line-0); font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0; text-transform: none; color: var(--cream-3); }
+    .featured-meta strong { display: block; color: var(--cream-0); font-weight: 600; letter-spacing: 0; text-transform: none; font-family: var(--font-body); font-size: 14px; margin-bottom: 4px; }
+
+    .memos { padding: clamp(80px, 10vh, 128px) 0 clamp(96px, 14vh, 160px); background: var(--navy-0); }
+    .memos-header { display: flex; justify-content: space-between; align-items: baseline; max-width: var(--max-w); margin: 0 auto 48px; padding: 0 var(--gutter); }
+    .memos-header h2 { font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); line-height: 1.05; margin: 12px 0 0; letter-spacing: var(--track-display); font-weight: 600; }
+    .memo { display: grid; grid-template-columns: 100px 1fr 200px; gap: clamp(20px, 2.6vw, 40px); padding: 28px 0; border-bottom: 1px solid var(--line-0); transition: background var(--t-fast); align-items: start; max-width: var(--max-w); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); cursor: pointer; }
+    .memo:hover { background: var(--navy-2); }
+    .memo:first-of-type { border-top: 1px solid var(--line-0); }
+    .memo-num { font-family: var(--font-body); font-size: 13px; color: var(--cream-3); letter-spacing: 0; padding-top: 4px; }
+    .memo-num strong { display: block; font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--cream-0); letter-spacing: -0.01em; margin-bottom: 4px; }
+    .memo-body h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -0.008em; margin: 0 0 8px; color: var(--cream-0); }
+    .memo-body h3 em { font-style: normal; color: var(--blue-bright); }
+    .memo-body p { font-size: 13.5px; line-height: 1.55; color: var(--cream-1); margin: 0; max-width: 580px; }
+    .memo-tag { display: inline-block; font-family: var(--font-body); font-size: 12px; letter-spacing: 0; text-transform: none; color: var(--cream-2); padding: 3px 7px; border: 1px solid var(--line-1); margin-top: 10px; }
+    .memo-meta { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-body); font-size: 12.5px; letter-spacing: 0; text-transform: none; color: var(--cream-2); padding-top: 4px; text-align: right; }
+    .memo-meta strong { color: var(--cream-0); font-weight: 500; }
+
+    @media (max-width: 880px) {
+      .featured-inner { grid-template-columns: 1fr; }
+      .memo { grid-template-columns: 1fr; }
+      .memo-meta { text-align: left; }
+      .streams-inner { overflow-x: auto; }
+    }
+  </style>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /><span class="brand-tag">Data Center Advisory · LatAm</span></a>
+      <div class="nav-links"><a href="/advisory">Advisory</a><a href="/development">Development</a><a href="/intelligence" class="active">Intelligence</a><a href="/platforms">Platforms</a><a href="/team">Team</a></div>
+      <div class="nav-right"><div class="nav-lang">
+        <a href="/intelligence" class="active">EN</a><span class="sep">·</span><a href="/pt/">PT</a><span class="sep">·</span><a href="/es/">ES</a>
+      </div>
+      <a href="mailto:info@cloudmindspartners.com" class="nav-cta">Talk to us <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg></a></div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="page-hero-bg" aria-hidden="true"></div>
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="page-hero-content">
+        <div class="page-eyebrow live">Intelligence</div>
+        <h1>Research on <em>LatAm</em> data center markets.</h1>
+        <p>Three streams. Primary sources. Audited claim-by-claim.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="streams">
+    <div class="streams-inner">
+      <a class="streams-tab active" href="#memos">Technical Memos <span class="streams-count">11</span></a>
+      <a class="streams-tab" href="#radar">Innovation Radar <span class="streams-count">W19</span></a>
+      <a class="streams-tab" href="#regwatch">Regulatory Watch <span class="streams-count">42</span></a>
+      <a class="streams-tab" href="#pulse">Weekly Pulse <span class="streams-count">live</span></a>
+    </div>
+  </div>
+
+  <section class="featured" id="memos">
+    <div class="featured-inner">
+      <div class="featured-img reveal">
+        <div class="featured-img-bg" aria-hidden="true"></div>
+        <span class="featured-tag">Memo 011 · Featured</span>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="section-eyebrow">Latest memo</div>
+        <h3>Where Brazil's 2028 grid headroom <span class="blue">actually sits</span> — and why Vespasiano matters more than Uberlândia.</h3>
+        <p>PARPEL Cycle 2027–2031 cross-referenced with N-1 contingency analysis across four target Brazilian sites. We map the eight substations that change the math.</p>
+        <div class="featured-meta">
+          <span><strong>14 pages</strong>Primary sources</span>
+          <span><strong>May 2026</strong>Published</span>
+          <span><strong>Members only</strong>Request access</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Memos archive (navy bg) -->
-  <section class="memos-archive" id="archive">
-    <div class="section-inner">
-      <div class="archive-header">
-        <h2>Archive</h2>
-        <span class="archive-meta">{allMemos.length} published</span>
-      </div>
-      {memos.length === 0 ? (
-        <div class="empty-state">
-          <p>{t('common.empty-memos')}</p>
-        </div>
-      ) : (
-        <div class="memo-list">
-          {memos.map((memo, i) => (
-            <a href={`/intelligence/memos/${memo.data.slug}`} class="memo-row">
-              <span class="memo-num">{String(i + 1).padStart(3, '0')}</span>
-              <span class="memo-date">{fmtMonth(memo.data.created)}</span>
-              <span class="memo-title">{memo.data.title}</span>
-              <span class="memo-tag">{memo.data.topic}</span>
-            </a>
-          ))}
-        </div>
-      )}
+  <section class="memos">
+    <div class="memos-header">
+      <h2>Archive</h2>
+      <span class="label-quiet">11 published · 4 in pipeline</span>
     </div>
+
+    <a class="memo reveal" href="#"><div class="memo-num"><strong>011</strong>May 26</div><div class="memo-body"><h3>Where Brazil's 2028 grid headroom <em>actually sits</em>.</h3><p>PARPEL Cycle 2027–2031 cross-referenced with N-1 contingency across four target sites.</p><span class="memo-tag">Power · Brazil</span></div><div class="memo-meta"><strong>14 pages</strong>7 sources<span>Audited 05-08</span></div></a>
+    <a class="memo reveal" href="#"><div class="memo-num"><strong>010</strong>Apr 26</div><div class="memo-body"><h3>Querétaro's water reckoning — <em>cooling-stack constraints</em> through 2030.</h3><p>CONAGUA outorga timelines vs hyperscaler campus pipeline. Why WUE 1.5 doesn't survive the next concession cycle.</p><span class="memo-tag">Water · Mexico</span></div><div class="memo-meta"><strong>11 pages</strong>9 sources<span>Audited 04-22</span></div></a>
+    <a class="memo reveal" href="#"><div class="memo-num"><strong>009</strong>Apr 26</div><div class="memo-body"><h3>Chile's DS17 unlock — <em>when 1.2 GW becomes addressable.</em></h3><p>CORFO DS17 ruling on data center power blocks. Atacama Pacific-coast wave-energy thesis: timing, not narrative.</p><span class="memo-tag">Regulatory · Chile</span></div><div class="memo-meta"><strong>9 pages</strong>6 sources<span>Audited 04-08</span></div></a>
+    <a class="memo reveal" href="#"><div class="memo-num"><strong>008</strong>Mar 26</div><div class="memo-body"><h3>SAIDI MX recalibrated — <em>16 CFE Divisiones</em>, ground-truth.</h3><p>CFE PAM RGD 2025–2039 Tabla V.1 reconciled with utility-published reliability.</p><span class="memo-tag">Reliability · Mexico</span></div><div class="memo-meta"><strong>13 pages</strong>4 sources<span>Audited 03-28</span></div></a>
+    <a class="memo reveal" href="#"><div class="memo-num"><strong>007</strong>Mar 26</div><div class="memo-body"><h3>São Paulo's REIDI calculus — <em>tax incentive timing</em> for sub-100 MW.</h3><p>REIDI approval lead times, MEI escalation paths, and how to model fiscal drag in board-grade IRR.</p><span class="memo-tag">Fiscal · Brazil</span></div><div class="memo-meta"><strong>10 pages</strong>5 sources<span>Audited 03-12</span></div></a>
+    <a class="memo reveal" href="#"><div class="memo-num"><strong>006</strong>Mar 26</div><div class="memo-body"><h3>AI energy frontier — <em>wave-powered subsea</em> and orbital solar.</h3><p>Panthalassa $140M Series B + Meta–Overview Energy 1 GW orbital. Disclosed counterparty risk in hyperscaler PPAs.</p><span class="memo-tag">Power · Frontier</span></div><div class="memo-meta"><strong>8 pages</strong>4 sources<span>Audited 03-05</span></div></a>
   </section>
 
-  <SiteFooter />
-</Base>
+  <footer>
+    <div class="foot-links">
+      <div class="foot-brand-cell">
+        <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
+        <p>Data center intelligence for Latin America.</p>
+        <div class="foot-social" aria-label="Follow us">
+          <a href="https://www.linkedin.com/company/cloud-minds-partners" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.97 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0z"/></svg></a>
+          <a href="https://wa.me/5511999999999" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.5-.3zM12 22a10 10 0 0 1-5-1.3L2 22l1.3-5A10 10 0 1 1 12 22zm0-18.2A8.2 8.2 0 0 0 4.6 16l-.2.5-.8 3 3-.8.5.2c1.2.7 2.6 1.1 4 1.1 4.5 0 8.2-3.7 8.2-8.2S16.5 3.8 12 3.8z"/></svg></a>
+        </div>
+      </div>
+      <div><h4>Platforms</h4><ul><li><a href="/platforms">Site Selection</a></li><li><a href="/platforms">Grid Intelligence</a></li><li><a href="/platforms">Financial Model</a></li><li><a href="/platforms">Test Fit Pro</a></li></ul></div>
+      <div><h4>Intelligence</h4><ul><li><a href="/intelligence">Technical Memos</a></li><li><a href="/intelligence">Innovation Radar</a></li><li><a href="/intelligence">Regulatory Watch</a></li><li><a href="/intelligence">Weekly Pulse</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="/advisory">Advisory</a></li><li><a href="/development">Development</a></li><li><a href="/team">Team</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Mexico City · MX</li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>All rights reserved.</span></div>
+  </footer>
 
-<style>
-  .section-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 clamp(28px, 4vw, 64px);
-  }
-
-  /* Featured memo (cream) */
-  .featured.on-cream {
-    background: var(--color-cream-bg, var(--color-cream-0));
-    color: var(--color-navy-0);
-    padding: clamp(72px, 10vh, 120px) 0;
-  }
-  .featured-grid {
-    display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap: clamp(48px, 6vw, 96px);
-    align-items: center;
-  }
-  .featured-img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 5 / 4;
-    object-fit: cover;
-    border-radius: 20px;
-    border: 1px solid rgba(5, 14, 29, 0.12);
-    display: block;
-  }
-  .section-eyebrow {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-blue-deep, var(--color-blue));
-    margin: 0 0 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 28px;
-    height: 1px;
-    background: currentColor;
-  }
-  .featured-text h2 {
-    font-family: var(--font-display);
-    font-size: clamp(26px, 3.2vw, 40px);
-    line-height: 1.1;
-    font-weight: 600;
-    color: var(--color-navy-0);
-    margin: 0;
-    max-width: 600px;
-  }
-  .featured-lede {
-    margin: 24px 0 0;
-    font-size: 15.5px;
-    line-height: 1.65;
-    color: #4d5f7a;
-    max-width: 500px;
-  }
-  .featured-meta {
-    margin: 32px 0 24px;
-    display: flex;
-    gap: 28px;
-    padding-top: 22px;
-    border-top: 1px solid rgba(5, 14, 29, 0.10);
-    font-family: var(--font-body, var(--font-display));
-    font-size: 12.5px;
-    color: #677793;
-    flex-wrap: wrap;
-  }
-  .featured-meta strong {
-    display: block;
-    color: var(--color-navy-0);
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-  .btn-read {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 24px;
-    border-radius: 999px;
-    background: var(--color-blue);
-    color: var(--color-cream-0);
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: opacity 0.2s, transform 0.2s;
-  }
-  .btn-read:hover {
-    opacity: 0.85;
-    transform: translateY(-1px);
-  }
-
-  /* Memos archive (navy) */
-  .memos-archive {
-    background: var(--color-navy-0);
-    color: var(--color-cream-0);
-    padding: clamp(80px, 10vh, 128px) 0 clamp(96px, 14vh, 160px);
-  }
-  .archive-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 48px;
-  }
-  .archive-header h2 {
-    font-family: var(--font-display);
-    font-size: clamp(24px, 3vw, 36px);
-    line-height: 1.05;
-    margin: 0;
-    color: var(--color-cream-0);
-    font-weight: 600;
-  }
-  .archive-meta {
-    font-family: var(--font-display);
-    font-size: 13px;
-    color: var(--color-cream-3, var(--color-cream-2));
-  }
-  .memo-list {
-    display: flex;
-    flex-direction: column;
-    border-top: 1px solid var(--color-line-0, rgba(250, 251, 253, 0.07));
-  }
-  .memo-row {
-    display: grid;
-    grid-template-columns: 80px 110px 1fr 180px;
-    gap: clamp(16px, 2.6vw, 36px);
-    padding: 24px 0;
-    border-bottom: 1px solid var(--color-line-0, rgba(250, 251, 253, 0.07));
-    text-decoration: none;
-    color: var(--color-cream-1);
-    align-items: baseline;
-    transition: background 0.15s, color 0.15s;
-  }
-  .memo-row:hover {
-    background: var(--color-navy-2, rgba(255, 255, 255, 0.02));
-    color: var(--color-cream-0);
-  }
-  .memo-num {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--color-cream-0);
-    letter-spacing: -0.01em;
-  }
-  .memo-date {
-    font-size: 13px;
-    color: var(--color-cream-2);
-  }
-  .memo-title {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--color-cream-0);
-  }
-  .memo-tag {
-    justify-self: end;
-    font-size: 12px;
-    color: var(--color-cream-2);
-    padding: 3px 7px;
-    border: 1px solid var(--color-line-1, rgba(250, 251, 253, 0.15));
-  }
-  .empty-state {
-    border: 1px dashed rgba(250, 251, 253, 0.18);
-    border-radius: 12px;
-    padding: 48px 32px;
-    text-align: center;
-    color: var(--color-cream-2);
-    font-size: 15px;
-    max-width: 540px;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 880px) {
-    .featured-grid {
-      grid-template-columns: 1fr;
-    }
-    .memo-row {
-      grid-template-columns: 1fr;
-      gap: 6px;
-      padding: 20px 0;
-    }
-    .memo-tag {
-      justify-self: start;
-    }
-  }
-</style>
+  <script is:inline>
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </Base>

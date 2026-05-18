@@ -1,363 +1,176 @@
 ---
 import Base from '../layouts/Base.astro';
 import SEO from '../components/SEO.astro';
-import SiteHeader from '../components/SiteHeader.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-import Hero from '../components/Hero.astro';
-import { getCollection } from 'astro:content';
-
-import heroTeam from '../assets/photos/hero-team.jpg';
-
-const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
-
-// People collection lives at cmp-knowledge/people/.
-// Partners are top-level files (edgard.md, gustavo.md).
-// Advisors are at advisors/*.md and get id prefix "advisors/".
-const everyone = await getCollection('people');
-const partners = everyone.filter((p) => !p.id.includes('/'));
-const advisors = everyone.filter((p) => p.id.startsWith('advisors/'));
-
-// Photo URL resolver — photos are copied from cmp-knowledge/people/photos/
-// into public/people/photos/ at build time (see deploy.yml). Schema photo
-// values can be "photos/x.jpg" (partners) or "../photos/x.jpg" (advisors).
-const photoUrl = (photoField: string | undefined): string | null => {
-  if (!photoField) return null;
-  const filename = photoField.replace(/^(\.\.\/)?photos\//, '');
-  return `/people/photos/${filename}`;
-};
-
-// Deterministic ordering: Edgard before Gustavo; advisors alphabetical.
-const partnerOrder: Record<string, number> = {
-  'Founder & CEO': 0,
-  'Head of Design & Project Management': 1,
-};
-partners.sort((a, b) => (partnerOrder[a.data.role] ?? 99) - (partnerOrder[b.data.role] ?? 99));
-advisors.sort((a, b) => a.data.name.localeCompare(b.data.name));
-
-// Strip leading "# Heading" + section headings, take the first 2 bullet lines
-// (or paragraphs) of the markdown body. Keeps the card readable on the cream
-// grid without dragging in PMP/CP3P-level detail.
-const extractBio = (body: string, maxItems = 2): string => {
-  const lines = body.split('\n').map((l) => l.trim());
-  const bullets: string[] = [];
-  for (const line of lines) {
-    if (line.startsWith('- ')) {
-      bullets.push(line.replace(/^-\s+/, ''));
-      if (bullets.length >= maxItems) break;
-    }
-  }
-  if (bullets.length > 0) return bullets.join(' · ');
-  // Fallback: first non-heading paragraph
-  const paras = body.split(/\n\n+/).filter((p) => !p.trim().startsWith('#'));
-  return (paras[0] ?? '').replace(/\n/g, ' ').trim();
-};
-
-// One-line "domain" label derived from role, e.g.
-// "Advisor — Energy Interconnection" → "Energy · Interconnection".
-const domainLabel = (role: string): string => {
-  const after = role.includes('—') ? role.split('—').slice(1).join('—') : role;
-  return after.replace(/\//g, '·').replace(/\s+/g, ' ').trim();
-};
-
-// Lightweight credit line for advisors: first bullet of body.
-const firstBullet = (body: string): string => {
-  const line = body.split('\n').map((l) => l.trim()).find((l) => l.startsWith('- '));
-  return line ? line.replace(/^-\s+/, '') : '';
-};
 ---
 
-<Base lang={locale}>
+<Base lang="en">
   <SEO
     slot="head"
     title="Team — Cloud Minds Partners"
-    description="Meet the Cloud Minds Partners team — partners and senior advisors on LatAm data center site selection, grid, regulatory, and capital."
-    lang={locale}
-  />
-  <SiteHeader />
-
-  <!-- 1. HERO -->
-  <Hero
-    variant="page"
-    image={heroTeam}
-    eyebrow="Team"
-    live
-    heading="A small partnership. A wider bench."
-    subheading="Two partners in São Paulo. A bench of senior advisors across Brazil — energy interconnection, telecom, and permitting."
+    description="A small partnership. A wider bench. Two partners in São Paulo. A bench of advisors across Brazil."
+    image="/og/team.png"
   />
 
-  <!-- 2. PARTNERS on cream -->
+  <style slot="head" is:global>
+    .page-hero-bg { background-image: url("/photos/hero-team.jpg"); }
+
+    .leadership { padding: clamp(80px, 12vh, 144px) 0; background: var(--cream-bg); color: var(--navy-0); }
+    .partner-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 56px 0 0;
+    }
+    .partner-card { border-radius: 24px;
+      background: transparent;
+      border: 1px solid rgba(5,14,29,0.12);
+      padding: 56px clamp(32px, 4vw, 64px);
+      display: flex; flex-direction: column; gap: 22px;
+      align-items: center; text-align: center;
+      transition: border-color var(--t-base), transform var(--t-base), box-shadow var(--t-base);
+    }
+    .partner-card:hover {
+      border-color: rgba(45,107,228,0.55);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 44px rgba(45,107,228,0.12);
+    }
+    .partner-avatar {
+      width: 160px; height: 160px; border-radius: 50%;
+      background-size: cover; background-position: center 12%;
+      border: 3px solid rgba(255,255,255,0.7);
+      box-shadow: 0 8px 24px rgba(5,14,29,0.10);
+    }
+    .partner-avatar.gustavo { background-position: center 18%; }
+    .partner-name { font-family: var(--font-display); font-size: 34px; font-weight: 600; letter-spacing: -0.022em; color: var(--navy-0); margin: 0; line-height: 1.1; }
+    .partner-role { font-family: var(--font-display); font-size: 15px; color: var(--blue-deep); font-weight: 600; letter-spacing: -0.005em; }
+    .partner-bio { font-size: 17px; line-height: 1.55; color: #3D4E68; margin: 0; max-width: 38ch; }
+    .partner-meta { font-family: var(--font-body); font-size: 14px; color: #677793; padding-top: 14px; border-top: 1px solid rgba(5,14,29,0.08); width: 80%; }
+
+    .bench { background: var(--navy-0); padding: clamp(96px, 14vh, 160px) 0; }
+    .bench-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .bench-card { border-radius: 22px;
+      padding: 44px clamp(24px, 3vw, 40px);
+      background: var(--navy-1);
+      border: 1px solid var(--line-1);
+      display: flex; flex-direction: column; gap: 16px;
+      align-items: center; text-align: center;
+      transition: background var(--t-base), border-color var(--t-base), transform var(--t-base);
+    }
+    .bench-card:hover { background: var(--navy-2); border-color: rgba(74,143,231,0.5); transform: translateY(-2px); }
+    .bench-photo { width: 88px; height: 88px; border-radius: 50%; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.12); box-shadow: 0 8px 24px rgba(0,0,0,0.30); }
+    .bench-domain { font-family: var(--font-display); font-size: 13px; color: var(--blue-bright); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+    .bench-name { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--cream-0); letter-spacing: -0.014em; margin: 0; line-height: 1.15; }
+    .bench-credit { font-size: 15px; color: var(--cream-1); margin: 0; line-height: 1.55; max-width: 26ch; }
+    .bench-tag { font-family: var(--font-body); font-size: 13px; color: var(--cream-3); padding-top: 12px; border-top: 1px solid var(--line-0); width: 80%; }
+
+    @media (max-width: 880px) {
+      .partner-grid, .bench-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /><span class="brand-tag">Data Center Advisory · LatAm</span></a>
+      <div class="nav-links"><a href="/advisory">Advisory</a><a href="/development">Development</a><a href="/intelligence">Intelligence</a><a href="/platforms">Platforms</a><a href="/team" class="active">Team</a></div>
+      <div class="nav-right"><div class="nav-lang">
+        <a href="/team" class="active">EN</a><span class="sep">·</span><a href="/pt/">PT</a><span class="sep">·</span><a href="/es/">ES</a>
+      </div>
+      <a href="mailto:info@cloudmindspartners.com" class="nav-cta">Talk to us <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg></a></div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="page-hero-bg" aria-hidden="true"></div>
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="page-hero-content">
+        <div class="page-eyebrow live">Team</div>
+        <h1>A small partnership. <em>A wider bench.</em></h1>
+        <p>Two partners in São Paulo. A bench of advisors across Brazil.</p>
+      </div>
+    </div>
+  </header>
+
   <section class="leadership on-cream">
-    <div class="section-inner">
-      <div class="section-head">
-        <p class="section-eyebrow">Partners</p>
-        <h2>Forty years of LatAm infrastructure.</h2>
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;">
+        <div class="section-eyebrow" style="justify-content:center;">Partners</div>
+        <h2 class="section-heading" style="margin: 0 auto; max-width: 720px;">Forty years of <span class="blue">LatAm infrastructure.</span></h2>
       </div>
       <div class="partner-grid">
-        {partners.map((p) => {
-          const src = photoUrl(p.data.photo);
-          const objPos = p.data.photo_position ?? 'center center';
-          return (
-            <article class="partner-card">
-              {src && (
-                <div class="partner-avatar">
-                  <img
-                    src={src}
-                    alt={`${p.data.name} — ${p.data.role}`}
-                    class="partner-photo"
-                    loading="lazy"
-                    style={`object-position: ${objPos};`}
-                  />
-                </div>
-              )}
-              <h3 class="partner-name">{p.data.name}</h3>
-              <div class="partner-role">{p.data.role}</div>
-              <p class="partner-bio">{extractBio(p.body)}</p>
-              {p.data.email && (
-                <div class="partner-meta">
-                  <a href={`mailto:${p.data.email}`} class="partner-contact">{p.data.email}</a>
-                </div>
-              )}
-            </article>
-          );
-        })}
+        <article class="partner-card reveal reveal-delay-1">
+          <div class="partner-avatar" style="background-image: url('/photos/people/edgard-abreu.jpg');"></div>
+          <h3 class="partner-name">Edgard Abreu</h3>
+          <div class="partner-role">Founder &amp; CEO</div>
+          <p class="partner-bio">20+ years in infrastructure. Led $500M+ acquisitions and 1 GW power-of-connection contracts across LatAm.</p>
+          <div class="partner-meta">Real Estate · Capital · Permitting</div>
+        </article>
+        <article class="partner-card reveal reveal-delay-2">
+          <div class="partner-avatar gustavo" style="background-image: url('/photos/people/gustavo-kummer.jpg');"></div>
+          <h3 class="partner-name">Gustavo Kummer</h3>
+          <div class="partner-role">Head of Design &amp; PM</div>
+          <p class="partner-bio">Architect and urban planner with 20+ years. PMP and CP3P certified. Urban regulation and feasibility.</p>
+          <div class="partner-meta">Engineering · Urbanism · PM</div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- 3. BENCH on navy -->
   <section class="bench">
-    <div class="section-inner">
-      <div class="section-head">
-        <p class="section-eyebrow">Bench</p>
-        <h2>Senior advisors. One call away.</h2>
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;">
+        <div class="section-eyebrow" style="justify-content:center;">Bench</div>
+        <h2 class="section-heading" style="margin: 0 auto; max-width: 720px;">Senior advisors. <span class="blue">One call away.</span></h2>
       </div>
       <div class="bench-grid">
-        {advisors.map((a) => {
-          const src = photoUrl(a.data.photo);
-          const objPos = a.data.photo_position ?? 'center center';
-          return (
-            <div class="bench-card">
-              {src && (
-                <div class="bench-avatar">
-                  <img
-                    src={src}
-                    alt={a.data.name}
-                    class="bench-photo"
-                    loading="lazy"
-                    style={`object-position: ${objPos};`}
-                  />
-                </div>
-              )}
-              <div class="bench-domain">{domainLabel(a.data.role)}</div>
-              <h4 class="bench-name">{a.data.name}</h4>
-              <p class="bench-credit">{firstBullet(a.body)}</p>
-            </div>
-          );
-        })}
+        <div class="bench-card reveal reveal-delay-1">
+          <div class="bench-photo" style="background-image: url('/photos/people/joao-carlos-aires.jpg');"></div>
+          <div class="bench-domain">Energy · Interconnection</div>
+          <h4 class="bench-name">João Carlos Aires</h4>
+          <p class="bench-credit">PhD (PUC-Rio), 30+ yrs. Former LIGHT Planning Manager.</p>
+          <span class="bench-tag">Rio de Janeiro</span>
+        </div>
+        <div class="bench-card reveal reveal-delay-2">
+          <div class="bench-photo" style="background-image: url('/photos/people/rodrigo-pelosini.jpg');"></div>
+          <div class="bench-domain">Telecom · Connectivity</div>
+          <h4 class="bench-name">Rodrigo Pelosini</h4>
+          <p class="bench-credit">Former Head of Engineering at UFINET Brasil. FTTH, DWDM, ANATEL.</p>
+          <span class="bench-tag">São Paulo</span>
+        </div>
+        <div class="bench-card reveal reveal-delay-3">
+          <div class="bench-photo" style="background-image: url('/photos/people/sergio-pacheco.jpg');"></div>
+          <div class="bench-domain">Regulatory · Permits</div>
+          <h4 class="bench-name">Sérgio Pacheco</h4>
+          <p class="bench-credit">30+ yrs in feasibility and approvals — federal, state, municipal.</p>
+          <span class="bench-tag">São Paulo</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <SiteFooter />
+  <footer>
+    <div class="foot-links">
+      <div class="foot-brand-cell">
+        <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
+        <p>Data center intelligence for Latin America.</p>
+        <div class="foot-social" aria-label="Follow us">
+          <a href="https://www.linkedin.com/company/cloud-minds-partners" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.97 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0z"/></svg></a>
+          <a href="https://wa.me/5511999999999" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.5-.3zM12 22a10 10 0 0 1-5-1.3L2 22l1.3-5A10 10 0 1 1 12 22zm0-18.2A8.2 8.2 0 0 0 4.6 16l-.2.5-.8 3 3-.8.5.2c1.2.7 2.6 1.1 4 1.1 4.5 0 8.2-3.7 8.2-8.2S16.5 3.8 12 3.8z"/></svg></a>
+        </div>
+      </div>
+      <div><h4>Platforms</h4><ul><li><a href="/platforms">Site Selection</a></li><li><a href="/platforms">Grid Intelligence</a></li><li><a href="/platforms">Financial Model</a></li><li><a href="/platforms">Test Fit Pro</a></li></ul></div>
+      <div><h4>Intelligence</h4><ul><li><a href="/intelligence">Technical Memos</a></li><li><a href="/intelligence">Innovation Radar</a></li><li><a href="/intelligence">Regulatory Watch</a></li><li><a href="/intelligence">Weekly Pulse</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="/advisory">Advisory</a></li><li><a href="/development">Development</a></li><li><a href="/team">Team</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Mexico City · MX</li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>All rights reserved.</span></div>
+  </footer>
+
+  <script is:inline>
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </Base>
-
-<style>
-  .section-inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: clamp(64px, 7vw, 112px) clamp(28px, 4vw, 64px);
-  }
-  .section-head {
-    text-align: center;
-    margin-bottom: 56px;
-  }
-  .section-eyebrow {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-blue-bright);
-    margin: 0 0 16px;
-  }
-  .section-head h2 {
-    font-family: var(--font-display);
-    font-size: clamp(30px, 3.6vw, 44px);
-    line-height: 1.1;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin: 0 auto;
-    max-width: 720px;
-  }
-
-  /* ——— PARTNERS on cream ——————————————————————— */
-  .leadership {
-    background: var(--color-cream-bg, #f5f0e8);
-    color: var(--color-navy-0);
-  }
-  .leadership .section-head h2 {
-    color: var(--color-navy-0);
-  }
-  .partner-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  .partner-card {
-    border-radius: 24px;
-    background: transparent;
-    border: 1px solid rgba(5, 14, 29, 0.12);
-    padding: 56px clamp(32px, 4vw, 64px);
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    align-items: center;
-    text-align: center;
-    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .partner-card:hover {
-    border-color: rgba(45, 107, 228, 0.55);
-    transform: translateY(-3px);
-    box-shadow: 0 18px 44px rgba(45, 107, 228, 0.12);
-  }
-  .partner-avatar {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid rgba(255, 255, 255, 0.7);
-    box-shadow: 0 8px 24px rgba(5, 14, 29, 0.10);
-    flex-shrink: 0;
-  }
-  .partner-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .partner-name {
-    font-family: var(--font-display);
-    font-size: 34px;
-    font-weight: 600;
-    letter-spacing: -0.022em;
-    color: var(--color-navy-0);
-    margin: 0;
-    line-height: 1.1;
-  }
-  .partner-role {
-    font-family: var(--font-display);
-    font-size: 15px;
-    color: var(--color-blue);
-    font-weight: 600;
-    letter-spacing: -0.005em;
-  }
-  .partner-bio {
-    font-size: 17px;
-    line-height: 1.55;
-    color: #3d4e68;
-    margin: 0;
-    max-width: 42ch;
-  }
-  .partner-meta {
-    font-family: var(--font-body);
-    font-size: 14px;
-    color: #677793;
-    padding-top: 14px;
-    border-top: 1px solid rgba(5, 14, 29, 0.08);
-    width: 80%;
-  }
-  .partner-contact {
-    color: var(--color-blue);
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .partner-contact:hover {
-    opacity: 0.75;
-  }
-
-  /* ——— BENCH on navy ——————————————————————————— */
-  .bench {
-    background: var(--color-navy-0, #05111d);
-    border-top: 1px solid var(--color-line-0);
-  }
-  .bench .section-head h2 {
-    color: var(--color-cream-0);
-  }
-  .bench-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-  .bench-card {
-    border-radius: 22px;
-    padding: 44px clamp(24px, 3vw, 40px);
-    background: var(--color-navy-1, #0a1a2b);
-    border: 1px solid var(--color-line-1, rgba(255, 255, 255, 0.08));
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-    text-align: center;
-    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-  }
-  .bench-card:hover {
-    background: var(--color-navy-2, #112237);
-    border-color: rgba(74, 143, 231, 0.5);
-    transform: translateY(-2px);
-  }
-  .bench-avatar {
-    width: 88px;
-    height: 88px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.30);
-    flex-shrink: 0;
-  }
-  .bench-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .bench-domain {
-    font-family: var(--font-display);
-    font-size: 13px;
-    color: var(--color-blue-bright);
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .bench-name {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--color-cream-0);
-    letter-spacing: -0.014em;
-    margin: 0;
-    line-height: 1.15;
-  }
-  .bench-credit {
-    font-size: 15px;
-    color: var(--color-cream-1);
-    margin: 0;
-    line-height: 1.55;
-    max-width: 28ch;
-  }
-
-  /* ——— Responsive ——————————————————————————— */
-  @media (max-width: 1100px) {
-    .bench-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 880px) {
-    .partner-grid,
-    .bench-grid {
-      grid-template-columns: 1fr;
-    }
-    .partner-card {
-      padding: 40px 28px;
-    }
-  }
-</style>

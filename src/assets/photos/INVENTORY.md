@@ -7,17 +7,17 @@ Attribution stored here; credits page deferred to Phase 3 / v2.
 | Filename | Mock-26 Role | Unsplash ID | Alt Text | Dimensions |
 |----------|-------------|-------------|----------|------------|
 | hero-sp-marginal.jpg | Home hero 1 — São Paulo | 1645918899630-85e2f3132a84 | São Paulo skyline — Marginal Pinheiros e Ponte Octávio Frias | 2400px |
-| hero-santiago.jpg | Home hero 2 — Santiago | 1689850543263-01a52ccc6943 | Santiago skyline with Cordillera de los Andes | 2400px |
+| hero-santiago.jpg | Home hero 2 — Santiago | 1630275923681-d39980be318a | Santiago skyline with Cordillera de los Andes | 2400px |
 | hero-cdmx.jpg | Home hero 3 — CDMX | 1674681512510-e06db64f53fb | Mexico City — Paseo de la Reforma aerial view | 2400px |
-| hero-advisory.jpg | Advisory page hero | 1473341304170-971dccb5ac1e | Transmission tower at sunset — orange sky | 2400px |
+| hero-advisory.jpg | Advisory page hero | 1541959284-d104fd29a1a7 | Industrial campus aerial (mock-26 advisory) | 2400px |
 | hero-development.jpg | Development page hero | 1496564203457-11bb12075d90 | Aerial view of modern corporate campus | 2400px |
-| hero-intelligence.jpg | Intelligence page hero | 1605379399843-5870eea9b74e | Warm-lit data center corridor | 2400px |
-| hero-platforms.jpg | Platforms page hero | 1573164713988-8665fc963095 | Data center corridor with engineers | 2400px |
-| hero-team.jpg | Team page hero | 1620996148584-c3c8cf5a0788 | São Paulo at night — aerial view | 2400px |
+| hero-intelligence.jpg | Intelligence page hero | 1677442135703-1787eea5ce01 | AI circuit board brain (mock-26 intelligence) | 2400px |
+| hero-platforms.jpg | Platforms page hero | 1667670778881-537035257bd8 | Blue circuit board abstract (mock-26 platforms D09) | 2400px |
+| hero-team.jpg | Team page hero | 1645536642772-93d4df8b8172 | SP Marginal traffic aerial (mock-26 T02) | 2400px |
 | card-home-site-selection.jpg | Home capabilities — Site Selection | 1669003153363-6d7ba8e20c7e | Industrial campus aerial — site and land selection | 1200px |
 | card-home-grid-intel.jpg | Home capabilities — Grid Intelligence | 1554735231-2250c114a31d | Wide multi-tower power transmission spread | 1200px |
 | card-home-dc-financial.jpg | Home capabilities — DC Financial | 1691643158804-d3f02eb456a3 | Growth chart on tablet — financial modeling | 1200px |
-| card-home-testfit-pro.jpg | Home capabilities — Test Fit Pro | 1683322499436-f4383dd59f5a | Server rack with blue fiber cabling | 1200px |
+| card-home-testfit-pro.jpg | Home capabilities — Test Fit Pro | 1644158767445-79390e879319 | 3D wireframe city render — TestFit Pro (R02) | 1200px |
 | memo-home-grid-headroom.jpg | Home insight memo — Brazil 2028 grid headroom | 1413882353314-73389f63b6fd | Transmission tower silhouette against green sunset | 1200px |
 | card-adv-site-selection.jpg | Advisory card — Site Selection | 1500382017468-9049fed747ef | Aerial farmland — site evaluation landscape | 1200px |
 | card-adv-power-grid.jpg | Advisory card — Power & Grid | 1690780473941-f6a55a5fc420 | Single iconic high-voltage transmission tower | 1200px |
@@ -31,7 +31,7 @@ Attribution stored here; credits page deferred to Phase 3 / v2.
 | card-platform-site-selection.jpg | Platforms — Site Selection product | 1715026323215-a2dbb71272f6 | Hyperscale data center exterior aerial | 1200px |
 | card-platform-grid-intel.jpg | Platforms — Grid Intelligence product | 1596072215997-cac821d05b9c | Transmission tower in daylight | 1200px |
 | card-platform-dc-financial.jpg | Platforms — DC Financial product | 1591696205602-2f950c417cb9 | Stocks chart on screen | 1200px |
-| card-platform-testfit-pro.jpg | Platforms — Test Fit Pro product | 1639066648921-82d4500abf1a | Green LED server stacks | 1200px |
+| card-platform-testfit-pro.jpg | Platforms — Test Fit Pro product | 1644158767445-79390e879319 | 3D wireframe city render — TestFit Pro (R02 reused) | 1200px |
 | memo-intelligence-grid.jpg | Intelligence featured memo — Brazil 2028 grid | 1591075246923-76a081d21e25 | Transmission tower black and white | 1200px |
 
 ## Notes
