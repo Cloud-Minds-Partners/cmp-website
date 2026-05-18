@@ -3,31 +3,54 @@ name: Deploy cmp-website
 on:
   push:
     branches:
-      - main
+      - "**"
     paths-ignore:
       - "README.md"
       - ".gitignore"
+      - ".planning/**"
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 concurrency:
-  group: cmp-website-deploy
+  group: cmp-website-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      # Surface secrets as env vars so expressions can gate on them
-      HAS_KNOWLEDGE_TOKEN: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN != '' }}
-      HAS_FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN != '' }}
+    permissions:
+      contents: read
+      id-token: write  # required for FirebaseExtended/action-hosting-deploy OIDC
+      pull-requests: write  # required for preview channel PR comment
+
     steps:
+      # ------------------------------------------------------------------ #
+      # PRE-FLIGHT: hard-fail if required deploy secret is absent           #
+      # Per CMP rule #8b — silent-skip is failure. Build must not succeed   #
+      # without deploying when on main. Non-main branches deploy preview.   #
+      # ------------------------------------------------------------------ #
+      - name: Pre-flight — assert deploy secret present
+        run: |
+          if [ -z "${{ secrets.FIREBASE_SERVICE_ACCOUNT_DCPLATFORMCMP }}" ]; then
+            echo "::error::FIREBASE_SERVICE_ACCOUNT_DCPLATFORMCMP is not set."
+            echo "Required for all deploys. Set the repo secret (Firebase service account JSON)."
+            echo "See: Firebase Console → Project Settings → Service Accounts → Generate new private key"
+            exit 1
+          fi
+          echo "Deploy secret present — continuing."
+
+      # ------------------------------------------------------------------ #
+      # CHECKOUT                                                             #
+      # ------------------------------------------------------------------ #
       - name: Checkout cmp-website
         uses: actions/checkout@v4
         with:
           path: cmp-website
 
       - name: Checkout cmp-knowledge (content source)
-        if: env.HAS_KNOWLEDGE_TOKEN == 'true'
+        if: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN != '' }}
         uses: actions/checkout@v4
         with:
           repository: Cloud-Minds-Partners/cmp-knowledge
@@ -35,7 +58,7 @@ jobs:
           token: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN }}
 
       - name: Warn when building without content source
-        if: env.HAS_KNOWLEDGE_TOKEN != 'true'
+        if: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN == '' }}
         run: |
           echo "::warning::CMP_KNOWLEDGE_READ_TOKEN not set — content collections will be empty."
           echo "Set the repo secret to deploy published memos/radar/regwatch/people."
@@ -46,7 +69,7 @@ jobs:
                    cmp-knowledge/people/advisors
 
       - name: Stage people photos into /public/people/photos
-        if: env.HAS_KNOWLEDGE_TOKEN == 'true'
+        if: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN != '' }}
         run: |
           mkdir -p cmp-website/public/people/photos
           if [ -d cmp-knowledge/people/photos ]; then
@@ -54,6 +77,9 @@ jobs:
             echo "copied $(ls cmp-website/public/people/photos | wc -l) photo(s)"
           fi
 
+      # ------------------------------------------------------------------ #
+      # BUILD                                                                #
+      # ------------------------------------------------------------------ #
       - name: Use Node 22
         uses: actions/setup-node@v4
         with:
@@ -69,17 +95,72 @@ jobs:
         run: npm run build
         working-directory: cmp-website
 
-      - name: Deploy to Firebase Hosting (cmp-website site)
-        if: env.HAS_FIREBASE_TOKEN == 'true'
+      # ------------------------------------------------------------------ #
+      # POST-BUILD ARTIFACT VALIDATION                                       #
+      # Hard-fail if critical routes are missing from dist/                 #
+      # ------------------------------------------------------------------ #
+      - name: Validate build artifacts
         run: |
-          npm install -g firebase-tools
-          firebase deploy --only hosting:cmp-website --project dcplatformcmp --non-interactive
+          MISSING=0
+          check() {
+            if [ ! -e "cmp-website/dist/$1" ]; then
+              echo "::error::Missing build artifact: dist/$1"
+              MISSING=$((MISSING+1))
+            else
+              echo "FOUND: dist/$1"
+            fi
+          }
+          check "index.html"
+          check "sitemap-index.xml"
+          check "robots.txt"
+          check "404.html"
+          if [ "$MISSING" -gt 0 ]; then
+            echo "::error::$MISSING artifact(s) missing from dist/ — aborting deploy."
+            exit 1
+          fi
+          echo "All required artifacts present."
+
+      # ------------------------------------------------------------------ #
+      # LIGHTHOUSE CI                                                        #
+      # Perf ≥ 0.9, A11Y ≥ 0.95, SEO ≥ 0.95                              #
+      # Runs against static dist/ (no server needed)                        #
+      # ------------------------------------------------------------------ #
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+        working-directory: cmp-website
+
+      - name: Run Lighthouse CI
+        run: lhci autorun
         working-directory: cmp-website
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
-      - name: Skipping deploy (no token)
-        if: env.HAS_FIREBASE_TOKEN != 'true'
-        run: |
-          echo "::warning::FIREBASE_TOKEN not set — build validated, deploy skipped."
-          echo "Set FIREBASE_TOKEN repo secret (value from `firebase login:ci`) to enable deploys."
+      # ------------------------------------------------------------------ #
+      # DEPLOY — Preview channel (non-main branches)                        #
+      # FirebaseExtended/action-hosting-deploy posts a PR comment with URL  #
+      # ------------------------------------------------------------------ #
+      - name: Deploy preview channel
+        if: github.ref != 'refs/heads/main'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DCPLATFORMCMP }}
+          projectId: dcplatformcmp
+          target: cmp-website
+          expires: 7d
+          channelId: preview-${{ github.head_ref || github.ref_name }}
+          entryPoint: ./cmp-website
+
+      # ------------------------------------------------------------------ #
+      # DEPLOY — Live channel (main only)                                   #
+      # ------------------------------------------------------------------ #
+      - name: Deploy live
+        if: github.ref == 'refs/heads/main'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DCPLATFORMCMP }}
+          projectId: dcplatformcmp
+          target: cmp-website
+          channelId: live
+          entryPoint: ./cmp-website

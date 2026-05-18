@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import SEO from '../components/SEO.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { useTranslations } from '../i18n/utils';
+
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
+---
+
+<Base title="404 — Page Not Found | Cloud Minds Partners">
+  <SEO
+    slot="head"
+    title="404 — Page Not Found | Cloud Minds Partners"
+    description="The page you are looking for does not exist."
+    canonical={new URL('/404', Astro.site ?? 'https://cloudmindspartners.com').href}
+    noindex={true}
+  />
+
+  <SiteHeader locale={locale} />
+
+  <main id="main-content">
+    <section class="min-h-[60vh] flex items-center justify-center px-6 py-24">
+      <div class="max-w-lg text-center">
+        <p class="text-sm font-mono tracking-widest text-cmp-teal uppercase mb-6">404</p>
+        <h1 class="text-4xl font-semibold text-white mb-4">Page not found</h1>
+        <p class="text-gray-400 mb-10 leading-relaxed">
+          The page you are looking for does not exist or has been moved.
+        </p>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-cmp-teal/10 border border-cmp-teal/30 text-cmp-teal text-sm font-medium hover:bg-cmp-teal/20 transition-colors"
+        >
+          Return to homepage
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter locale={locale} />
+</Base>
