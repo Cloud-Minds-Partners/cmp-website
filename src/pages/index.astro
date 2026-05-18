@@ -7,11 +7,14 @@ import Hero from '../components/Hero.astro';
 import CapabilityCard from '../components/CapabilityCard.astro';
 import NewsletterSubscribe from '../components/NewsletterSubscribe.astro';
 import { useTranslations } from '../i18n/utils';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 
 import heroSp from '../assets/photos/hero-sp-marginal.jpg';
 import heroSantiago from '../assets/photos/hero-santiago.jpg';
 import heroCdmx from '../assets/photos/hero-cdmx.jpg';
+
+// Preload the first (above-the-fold) hero image to improve LCP
+const heroSpOptimized = await getImage({ src: heroSp, width: 1920, format: 'webp' });
 import cardSiteSelection from '../assets/photos/card-home-site-selection.jpg';
 import cardGridIntel from '../assets/photos/card-home-grid-intel.jpg';
 import cardDcFinancial from '../assets/photos/card-home-dc-financial.jpg';
@@ -27,13 +30,17 @@ const t = useTranslations(locale);
     slot="head"
     title="Cloud Minds Partners — Data Center Intelligence for Latin America"
     description={t('home.hero.subhead')}
+    image="/og/home.png"
     lang={locale}
   />
+  <!-- Preload first hero slide for LCP improvement -->
+  <link slot="head" rel="preload" as="image" href={heroSpOptimized.src} type="image/webp" />
   <SiteHeader />
 
   <!-- 1. HERO: 3-city rotation -->
   <Hero
     variant="home"
+    preloadHref={heroSpOptimized.src}
     slides={[
       { src: heroSp, alt: 'São Paulo skyline — Marginal Pinheiros' },
       { src: heroSantiago, alt: 'Santiago skyline with Cordillera de los Andes' },

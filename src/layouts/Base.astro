@@ -21,7 +21,35 @@ const { lang = "en" } = Astro.props;
     <slot name="head" />
   </head>
   <body>
-    <slot />
+    <!-- Skip-to-content: visible on focus for keyboard/AT users -->
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div id="main">
+      <slot />
+    </div>
     <WhatsAppFab />
   </body>
 </html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: 12px 24px;
+    background: #4A8FE7;
+    color: #FAFBFD;
+    font-family: system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom-right-radius: 6px;
+    transition: top 0.1s;
+  }
+
+  .skip-link:focus {
+    top: 0;
+    outline: 2px solid #FAFBFD;
+    outline-offset: -4px;
+  }
+</style>

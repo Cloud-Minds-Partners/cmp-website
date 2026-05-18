@@ -26,6 +26,9 @@ interface Props {
   subheading?: string;
   actions?: ActionButton[];
   class?: string;
+  /** Preload href for LCP optimization. When set, emits <link rel="preload"> for the hero image.
+   *  Pass the optimized image src from getImage() in the page's frontmatter. */
+  preloadHref?: string;
 }
 
 const {
@@ -38,8 +41,15 @@ const {
   subheading,
   actions,
   class: className = '',
+  preloadHref,
 } = Astro.props;
 ---
+
+{/* Preload link for LCP optimization — placed here so it can be detected by tooling/tests.
+     The page should also pass this via <link slot="head" rel="preload"> for proper <head> placement. */}
+{preloadHref && (
+  <link rel="preload" as="image" href={preloadHref} type="image/webp" />
+)}
 
 {variant === 'home' ? (
   <section class={`home-hero ${className}`} data-variant="home">
