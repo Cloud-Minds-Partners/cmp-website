@@ -1,69 +1,199 @@
 ---
-import Base from "../../../layouts/Base.astro";
-import SEO from "../../../components/SEO.astro";
-import SiteHeader from "../../../components/SiteHeader.astro";
-import SiteFooter from "../../../components/SiteFooter.astro";
-import Section from "../../../components/Section.astro";
-import { getCollection } from "astro:content";
+import Base from '../../../layouts/Base.astro';
+import SEO from '../../../components/SEO.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import LocaleBanner from '../../../components/LocaleBanner.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations } from '../../../i18n/utils';
 
-const radar = (await getCollection("radar", (r) => r.data.published)).sort((a, b) => {
-  const aStart = a.data.period_start?.valueOf() ?? 0;
-  const bStart = b.data.period_start?.valueOf() ?? 0;
-  return bStart - aStart;
-});
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
 
-const fmt = (d: Date | undefined) =>
-  d ? d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "";
+const allEntries = await getCollection('radar', (r) => r.data.published);
+const localeEntries = allEntries.filter((r) => r.data.language === locale);
+const entries = (localeEntries.length > 0 ? localeEntries : allEntries)
+  .sort((a, b) => {
+    const aDate = a.data.period_start?.valueOf() ?? 0;
+    const bDate = b.data.period_start?.valueOf() ?? 0;
+    return bDate - aDate;
+  });
+const showFallbackBanner = localeEntries.length === 0 && locale !== 'en';
+
+const fmtRange = (start: Date | undefined, end: Date | undefined): string => {
+  if (!start) return '';
+  const s = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  if (!end) return s;
+  const e = end.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  return `${s} — ${e}`;
+};
 ---
 
-<Base>
-  <SEO slot="head" title="Innovation Radar — Cloud Minds Partners" description="Weekly radar of technology and market signals shaping Latin America's data center landscape." />
-  <SiteHeader
-    active="intelligence"
-    subnav={[
-      { href: "/intelligence", label: "Overview" },
-      { href: "/intelligence/memos", label: "Technical Memos" },
-      { href: "/intelligence/radar", label: "Innovation Radar", active: true },
-      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
-    ]}
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title="Innovation Radar — Cloud Minds Partners"
+    description="Weekly innovation radar covering LatAm data center technology trends and market signals."
+    lang={locale}
   />
+  <SiteHeader subnav={[
+    { href: '/intelligence', label: 'Overview' },
+    { href: '/intelligence/memos', label: 'Technical Memos' },
+    { href: '/intelligence/radar', label: 'Innovation Radar', active: true },
+    { href: '/intelligence/regwatch', label: 'Regulatory Watch' },
+  ]} />
 
-  <main>
-    <section class="pt-20 pb-12 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Intelligence · Radar</div>
-        <h1 class="display text-4xl md:text-5xl max-w-3xl">Innovation Radar.</h1>
-        <p class="lede mt-5 max-w-2xl">
-          Weekly scan of infrastructure, AI, competitive, and regulatory
-          signals worth tracking for LatAm data center operators.
-        </p>
+  {showFallbackBanner && <LocaleBanner />}
+
+  <main class="collection-main">
+    <div class="collection-header">
+      <p class="collection-eyebrow">Intelligence</p>
+      <h1>Innovation Radar</h1>
+      <p class="collection-lede">Weekly technology and market signals for LatAm DC professionals — infrastructure, AI, competitive, and regulatory.</p>
+    </div>
+
+    {entries.length === 0 ? (
+      <div class="empty-state">
+        <p>Innovation radar — first entry coming soon.</p>
       </div>
-    </section>
-
-    <Section compact>
-      {radar.length === 0 && (
-        <p class="text-[var(--color-ink-muted)] italic">No radar entries published yet.</p>
-      )}
-
-      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
-        {radar.map((entry) => (
-          <a href={`/intelligence/radar/${entry.data.week ?? entry.id}`} class="block py-8 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-            <div class="grid md:grid-cols-12 gap-6">
-              <div class="md:col-span-3">
-                <div class="caption text-[var(--color-navy)]">Week {entry.data.week ?? entry.id}</div>
-                {entry.data.period_start && entry.data.period_end && (
-                  <div class="caption mt-1">{fmt(entry.data.period_start)} — {fmt(entry.data.period_end)}</div>
-                )}
-              </div>
-              <div class="md:col-span-9">
-                <h2 class="display text-xl">Week {entry.data.week ?? entry.id}</h2>
-              </div>
-            </div>
+    ) : (
+      <div class="radar-list">
+        {entries.map((entry, i) => (
+          <a href={`/intelligence/radar/${entry.data.week ?? entry.id}`} class="radar-row">
+            <span class="radar-num">{String(i + 1).padStart(3, '0')}</span>
+            <span class="radar-week">{entry.data.week ?? entry.id}</span>
+            <span class="radar-range">{fmtRange(entry.data.period_start, entry.data.period_end)}</span>
+            <span class="radar-author">{entry.data.author}</span>
           </a>
         ))}
       </div>
-    </Section>
+    )}
   </main>
 
   <SiteFooter />
 </Base>
+
+<style>
+  .collection-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(64px, 8vw, 120px) clamp(28px, 4vw, 64px) clamp(96px, 14vh, 160px);
+  }
+
+  .collection-header {
+    margin-bottom: 64px;
+    border-bottom: 1px solid rgba(250, 251, 253, 0.07);
+    padding-bottom: 48px;
+  }
+
+  .collection-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blue-bright, #4a8fe7);
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .collection-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .collection-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 600;
+    color: var(--color-cream-0);
+    margin: 0 0 16px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .collection-lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-cream-2);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .empty-state {
+    border: 1px dashed rgba(250, 251, 253, 0.18);
+    border-radius: 12px;
+    padding: 48px 32px;
+    text-align: center;
+    color: var(--color-cream-2);
+    font-size: 15px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .radar-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(250, 251, 253, 0.07);
+  }
+
+  .radar-row {
+    display: grid;
+    grid-template-columns: 72px 160px 1fr 140px;
+    gap: clamp(16px, 2.6vw, 36px);
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(250, 251, 253, 0.07);
+    text-decoration: none;
+    color: var(--color-cream-1);
+    align-items: baseline;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .radar-row:hover {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--color-cream-0);
+  }
+
+  .radar-num {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-cream-0);
+    letter-spacing: -0.01em;
+  }
+
+  .radar-week {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-cream-0);
+  }
+
+  .radar-range {
+    font-size: 14px;
+    color: var(--color-cream-2);
+  }
+
+  .radar-author {
+    font-size: 13px;
+    color: var(--color-cream-2);
+    justify-self: end;
+  }
+
+  @media (max-width: 880px) {
+    .radar-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 18px 0;
+    }
+
+    .radar-author {
+      justify-self: start;
+    }
+  }
+</style>

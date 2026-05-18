@@ -1,76 +1,219 @@
 ---
-import Base from "../../../layouts/Base.astro";
-import SEO from "../../../components/SEO.astro";
-import SiteHeader from "../../../components/SiteHeader.astro";
-import SiteFooter from "../../../components/SiteFooter.astro";
-import Section from "../../../components/Section.astro";
-import { getCollection } from "astro:content";
+import Base from '../../../layouts/Base.astro';
+import SEO from '../../../components/SEO.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import LocaleBanner from '../../../components/LocaleBanner.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations } from '../../../i18n/utils';
 
-const memos = (await getCollection("memos", (m) => m.data.publish)).sort(
-  (a, b) => b.data.created.valueOf() - a.data.created.valueOf(),
-);
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
+
+const allMemos = await getCollection('memos', (m) => m.data.publish);
+const localeMemos = allMemos.filter((m) => m.data.language === locale);
+const memos = (localeMemos.length > 0 ? localeMemos : allMemos)
+  .sort((a, b) => b.data.created.valueOf() - a.data.created.valueOf());
+const showFallbackBanner = localeMemos.length === 0 && locale !== 'en';
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
 const countryName: Record<string, string> = {
-  BR: "Brazil", MX: "Mexico", CL: "Chile", AR: "Argentina",
-  CO: "Colombia", PE: "Peru", UY: "Uruguay",
+  BR: 'Brazil', MX: 'Mexico', CL: 'Chile', AR: 'Argentina',
+  CO: 'Colombia', PE: 'Peru', UY: 'Uruguay',
 };
-
-const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short" });
 ---
 
-<Base>
-  <SEO slot="head" title="Technical Memos — Cloud Minds Partners" description="In-depth technical analysis of data center regulatory and infrastructure topics across Latin America." />
-  <SiteHeader
-    active="intelligence"
-    subnav={[
-      { href: "/intelligence", label: "Overview" },
-      { href: "/intelligence/memos", label: "Technical Memos", active: true },
-      { href: "/intelligence/radar", label: "Innovation Radar" },
-      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
-    ]}
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title="Technical Memos — Cloud Minds Partners"
+    description="Primary-source technical memos on LatAm data center markets — regulatory, fiscal, and grid intelligence."
+    lang={locale}
   />
+  <SiteHeader subnav={[
+    { href: '/intelligence', label: 'Overview' },
+    { href: '/intelligence/memos', label: 'Technical Memos', active: true },
+    { href: '/intelligence/radar', label: 'Innovation Radar' },
+    { href: '/intelligence/regwatch', label: 'Regulatory Watch' },
+  ]} />
 
-  <main>
-    <section class="pt-20 pb-12 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Intelligence · Memos</div>
-        <h1 class="display text-4xl md:text-5xl max-w-3xl">Technical Memos.</h1>
-        <p class="lede mt-5 max-w-2xl">
-          Five-page briefs on regulatory, fiscal, and market developments in
-          Latin American data center markets.
-        </p>
+  {showFallbackBanner && <LocaleBanner />}
+
+  <main class="collection-main">
+    <div class="collection-header">
+      <p class="collection-eyebrow">Intelligence</p>
+      <h1>Technical Memos</h1>
+      <p class="collection-lede">Primary-source research, audited before publication. Five-page briefs on regulatory, fiscal, and grid developments.</p>
+    </div>
+
+    {memos.length === 0 ? (
+      <div class="empty-state">
+        <p>{t('common.empty-memos')}</p>
       </div>
-    </section>
-
-    <Section compact>
-      {memos.length === 0 && (
-        <p class="text-[var(--color-ink-muted)] italic">No memos published yet.</p>
-      )}
-
-      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
-        {memos.map((memo) => (
-          <a href={`/intelligence/memos/${memo.data.slug}`} class="block py-8 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-            <div class="grid md:grid-cols-12 gap-6">
-              <div class="md:col-span-3">
-                <div class="caption text-[var(--color-navy)]">
-                  {countryName[memo.data.jurisdiction.country] ?? memo.data.jurisdiction.country} · {memo.data.jurisdiction.scope}
-                </div>
-                <div class="caption mt-1">{fmt(memo.data.created)}</div>
-              </div>
-              <div class="md:col-span-9">
-                <h2 class="display text-xl md:text-2xl mb-2">{memo.data.title}</h2>
-                {memo.data.sources_count !== undefined && (
-                  <p class="text-sm text-[var(--color-ink-muted)]">
-                    {memo.data.sources_count} primary sources · {memo.data.word_count} words
-                  </p>
-                )}
-              </div>
-            </div>
+    ) : (
+      <div class="memo-list">
+        {memos.map((memo, i) => (
+          <a href={`/intelligence/memos/${memo.data.slug}`} class="memo-row">
+            <span class="memo-num">{String(i + 1).padStart(3, '0')}</span>
+            <span class="memo-date">{fmtDate(memo.data.created)}</span>
+            <span class="memo-body">
+              <span class="memo-title">{memo.data.title}</span>
+              <span class="memo-meta">
+                {countryName[memo.data.jurisdiction.country] ?? memo.data.jurisdiction.country}
+                {memo.data.sources_count !== undefined && <> · {memo.data.sources_count} sources</>}
+                {memo.data.word_count && <> · {memo.data.word_count} words</>}
+              </span>
+            </span>
+            <span class="memo-tag">{memo.data.topic}</span>
           </a>
         ))}
       </div>
-    </Section>
+    )}
   </main>
 
   <SiteFooter />
 </Base>
+
+<style>
+  .collection-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(64px, 8vw, 120px) clamp(28px, 4vw, 64px) clamp(96px, 14vh, 160px);
+  }
+
+  .collection-header {
+    margin-bottom: 64px;
+    border-bottom: 1px solid rgba(250, 251, 253, 0.07);
+    padding-bottom: 48px;
+  }
+
+  .collection-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blue-bright, #4a8fe7);
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .collection-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .collection-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 600;
+    color: var(--color-cream-0);
+    margin: 0 0 16px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .collection-lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-cream-2);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .empty-state {
+    border: 1px dashed rgba(250, 251, 253, 0.18);
+    border-radius: 12px;
+    padding: 48px 32px;
+    text-align: center;
+    color: var(--color-cream-2);
+    font-size: 15px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .memo-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(250, 251, 253, 0.07);
+  }
+
+  .memo-row {
+    display: grid;
+    grid-template-columns: 72px 140px 1fr 180px;
+    gap: clamp(16px, 2.6vw, 36px);
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(250, 251, 253, 0.07);
+    text-decoration: none;
+    color: var(--color-cream-1);
+    align-items: start;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .memo-row:hover {
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--color-cream-0);
+  }
+
+  .memo-num {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-cream-0);
+    letter-spacing: -0.01em;
+  }
+
+  .memo-date {
+    font-size: 13px;
+    color: var(--color-cream-2);
+    padding-top: 3px;
+  }
+
+  .memo-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .memo-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-cream-0);
+    line-height: 1.3;
+  }
+
+  .memo-meta {
+    font-size: 13px;
+    color: var(--color-cream-2);
+  }
+
+  .memo-tag {
+    justify-self: end;
+    font-size: 12px;
+    color: var(--color-cream-2);
+    padding: 3px 8px;
+    border: 1px solid rgba(250, 251, 253, 0.15);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 880px) {
+    .memo-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 20px 0;
+    }
+
+    .memo-tag {
+      justify-self: start;
+    }
+  }
+</style>
