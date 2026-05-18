@@ -1,104 +1,320 @@
 ---
-import Base from "../layouts/Base.astro";
-import SEO from "../components/SEO.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
+import Base from '../layouts/Base.astro';
+import SEO from '../components/SEO.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Hero from '../components/Hero.astro';
+import { Image } from 'astro:assets';
+import { useTranslations } from '../i18n/utils';
 
-const phases = [
-  {
-    n: "Phase 1",
-    t: "Pre-site",
-    b: "Site qualification, offtake modeling, equity/debt stack scoping. Goal: committable term sheet within 90 days where fundamentals support it.",
-  },
-  {
-    n: "Phase 2",
-    t: "Engineering & permits",
-    b: "Technical DD, interconnection path, environmental and water filings, MV/HV coordination. Managed with EPC and local engineering partners.",
-  },
-  {
-    n: "Phase 3",
-    t: "Construction & commissioning",
-    b: "Owner-rep coordination, risk register, schedule-linked cash curve, milestone reporting. We stay close enough to catch drift without replacing the GC.",
-  },
-  {
-    n: "Phase 4",
-    t: "Operate & iterate",
-    b: "PUE/WUE monitoring, expansion optioning, exit or refinancing prep. Intelligence inputs fed back into the Site Selection Tool for future deals.",
-  },
-];
+import heroDevelopment from '../assets/photos/hero-development.jpg';
+import cardCodeveloper from '../assets/photos/card-dev-codeveloper.jpg';
+import cardTechAdvisor from '../assets/photos/card-dev-tech-advisor.jpg';
+import cardFinancialPartner from '../assets/photos/card-dev-financial-partner.jpg';
+
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
 ---
 
-<Base>
-  <SEO slot="head" title="Development — Cloud Minds Partners" description="Co-development, technical due diligence, and financial modeling for data center projects from pre-site through commissioning." />
-  <SiteHeader active="development" />
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title="Development — Cloud Minds Partners"
+    description="LatAm data center co-development — equity co-developer, fee-based technical advisor, or financial partner across the full build lifecycle from kickoff to commissioning."
+    lang={locale}
+  />
+  <SiteHeader />
 
-  <main>
-    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">02 / Project Development</div>
-        <h1 class="display-lg max-w-3xl">From thesis to commissioned asset.</h1>
-        <p class="lede mt-6 max-w-2xl">
-          We work alongside operators and sponsors on specific projects —
-          either as co-developer, technical advisor, or financial partner
-          — across the full lifecycle of a data center build.
-        </p>
+  <!-- 1. HERO -->
+  <Hero
+    variant="page"
+    image={heroDevelopment}
+    eyebrow={t('nav.development')}
+    live
+    heading="From thesis to commissioned asset."
+    subheading="Co-developer, technical advisor, or financial partner — across the full build lifecycle."
+  />
+
+  <!-- 2. ROLES — cream bg, 3-col -->
+  <section class="roles on-cream">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="section-eyebrow">Roles</p>
+        <h2>Three ways we sit on the cap table.</h2>
       </div>
-    </section>
-
-    <Section eyebrow="Project lifecycle" title="Four phases. One owner of the narrative." compact>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--color-rule)]">
-        {phases.map((p) => (
-          <div class="bg-[var(--color-canvas)] p-7">
-            <div class="caption mb-3">{p.n}</div>
-            <h3 class="display text-lg mb-3">{p.t}</h3>
-            <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.b}</p>
+      <div class="roles-grid">
+        <article class="role-card">
+          <div class="role-photo-wrap">
+            <Image
+              src={cardCodeveloper}
+              alt="Co-developer — equity participation"
+              widths={[480, 720, 960]}
+              sizes="(max-width: 880px) 100vw, 33vw"
+              format="webp"
+              class="role-photo"
+            />
           </div>
-        ))}
-      </div>
-    </Section>
+          <div class="role-body">
+            <div class="role-num">01 — Equity</div>
+            <h3>Co-developer</h3>
+            <p>Phase-gated equity tranches tied to project milestones.</p>
+          </div>
+        </article>
 
-    <Section eyebrow="Engagement models" title="How we participate." tone="alt">
-      <div class="grid md:grid-cols-3 gap-px bg-[var(--color-rule)]">
-        <div class="bg-[var(--color-surface)] p-9">
-          <h3 class="display text-lg mb-3">Co-developer</h3>
-          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-            CMP holds a development interest alongside the sponsor. Aligned
-            on outcome, not billable hour.
-          </p>
-        </div>
-        <div class="bg-[var(--color-surface)] p-9">
-          <h3 class="display text-lg mb-3">Owner's technical advisor</h3>
-          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-            Fixed-scope engagements covering technical DD, permitting,
-            procurement support, and commissioning oversight.
-          </p>
-        </div>
-        <div class="bg-[var(--color-surface)] p-9">
-          <h3 class="display text-lg mb-3">Intelligence subscription</h3>
-          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-            For funds and strategic operators — ongoing access to platform
-            data, memos, and monthly regulatory digests.
-          </p>
-        </div>
-      </div>
-    </Section>
+        <article class="role-card">
+          <div class="role-photo-wrap">
+            <Image
+              src={cardTechAdvisor}
+              alt="Technical advisor — fee-based engagement"
+              widths={[480, 720, 960]}
+              sizes="(max-width: 880px) 100vw, 33vw"
+              format="webp"
+              class="role-photo"
+            />
+          </div>
+          <div class="role-body">
+            <div class="role-num">02 — Fee-based</div>
+            <h3>Technical advisor</h3>
+            <p>DD for institutional investors and operators.</p>
+          </div>
+        </article>
 
-    <Section tone="ink" compact>
-      <div class="max-w-3xl">
-        <div class="eyebrow mb-4 text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)]">Next</div>
-        <h2 class="display text-2xl md:text-3xl text-[var(--color-canvas)] mb-6">
-          Have a project that needs either a co-developer or a sharper technical lens?
-        </h2>
-        <a
-          href="mailto:info@cloudmindspartners.com"
-          class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
-        >
-          info@cloudmindspartners.com
-        </a>
+        <article class="role-card">
+          <div class="role-photo-wrap">
+            <Image
+              src={cardFinancialPartner}
+              alt="Financial partner — capital structuring"
+              widths={[480, 720, 960]}
+              sizes="(max-width: 880px) 100vw, 33vw"
+              format="webp"
+              class="role-photo"
+            />
+          </div>
+          <div class="role-body">
+            <div class="role-num">03 — Capital</div>
+            <h3>Financial partner</h3>
+            <p>BNDES, IFC, debentures incentivadas and senior tranches.</p>
+          </div>
+        </article>
       </div>
-    </Section>
-  </main>
+    </div>
+  </section>
+
+  <!-- 3. LIFECYCLE — navy bg, 4-phase strip -->
+  <section class="lifecycle">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="section-eyebrow">Lifecycle</p>
+        <h2>Kickoff to commissioning.</h2>
+      </div>
+    </div>
+    <div class="lifecycle-track">
+      <div class="lc-phase">
+        <div class="lc-num">01</div>
+        <div class="lc-label">0–6 months</div>
+        <h4>Pre-site</h4>
+        <p>Qualification, offtake modeling, term sheet in 90 days.</p>
+      </div>
+      <div class="lc-phase">
+        <div class="lc-num">02</div>
+        <div class="lc-label">6–18 months</div>
+        <h4>Engineering &amp; permits</h4>
+        <p>Technical DD, interconnection, environmental filings.</p>
+      </div>
+      <div class="lc-phase">
+        <div class="lc-num">03</div>
+        <div class="lc-label">18–36 months</div>
+        <h4>Construction</h4>
+        <p>Owner-rep, risk register, milestone reporting.</p>
+      </div>
+      <div class="lc-phase">
+        <div class="lc-num">04</div>
+        <div class="lc-label">Ongoing</div>
+        <h4>Operate &amp; iterate</h4>
+        <p>PUE/WUE monitoring, expansion, exit prep.</p>
+      </div>
+    </div>
+  </section>
 
   <SiteFooter />
 </Base>
+
+<style>
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: clamp(64px, 7vw, 112px) clamp(28px, 4vw, 64px);
+  }
+  .section-head {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blue-bright);
+    margin: 0 0 16px;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.6vw, 44px);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 auto;
+    max-width: 720px;
+  }
+
+  /* ——— ROLES on cream ——————————————————————— */
+  .roles {
+    background: var(--color-cream-bg, #f5f0e8);
+    color: var(--color-navy-0);
+  }
+  .roles .section-head h2 {
+    color: var(--color-navy-0);
+  }
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .role-card {
+    background: transparent;
+    border: 1px solid rgba(5, 14, 29, 0.12);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .role-card:hover {
+    border-color: rgba(45, 107, 228, 0.55);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 44px rgba(45, 107, 228, 0.12);
+  }
+  .role-photo-wrap {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 19px 19px 0 0;
+  }
+  .role-card :global(.role-photo) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(1.18) contrast(1.05);
+    transition: transform 0.4s;
+  }
+  .role-card:hover :global(.role-photo) {
+    transform: scale(1.04);
+  }
+  .role-body {
+    padding: 32px 28px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 1;
+  }
+  .role-num {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-blue);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .role-card h3 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    color: var(--color-navy-0);
+    margin: 0;
+  }
+  .role-card p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: #4D5F7A;
+    margin: 0;
+    max-width: 30ch;
+  }
+
+  /* ——— LIFECYCLE on navy ———————————————————— */
+  .lifecycle {
+    background: var(--color-navy-0, #05111d);
+    border-top: 1px solid var(--color-line-0);
+  }
+  .lifecycle .section-inner {
+    padding-bottom: 0;
+  }
+  .lifecycle .section-head h2 {
+    color: var(--color-cream-0);
+  }
+  .lifecycle-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 0;
+    border-top: 1px solid var(--color-line-0);
+  }
+  .lc-phase {
+    padding: 40px 28px;
+    border-right: 1px solid var(--color-line-0);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .lc-phase:last-child {
+    border-right: 0;
+  }
+  .lc-num {
+    font-family: var(--font-display);
+    font-size: 56px;
+    font-weight: 600;
+    color: var(--color-blue-bright);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .lc-label {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--color-cream-3);
+  }
+  .lc-phase h4 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-cream-0);
+    letter-spacing: -0.012em;
+  }
+  .lc-phase p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-cream-1);
+    margin: 0;
+    max-width: 28ch;
+  }
+
+  @media (max-width: 880px) {
+    .roles-grid,
+    .lifecycle-track {
+      grid-template-columns: 1fr;
+    }
+    .lc-phase {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line-0);
+    }
+    .lc-phase:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

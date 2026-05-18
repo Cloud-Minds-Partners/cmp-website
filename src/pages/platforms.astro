@@ -1,56 +1,254 @@
 ---
-import Base from "../layouts/Base.astro";
-import SEO from "../components/SEO.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
-import { platforms } from "../data/platforms";
+import Base from '../layouts/Base.astro';
+import SEO from '../components/SEO.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Hero from '../components/Hero.astro';
+import { Image } from 'astro:assets';
+import { useTranslations } from '../i18n/utils';
 
-const statusLabel: Record<string, string> = {
-  "live": "Live",
-  "beta": "Beta",
-  "in-development": "In development",
-};
+import heroPlatforms from '../assets/photos/hero-platforms.jpg';
+import cardPlatformSiteSelection from '../assets/photos/card-platform-site-selection.jpg';
+import cardPlatformGridIntel from '../assets/photos/card-platform-grid-intel.jpg';
+import cardPlatformDcFinancial from '../assets/photos/card-platform-dc-financial.jpg';
+import cardPlatformTestFit from '../assets/photos/card-platform-testfit-pro.jpg';
+
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
 ---
 
-<Base>
-  <SEO slot="head" title="Platforms — Cloud Minds Partners" description="CMP proprietary platforms for data center site selection, market pricing, capacity modelling, and project tracking." />
-  <SiteHeader active="platforms" />
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title="Platforms — Cloud Minds Partners"
+    description="Four purpose-built data center platforms applied to live LatAm engagements: Site Selection, Grid Intelligence, DC Financial Model, and Test Fit Pro."
+    lang={locale}
+  />
+  <SiteHeader />
 
-  <main>
-    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">Platforms</div>
-        <h1 class="display-lg max-w-3xl">We productize what survives across engagements.</h1>
-        <p class="lede mt-6 max-w-2xl">
-          Our platforms are the tools we use on every project — not a
-          separate business line. They are available to clients under
-          engagement and become deliverables in their own right.
-        </p>
-      </div>
-    </section>
+  <!-- 1. HERO -->
+  <Hero
+    variant="page"
+    image={heroPlatforms}
+    eyebrow={t('nav.platforms')}
+    live
+    heading="Tools we built. Now in production."
+    subheading="Four platforms applied to live engagements across LatAm."
+  />
 
-    <Section compact>
-      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
-        {platforms.map((p) => (
-          <a href={`/platforms/${p.slug}`} class="block py-10 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-            <div class="grid md:grid-cols-12 gap-6">
-              <div class="md:col-span-3">
-                <div class="caption mb-2">{p.tag}</div>
-                {p.url && p.showHost && <div class="caption text-[var(--color-navy)]">{new URL(p.url).host}</div>}
-                <div class="caption mt-1 text-[var(--color-ink-quiet)]">{statusLabel[p.status]}</div>
-              </div>
-              <div class="md:col-span-9">
-                <h2 class="display text-2xl mb-3">{p.name}</h2>
-                <p class="text-[var(--color-ink)] leading-relaxed">{p.summary}</p>
-                <span class="inline-block mt-5 text-sm font-semibold text-[var(--color-navy)]">Learn more →</span>
-              </div>
-            </div>
-          </a>
-        ))}
+  <!-- 2. PRODUCTS — 4 alternating split panels -->
+  <section class="products">
+    <article class="product product--1" id="platforms-site-selection">
+      <div class="product-info">
+        <div class="product-info-num">01 — Site Selection</div>
+        <h2>Score 76 cities in minutes.</h2>
+        <p>Land, grid, water, fiber, climate, fiscal — weighted to the thesis.</p>
+        <a class="product-cta" href="mailto:info@cloudmindspartners.com">Request access →</a>
       </div>
-    </Section>
-  </main>
+      <div class="product-visual">
+        <Image
+          src={cardPlatformSiteSelection}
+          alt="Site Selection platform — hyperscale data center exterior aerial"
+          widths={[960, 1440, 1920]}
+          sizes="(max-width: 880px) 100vw, 50vw"
+          format="webp"
+          class="product-visual-bg"
+        />
+      </div>
+    </article>
+
+    <article class="product product--2" id="platforms-grid-intelligence">
+      <div class="product-info">
+        <div class="product-info-num">02 — Grid Intelligence</div>
+        <h2>508 ONS studies. Indexed.</h2>
+        <p>PARPEL 2027–2031 modeled by substation. N-1 contingency in 24h.</p>
+        <a class="product-cta" href="mailto:info@cloudmindspartners.com">Request access →</a>
+      </div>
+      <div class="product-visual">
+        <Image
+          src={cardPlatformGridIntel}
+          alt="Grid Intelligence platform — transmission tower in daylight"
+          widths={[960, 1440, 1920]}
+          sizes="(max-width: 880px) 100vw, 50vw"
+          format="webp"
+          class="product-visual-bg"
+        />
+      </div>
+    </article>
+
+    <article class="product product--3" id="platforms-dc-financial">
+      <div class="product-info">
+        <div class="product-info-num">03 — DC Financial Model</div>
+        <h2>Country-specific TCO.</h2>
+        <p>BR · CL · MX tariffs, capex curves by tier, sensitivity by FX and DSCR.</p>
+        <a class="product-cta" href="mailto:info@cloudmindspartners.com">Request access →</a>
+      </div>
+      <div class="product-visual">
+        <Image
+          src={cardPlatformDcFinancial}
+          alt="DC Financial Model platform — stocks chart on screen"
+          widths={[960, 1440, 1920]}
+          sizes="(max-width: 880px) 100vw, 50vw"
+          format="webp"
+          class="product-visual-bg"
+        />
+      </div>
+    </article>
+
+    <article class="product product--4" id="platforms-test-fit-pro">
+      <div class="product-info">
+        <div class="product-info-num">04 — Test Fit Pro</div>
+        <h2>Engineering-grade layouts.</h2>
+        <p>Hyperscale and edge campuses. 30 vendor presets. EIAR-compliant.</p>
+        <a class="product-cta" href="mailto:info@cloudmindspartners.com">Request access →</a>
+      </div>
+      <div class="product-visual">
+        <Image
+          src={cardPlatformTestFit}
+          alt="Test Fit Pro platform — green LED server stacks"
+          widths={[960, 1440, 1920]}
+          sizes="(max-width: 880px) 100vw, 50vw"
+          format="webp"
+          class="product-visual-bg"
+        />
+      </div>
+    </article>
+  </section>
 
   <SiteFooter />
 </Base>
+
+<style>
+  .products {
+    padding: 0;
+  }
+  .product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    width: 100%;
+  }
+  .product-info {
+    padding: clamp(56px, 8vh, 96px) clamp(48px, 6vw, 96px);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .product-info-num {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--color-blue-bright);
+  }
+  .product-info h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.2vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-cream-0);
+    max-width: 16ch;
+  }
+  .product-info > p {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--color-cream-1);
+    margin: 0;
+    max-width: 38ch;
+  }
+  .product-cta {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-blue-bright);
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--color-blue-bright);
+    transition: gap 0.2s, color 0.2s;
+    text-decoration: none;
+  }
+  .product-cta:hover {
+    gap: 16px;
+    color: var(--color-cream-0);
+  }
+
+  /* Alternating dark / cream backgrounds */
+  .product--1 .product-info,
+  .product--3 .product-info {
+    background: var(--color-navy-0, #05111d);
+  }
+  .product--2 .product-info,
+  .product--4 .product-info {
+    background: var(--color-cream-bg, #f5f0e8);
+    color: var(--color-navy-0);
+  }
+  .product--2 .product-info h2,
+  .product--4 .product-info h2 {
+    color: var(--color-navy-0);
+  }
+  .product--2 .product-info > p,
+  .product--4 .product-info > p {
+    color: #4D5F7A;
+  }
+  .product--2 .product-info-num,
+  .product--4 .product-info-num {
+    color: var(--color-blue);
+  }
+  .product--2 .product-cta,
+  .product--4 .product-cta {
+    color: var(--color-blue);
+    border-color: var(--color-blue);
+  }
+  .product--2 .product-cta:hover,
+  .product--4 .product-cta:hover {
+    color: var(--color-navy-0);
+  }
+
+  /* Even products: photo on left */
+  .product:nth-child(even) .product-info {
+    order: 2;
+  }
+  .product:nth-child(even) .product-visual {
+    order: 1;
+  }
+
+  .product-visual {
+    position: relative;
+    min-height: 480px;
+    overflow: hidden;
+  }
+  .product-visual :global(.product-visual-bg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: prodKen 22s ease-in-out infinite alternate;
+    filter: saturate(1.15) contrast(1.05);
+  }
+  @keyframes prodKen {
+    0%   { transform: scale(1); }
+    100% { transform: scale(1.07); }
+  }
+
+  @media (max-width: 880px) {
+    .product {
+      grid-template-columns: 1fr;
+    }
+    .product-visual {
+      min-height: 280px;
+    }
+    .product:nth-child(even) .product-info {
+      order: 1;
+    }
+    .product:nth-child(even) .product-visual {
+      order: 2;
+    }
+  }
+</style>

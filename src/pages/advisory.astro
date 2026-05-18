@@ -1,95 +1,397 @@
 ---
-import Base from "../layouts/Base.astro";
-import SEO from "../components/SEO.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import Section from "../components/Section.astro";
+import Base from '../layouts/Base.astro';
+import SEO from '../components/SEO.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Hero from '../components/Hero.astro';
+import CapabilityCard from '../components/CapabilityCard.astro';
+import { useTranslations } from '../i18n/utils';
 
-const capabilities = [
-  {
-    n: "01",
-    t: "Site selection",
-    b: "Multi-criteria scoring across land, power, water, connectivity, tax, and regulatory fit. Driven by our Site Selection Tool and ground-truthed with local partners.",
-  },
-  {
-    n: "02",
-    t: "Feasibility studies",
-    b: "Capex envelope, timeline risk, interconnection gate, water baseline, permitting path. Output is a defensible file deliverable, not a pitch deck.",
-  },
-  {
-    n: "03",
-    t: "Market intelligence",
-    b: "Demand signals, competitive density, tariff trajectories, and policy context across Brazil, Chile, and Mexico as primary markets.",
-  },
-  {
-    n: "04",
-    t: "Regulatory path mapping",
-    b: "Federal, state, and municipal requirements distilled into a project timeline. Primary sources attached. Reviewed monthly under Regulatory Watch.",
-  },
-];
+import heroAdvisory from '../assets/photos/hero-advisory.jpg';
+import cardSite from '../assets/photos/card-adv-site-selection.jpg';
+import cardPower from '../assets/photos/card-adv-power-grid.jpg';
+import cardWater from '../assets/photos/card-adv-water-climate.jpg';
+import cardRegulatory from '../assets/photos/card-adv-regulatory.jpg';
+import cardFinancial from '../assets/photos/card-adv-financial.jpg';
+import cardMarket from '../assets/photos/card-adv-market-intel.jpg';
+
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
 ---
 
-<Base>
-  <SEO slot="head" title="Advisory — Cloud Minds Partners" description="Site selection, feasibility studies, market intelligence, and regulatory path mapping for data center projects in Latin America." />
-  <SiteHeader active="advisory" />
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title="Advisory — Cloud Minds Partners"
+    description="LatAm data center advisory — site selection, power & grid, water & climate, regulatory & tax, financial structuring, and market intelligence. Six lenses. One picture."
+    lang={locale}
+  />
+  <SiteHeader />
 
-  <main>
-    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">01 / Advisory</div>
-        <h1 class="display-lg max-w-3xl">Advisory for data center projects in Latin America.</h1>
-        <p class="lede mt-6 max-w-2xl">
-          The work that sits before a project has a CFO and an EPC —
-          deciding where, whether, and how, with evidence that holds up in
-          front of a board, a regulator, or a bank.
-        </p>
+  <!-- 1. HERO -->
+  <Hero
+    variant="page"
+    image={heroAdvisory}
+    eyebrow={t('nav.advisory')}
+    live
+    heading="The work that sits before a CFO and an EPC."
+    subheading="Site, power, water, regulatory, capital — pressure-tested before the bid."
+  />
+
+  <!-- 2. FIGURES on near-black -->
+  <section class="figures-strip">
+    <div class="figures-inner">
+      <div class="figure">
+        <div class="figure-num">76</div>
+        <div class="figure-label">Cities</div>
       </div>
-    </section>
-
-    <Section eyebrow="Capabilities" title="How we work." compact>
-      <div class="grid md:grid-cols-2 gap-px bg-[var(--color-rule)]">
-        {capabilities.map((c) => (
-          <div class="bg-[var(--color-canvas)] p-9">
-            <div class="caption mb-3">{c.n}</div>
-            <h3 class="display text-xl mb-3">{c.t}</h3>
-            <p class="text-[var(--color-ink-muted)] leading-relaxed">{c.b}</p>
-          </div>
-        ))}
+      <div class="figure">
+        <div class="figure-num">30<span class="figure-unit">+</span></div>
+        <div class="figure-label">Engagements</div>
       </div>
-    </Section>
-
-    <Section eyebrow="Method" title="Primary sources first. Always." tone="alt">
-      <div class="max-w-3xl">
-        <p class="text-[var(--color-ink)] leading-relaxed text-lg">
-          Every factual claim in a CMP deliverable traces back to a primary
-          source downloaded and archived in our intelligence repository.
-          We built an audit gate —
-          <code class="text-sm bg-[var(--color-canvas)] px-1.5 py-0.5 border border-[var(--color-rule)]">cmp-memo audit</code>
-          — that blocks publication when citations don't resolve to a
-          verifiable document.
-        </p>
-        <p class="text-[var(--color-ink-muted)] leading-relaxed mt-5">
-          This is unusual in the industry. It is not a marketing line.
-          It is the constraint that shapes what we publish and when.
-        </p>
+      <div class="figure">
+        <div class="figure-num">1<span class="figure-unit">B+</span></div>
+        <div class="figure-label">USD informed</div>
       </div>
-    </Section>
+      <div class="figure">
+        <div class="figure-num">3</div>
+        <div class="figure-label">Markets</div>
+      </div>
+    </div>
+  </section>
 
-    <Section tone="ink" compact>
-      <div class="max-w-3xl">
-        <div class="eyebrow mb-4 text-[color:color-mix(in_srgb,var(--color-canvas)_60%,transparent)]">Next</div>
-        <h2 class="display text-2xl md:text-3xl text-[var(--color-canvas)] mb-6">
-          Looking at a specific site or market?
-        </h2>
-        <a
-          href="mailto:info@cloudmindspartners.com"
-          class="inline-block no-underline text-[var(--color-canvas)] border border-[var(--color-canvas)] px-5 py-2.5 hover:bg-[var(--color-canvas)] hover:text-[var(--color-ink)] transition-colors"
-        >
-          info@cloudmindspartners.com
+  <!-- 3. CAPABILITIES on cream — 2x3 grid -->
+  <section class="capabilities on-cream">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="section-eyebrow">Capabilities</p>
+        <h2>Six lenses. One picture.</h2>
+      </div>
+      <div class="cap-grid">
+        <CapabilityCard onCream
+          num="01 — Site"
+          title="Site selection"
+          description="LatAm cities scored by land, grid, water, fiber and fiscal incentives."
+          photo={cardSite}
+        />
+        <CapabilityCard onCream
+          num="02 — Power"
+          title="Power & grid"
+          description="Feasibility, N-1 contingency, PARPEL 2027–2031 modeling."
+          photo={cardPower}
+        />
+        <CapabilityCard onCream
+          num="03 — Water"
+          title="Water & climate"
+          description="Outorga lead times and WUE under regional drought stress."
+          photo={cardWater}
+        />
+        <CapabilityCard onCream
+          num="04 — Regulatory"
+          title="Regulatory & tax"
+          description="EIAR, Anatel, REIDI and state-level incentive structuring."
+          photo={cardRegulatory}
+        />
+        <CapabilityCard onCream
+          num="05 — Capital"
+          title="Financial structuring"
+          description="TCO, IRR and FX stress — numbers a credit committee passes."
+          photo={cardFinancial}
+        />
+        <CapabilityCard onCream
+          num="06 — Intelligence"
+          title="Market intelligence"
+          description="Demand signals, PPAs and competitor mapping — primary sources."
+          photo={cardMarket}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ENGAGEMENT MODEL on navy — 4-step timeline -->
+  <section class="engagement">
+    <div class="section-inner">
+      <div class="section-head">
+        <p class="section-eyebrow">Engagement</p>
+        <h2>Four phases. One owner.</h2>
+      </div>
+      <div class="engagement-timeline">
+        <div class="model-step">
+          <div class="model-step-dot"></div>
+          <div class="model-step-num">Phase 01</div>
+          <h4>Thesis</h4>
+          <p>Investment thesis, market sizing, scoring rubric.</p>
+          <div class="model-step-time">3–4 weeks</div>
+        </div>
+        <div class="model-step">
+          <div class="model-step-dot"></div>
+          <div class="model-step-num">Phase 02</div>
+          <h4>Shortlist</h4>
+          <p>Primary research across 20–60 candidate sites.</p>
+          <div class="model-step-time">6–10 weeks</div>
+        </div>
+        <div class="model-step">
+          <div class="model-step-dot"></div>
+          <div class="model-step-num">Phase 03</div>
+          <h4>Diligence</h4>
+          <p>3–5 preferred sites. Engineering, financial, regulatory.</p>
+          <div class="model-step-time">4–8 weeks</div>
+        </div>
+        <div class="model-step">
+          <div class="model-step-dot"></div>
+          <div class="model-step-num">Phase 04</div>
+          <h4>Close</h4>
+          <p>Negotiation, EPC handoff, capital markets storyline.</p>
+          <div class="model-step-time">Variable</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CTA bar on cream -->
+  <section class="adv-cta on-cream">
+    <div class="adv-cta-inner">
+      <div class="adv-cta-text">
+        <p class="section-eyebrow">Ready when you are</p>
+        <h2>Bring a thesis. We'll pressure-test it.</h2>
+      </div>
+      <div class="adv-cta-actions">
+        <a class="btn-primary" href="mailto:info@cloudmindspartners.com">
+          Engage advisory
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
         </a>
+        <a class="btn-outline" href="/intelligence/memos">Read a memo</a>
       </div>
-    </Section>
-  </main>
+    </div>
+  </section>
 
   <SiteFooter />
 </Base>
+
+<style>
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: clamp(64px, 7vw, 112px) clamp(28px, 4vw, 64px);
+  }
+  .section-head {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blue-bright);
+    margin: 0 0 16px;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.6vw, 44px);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 auto;
+    max-width: 720px;
+  }
+
+  /* ——— FIGURES STRIP — near-black ——————————————— */
+  .figures-strip {
+    background: rgba(5, 14, 29, 0.97);
+    border-top: 1px solid var(--color-line-0);
+    border-bottom: 1px solid var(--color-line-0);
+  }
+  .figures-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 64px clamp(28px, 4vw, 64px);
+    gap: 0;
+  }
+  .figure {
+    padding: 8px 32px;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+  }
+  .figure:last-child {
+    border-right: 0;
+  }
+  .figure-num {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 3.6vw, 48px);
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-cream-0);
+  }
+  .figure-unit {
+    font-size: 13px;
+    color: var(--color-cream-2);
+    font-weight: 400;
+    font-family: var(--font-body);
+    margin-left: 4px;
+  }
+  .figure-label {
+    margin-top: 12px;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--color-cream-2);
+  }
+
+  /* ——— CAPABILITIES on cream — 3-col grid ——————— */
+  .capabilities {
+    background: var(--color-cream-bg, #f5f0e8);
+    color: var(--color-navy-0);
+  }
+  .capabilities .section-head h2 {
+    color: var(--color-navy-0);
+  }
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* ——— ENGAGEMENT MODEL on navy ———————————————— */
+  .engagement {
+    background: var(--color-navy-0, #05111d);
+    border-top: 1px solid var(--color-line-0);
+  }
+  .engagement .section-head h2 {
+    color: var(--color-cream-0);
+  }
+  .engagement-timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .model-step {
+    padding: 24px 20px;
+    border-left: 1px solid var(--color-line-0);
+    position: relative;
+  }
+  .model-step-dot {
+    position: absolute;
+    top: 24px;
+    left: -5px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-blue-bright);
+    box-shadow: 0 0 0 3px rgba(5, 14, 29, 0.97);
+  }
+  .model-step-num {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--color-cream-2);
+    margin-bottom: 12px;
+  }
+  .model-step h4 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    color: var(--color-cream-0);
+    margin: 0 0 12px;
+  }
+  .model-step p {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--color-cream-1);
+    margin: 0 0 20px;
+    max-width: 28ch;
+  }
+  .model-step-time {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--color-blue-bright);
+    letter-spacing: 0.02em;
+  }
+
+  /* ——— CTA bar on cream ———————————————————————— */
+  .adv-cta {
+    background: var(--color-cream-bg, #f5f0e8);
+    color: var(--color-navy-0);
+  }
+  .adv-cta-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: clamp(48px, 6vw, 80px) clamp(28px, 4vw, 64px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .adv-cta-text .section-eyebrow {
+    margin-bottom: 18px;
+  }
+  .adv-cta-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--color-navy-0);
+    max-width: 22ch;
+  }
+  .adv-cta-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn-primary,
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-primary {
+    background: var(--color-blue);
+    color: var(--color-cream-0);
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(5, 14, 29, 0.25);
+    color: var(--color-navy-0);
+  }
+  .btn-primary:hover,
+  .btn-outline:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  /* ——— Responsive ——————————————————————————— */
+  @media (max-width: 1100px) {
+    .cap-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 880px) {
+    .figures-inner,
+    .cap-grid,
+    .engagement-timeline {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .figure {
+      border-right: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px 0;
+    }
+    .figure:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>
