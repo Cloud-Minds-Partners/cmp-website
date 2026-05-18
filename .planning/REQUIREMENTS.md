@@ -81,10 +81,10 @@
 
 ### Deploy
 
-- [ ] **DEPLOY-01**: GitHub Actions workflow — hard-fails when `FIREBASE_TOKEN` or `CMP_KNOWLEDGE_READ_TOKEN` missing (remove silent-skip per global rule #8b)
-- [ ] **DEPLOY-02**: Firebase Hosting preview channels per non-main branch (`channel-deploy --expires 7d`)
-- [ ] **DEPLOY-03**: Production cutover — mock-26 design replaces v4 Crusoe on `dcplatformcmp.web.app/cmp-website` site, single coordinated deploy, rollback documented
-- [ ] **DEPLOY-04**: Lighthouse CI step in workflow — fails build if Performance <90, SEO <95, Accessibility <95 on home page
+- [x] **DEPLOY-01**: GitHub Actions workflow — hard-fails when `FIREBASE_TOKEN` or `CMP_KNOWLEDGE_READ_TOKEN` missing (remove silent-skip per global rule #8b)
+- [x] **DEPLOY-02**: Firebase Hosting preview channels per non-main branch (`channel-deploy --expires 7d`)
+- [x] **DEPLOY-03**: Production cutover — mock-26 design replaces v4 Crusoe on `dcplatformcmp.web.app/cmp-website` site, single coordinated deploy, rollback documented
+- [x] **DEPLOY-04**: Lighthouse CI step in workflow — fails build if Performance <90, SEO <95, Accessibility <95 on home page
 
 ## v2 Requirements
 
@@ -175,10 +175,10 @@
 | PERF-02 | Phase 4 | Complete |
 | PERF-03 | Phase 4 | Complete |
 | PERF-04 | Phase 4 | Complete |
-| DEPLOY-01 | Phase 5 | Pending |
-| DEPLOY-02 | Phase 5 | Pending |
-| DEPLOY-03 | Phase 5 | Pending |
-| DEPLOY-04 | Phase 5 | Pending |
+| DEPLOY-01 | Phase 5 | Complete |
+| DEPLOY-02 | Phase 5 | Complete |
+| DEPLOY-03 | Phase 5 | Complete |
+| DEPLOY-04 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 51 total

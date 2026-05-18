@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 04-00 (SEO + A11Y + PERF quality gate — all 18 reqs delivered)
-last_updated: "2026-05-18T12:06:03.422Z"
+stopped_at: Completed 05-deploy/05-00-PLAN.md — FINAL PHASE
+last_updated: "2026-05-18T12:14:55.934Z"
 last_activity: "2026-05-18 — Plan 04-00 complete: @astrojs/sitemap, 8 OG PNGs, skip-to-content, hero LCP preload, phase4-quality.spec.ts (14 tests pass)"
 progress:
   total_phases: 5
-  completed_phases: 4
-  total_plans: 15
-  completed_plans: 15
+  completed_phases: 5
+  total_plans: 16
+  completed_plans: 16
   percent: 100
 ---
 
@@ -60,6 +60,7 @@ Progress: [██████████] 100% (overall: 15/15 plans)
 | Phase 03-pages P03-04 | 10 | 3 tasks | 3 files |
 | Phase 03-pages P05 | 372 | 3 tasks | 4 files |
 | Phase 04-quality-gate P04-00 | 321 | 4 tasks | 16 files |
+| Phase 05-deploy P05-00 | 525674 | 4 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -115,6 +116,8 @@ Recent decisions affecting current work:
 - [Phase 04-quality-gate]: Skip link wraps full slot in div#main, visible on :focus with brand blue bg + outline
 - [Phase 04-quality-gate]: Hero preload dual-path: head slot + body preloadHref prop; preload confirmed in <head>
 - [Phase 04-quality-gate]: Lighthouse CLI gap accepted per plan — structural signals covered by 14 Playwright tests; manual score validation post-deploy
+- [Phase 05-deploy]: Migrated CI from FIREBASE_TOKEN (legacy CI token) to FIREBASE_SERVICE_ACCOUNT_DCPLATFORMCMP (service account JSON) for Firebase deploy
+- [Phase 05-deploy]: Pre-flight hard-fail on missing deploy secret (exit 1 before build) — eliminates silent-skip pattern per CMP rule #8b
 
 ### Pending Todos
 
@@ -128,6 +131,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-18T12:02:00.000Z
-Stopped at: Completed 04-00 (SEO + A11Y + PERF quality gate — all 18 reqs delivered)
+Last session: 2026-05-18T12:14:55.932Z
+Stopped at: Completed 05-deploy/05-00-PLAN.md — FINAL PHASE
 Resume file: None

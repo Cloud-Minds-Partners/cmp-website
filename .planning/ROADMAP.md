@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Components** - Full shared component library and content collection schemas
 - [ ] **Phase 3: Pages** - All six canonical pages, content collection routes, and locale copy
 - [ ] **Phase 4: Quality Gate** - SEO, accessibility, and performance baselines verified against Lighthouse thresholds
-- [ ] **Phase 5: Deploy** - Hard-fail CI, preview channels, Lighthouse CI gate, and production cutover
+- [x] **Phase 5: Deploy** - Hard-fail CI, preview channels, Lighthouse CI gate, and production cutover (completed 2026-05-18)
 
 ## Phase Details
 
@@ -111,4 +111,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Components | 4/4 | Complete |  |
 | 3. Pages | 6/6 | Complete | 2026-05-18 |
 | 4. Quality Gate | 1/1 | Complete | 2026-05-18 |
-| 5. Deploy | 0/TBD | Not started | - |
+| 5. Deploy | 1/1 | Complete   | 2026-05-18 |
