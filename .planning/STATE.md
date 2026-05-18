@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 02-04-PLAN.md (Wave 2 composites — visual fidelity deferred per user approval)
-last_updated: "2026-05-17T23:22:04.533Z"
+stopped_at: Completed 03-00-PLAN.md (Wave 0 Phase 3 infrastructure — spec stubs + scaffolding cleanup + platforms redirect)
+last_updated: "2026-05-18T00:32:49.738Z"
 last_activity: 2026-05-17 — Plan 02-04 complete (SiteHeader, SiteFooter, /dev/components preview page — visual fidelity deferred per user approval)
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 8
-  completed_plans: 8
+  total_plans: 14
+  completed_plans: 9
   percent: 100
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-16)
 
 **Core value:** Communicate Cloud Minds Partners' positioning as the LatAm DC intelligence firm to advisory/development prospects, with editorial-quality visual presence and zero-friction conversion paths.
-**Current focus:** Phase 1 — Foundation
+**Current focus:** Phase 3 — Pages
 
 ## Current Position
 
-Phase: 1 of 5 (Foundation) — COMPLETE
-Plan: 4 of 4 in current phase (all complete)
-Status: Phase 2 done — ready for Phase 3
-Last activity: 2026-05-17 — Plan 02-04 complete (SiteHeader, SiteFooter, /dev/components preview page — visual fidelity deferred per user approval)
+Phase: 3 of 5 (Pages) — IN PROGRESS
+Plan: 1 of 6 in current phase (03-00 complete; next 03-01)
+Status: Wave 0 infrastructure landed — ready for Wave 1 EN page builds
+Last activity: 2026-05-17 — Plan 03-00 complete (3 Playwright spec stubs, image-pipeline-test.astro + newsletter.astro deleted, platforms/[slug].astro 301 redirect)
 
-Progress: [██████████] 100% (Phase 1)
+Progress: [██████░░░░] 64% (overall: 9/14 plans)
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [██████████] 100% (Phase 1)
 | Phase 02-components P02-01 | 3 | 2 tasks | 13 files |
 | Phase 02-components P02-02 | 8 | 2 tasks | 4 files |
 | Phase 02-components P02-03 | 14 | 2 tasks | 21 files |
+| Phase 03-pages P00 | 15min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -88,6 +89,8 @@ Recent decisions affecting current work:
 - [Phase 02-components]: 02-03: SEO barePath strips /pt and /es prefix before getAbsoluteLocaleUrl to prevent double-prefix on hreflang alternates
 - [Phase 02-components]: 02-03: NewsletterSubscribe uses uid per instance to prevent DOM ID conflicts on multi-embed pages
 - 2026-05-17 — Phase 2 visual fidelity check deferred (eyeball at /dev/components not performed). Flagged for Phase 3 page composition review.
+- [Phase 03-pages]: newsletter.astro deleted (not redirected) — cleanest approach; newsletter is inline home section per CONTEXT.md
+- [Phase 03-pages]: platforms/[slug].astro 4 slugs hardcoded matching mock-26 product names — redirect-only file needs no dynamic data
 
 ### Pending Todos
 
@@ -101,6 +104,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-17T23:30:00.000Z
-Stopped at: Completed 02-04-PLAN.md (Wave 2 composites — visual fidelity deferred per user approval)
+Last session: 2026-05-18T00:32:49.736Z
+Stopped at: Completed 03-00-PLAN.md (Wave 0 Phase 3 infrastructure — spec stubs + scaffolding cleanup + platforms redirect)
 Resume file: None

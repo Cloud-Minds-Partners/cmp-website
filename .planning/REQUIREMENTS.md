@@ -26,31 +26,31 @@
 
 ### Pages
 
-- [ ] **PAGE-01**: Home page — 3-city LatAm hero rotation (SP/Santiago/CDMX), capabilities section (4 cards), insight memo highlight, stats section, team teaser, Newsletter section
-- [ ] **PAGE-02**: Advisory page — hero (industrial campus aerial A01), 6 capability cards (farms / power tower / coast water / blueprints / stock chart / SP skyline)
-- [ ] **PAGE-03**: Development page — hero (aerial campus), 3 roles section (modern office / blueprint / trading screens)
-- [ ] **PAGE-04**: Intelligence page — hero (AI circuit board AI06), featured memo highlight, three subsection links (memos / radar / regwatch)
-- [ ] **PAGE-05**: Platforms page — hero (D09 blue circuit abstract), 4 product cards (Site Selection / Grid Intelligence / DC Financial / Test Fit Pro)
-- [ ] **PAGE-06**: Team page — hero (T02 SP Marginal traffic), real bios from `cmp-knowledge/people/` (Edgard, Gustavo, Rodrigo, Sérgio, João Carlos)
-- [ ] **PAGE-07**: Contact page — direct emails, WhatsApp link, social links, simple inquiry form posting to existing inquiry handler
+- [x] **PAGE-01**: Home page — 3-city LatAm hero rotation (SP/Santiago/CDMX), capabilities section (4 cards), insight memo highlight, stats section, team teaser, Newsletter section
+- [x] **PAGE-02**: Advisory page — hero (industrial campus aerial A01), 6 capability cards (farms / power tower / coast water / blueprints / stock chart / SP skyline)
+- [x] **PAGE-03**: Development page — hero (aerial campus), 3 roles section (modern office / blueprint / trading screens)
+- [x] **PAGE-04**: Intelligence page — hero (AI circuit board AI06), featured memo highlight, three subsection links (memos / radar / regwatch)
+- [x] **PAGE-05**: Platforms page — hero (D09 blue circuit abstract), 4 product cards (Site Selection / Grid Intelligence / DC Financial / Test Fit Pro)
+- [x] **PAGE-06**: Team page — hero (T02 SP Marginal traffic), real bios from `cmp-knowledge/people/` (Edgard, Gustavo, Rodrigo, Sérgio, João Carlos)
+- [x] **PAGE-07**: Contact page — direct emails, WhatsApp link, social links, simple inquiry form posting to existing inquiry handler
 
 ### Content collections
 
 - [x] **CONT-01**: Zod schemas for `memos`, `radar`, `regwatch` refactored with `language` field (en/pt/es enum) + locale-aware slugs
-- [ ] **CONT-02**: Memos index page (`/intelligence/memos/`) — renders list from collection, gracefully shows "Memo library expanding — first publication coming soon" when empty
-- [ ] **CONT-03**: Memo detail page (`/intelligence/memos/[slug]`) — uses `MemoLayout`, includes `Article` JSON-LD, related memos
-- [ ] **CONT-04**: Radar index page — preserves existing 1 entry, list view
-- [ ] **CONT-05**: Radar detail page — uses `RadarLayout`
-- [ ] **CONT-06**: Regwatch index page — handles empty collection same as memos
+- [x] **CONT-02**: Memos index page (`/intelligence/memos/`) — renders list from collection, gracefully shows "Memo library expanding — first publication coming soon" when empty
+- [x] **CONT-03**: Memo detail page (`/intelligence/memos/[slug]`) — uses `MemoLayout`, includes `Article` JSON-LD, related memos
+- [x] **CONT-04**: Radar index page — preserves existing 1 entry, list view
+- [x] **CONT-05**: Radar detail page — uses `RadarLayout`
+- [x] **CONT-06**: Regwatch index page — handles empty collection same as memos
 - [ ] **CONT-07**: Regwatch detail page — uses `RegwatchLayout`
 
 ### Internationalization
 
 - [x] **I18N-01**: Astro native i18n routing configured in `astro.config.mjs` — default locale `en`, secondary `pt`, `es`, routes `/`, `/pt/`, `/es/`
 - [x] **I18N-02**: Translation file structure created — `src/i18n/{en,pt,es}.json` with all UI strings (nav, CTAs, footer, common labels)
-- [ ] **I18N-03**: Locale-aware `LangSwitcher` — clicking PT on `/team` routes to `/pt/team`; preserves deep links
-- [ ] **I18N-04**: `hreflang` tags emitted on every page (canonical, alternates)
-- [ ] **I18N-05**: At least the home page has translated copy in PT and ES at launch; other pages may fall back to EN (acceptable interim state, flagged in UX with subtle banner)
+- [x] **I18N-03**: Locale-aware `LangSwitcher` — clicking PT on `/team` routes to `/pt/team`; preserves deep links
+- [x] **I18N-04**: `hreflang` tags emitted on every page (canonical, alternates)
+- [x] **I18N-05**: At least the home page has translated copy in PT and ES at launch; other pages may fall back to EN (acceptable interim state, flagged in UX with subtle banner)
 
 ### SEO / AEO
 
@@ -141,22 +141,22 @@
 | COMP-08 | Phase 2 | Complete |
 | COMP-09 | Phase 2 | Complete |
 | CONT-01 | Phase 2 | Complete |
-| PAGE-01 | Phase 3 | Pending |
-| PAGE-02 | Phase 3 | Pending |
-| PAGE-03 | Phase 3 | Pending |
-| PAGE-04 | Phase 3 | Pending |
-| PAGE-05 | Phase 3 | Pending |
-| PAGE-06 | Phase 3 | Pending |
-| PAGE-07 | Phase 3 | Pending |
-| CONT-02 | Phase 3 | Pending |
-| CONT-03 | Phase 3 | Pending |
-| CONT-04 | Phase 3 | Pending |
-| CONT-05 | Phase 3 | Pending |
-| CONT-06 | Phase 3 | Pending |
+| PAGE-01 | Phase 3 | Complete |
+| PAGE-02 | Phase 3 | Complete |
+| PAGE-03 | Phase 3 | Complete |
+| PAGE-04 | Phase 3 | Complete |
+| PAGE-05 | Phase 3 | Complete |
+| PAGE-06 | Phase 3 | Complete |
+| PAGE-07 | Phase 3 | Complete |
+| CONT-02 | Phase 3 | Complete |
+| CONT-03 | Phase 3 | Complete |
+| CONT-04 | Phase 3 | Complete |
+| CONT-05 | Phase 3 | Complete |
+| CONT-06 | Phase 3 | Complete |
 | CONT-07 | Phase 3 | Pending |
-| I18N-03 | Phase 3 | Pending |
-| I18N-04 | Phase 3 | Pending |
-| I18N-05 | Phase 3 | Pending |
+| I18N-03 | Phase 3 | Complete |
+| I18N-04 | Phase 3 | Complete |
+| I18N-05 | Phase 3 | Complete |
 | SEO-01 | Phase 4 | Pending |
 | SEO-02 | Phase 4 | Pending |
 | SEO-03 | Phase 4 | Pending |
