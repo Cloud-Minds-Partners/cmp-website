@@ -1,107 +1,307 @@
 ---
-import Base from "../../layouts/Base.astro";
-import SEO from "../../components/SEO.astro";
-import SiteHeader from "../../components/SiteHeader.astro";
-import SiteFooter from "../../components/SiteFooter.astro";
-import Section from "../../components/Section.astro";
-import { getCollection } from "astro:content";
+import Base from '../../layouts/Base.astro';
+import SEO from '../../components/SEO.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Hero from '../../components/Hero.astro';
+import LocaleBanner from '../../components/LocaleBanner.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations } from '../../i18n/utils';
+import { Image } from 'astro:assets';
 
-const memos = (await getCollection("memos", (m) => m.data.publish)).length;
-const radar = (await getCollection("radar", (r) => r.data.published)).length;
-const regwatch = (await getCollection("regwatch", (r) => r.data.published)).length;
+import heroIntelligence from '../../assets/photos/hero-intelligence.jpg';
+import memoFeaturedImg from '../../assets/photos/memo-intelligence-grid.jpg';
+
+const locale = (Astro.currentLocale ?? 'en') as 'en' | 'pt' | 'es';
+const t = useTranslations(locale);
+
+const allMemos = await getCollection('memos', (m) => m.data.publish);
+const localeMemos = allMemos.filter((m) => m.data.language === locale);
+const memos = (localeMemos.length > 0 ? localeMemos : allMemos)
+  .sort((a, b) => b.data.created.valueOf() - a.data.created.valueOf());
+const showFallbackBanner = localeMemos.length === 0 && locale !== 'en';
+
+// Streams subnav links to the 3 collection index pages
+const streams = [
+  { href: '/intelligence', label: 'Overview' },
+  { href: '/intelligence/memos', label: 'Technical Memos' },
+  { href: '/intelligence/radar', label: 'Innovation Radar' },
+  { href: '/intelligence/regwatch', label: 'Regulatory Watch' },
+];
+
+const fmtMonth = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
 ---
 
-<Base>
-  <SEO slot="head" title="Intelligence — Cloud Minds Partners" description="Technical memos, innovation radar, and regulatory watch for the Latin America data center market." />
-  <SiteHeader
-    active="intelligence"
-    subnav={[
-      { href: "/intelligence", label: "Overview", active: true },
-      { href: "/intelligence/memos", label: "Technical Memos" },
-      { href: "/intelligence/radar", label: "Innovation Radar" },
-      { href: "/intelligence/regwatch", label: "Regulatory Watch" },
-    ]}
+<Base lang={locale}>
+  <SEO
+    slot="head"
+    title="Intelligence — Cloud Minds Partners"
+    description="Technical memos, innovation radar, and regulatory watch covering LatAm data center markets."
+    lang={locale}
+  />
+  <SiteHeader subnav={streams} />
+
+  {showFallbackBanner && <LocaleBanner />}
+
+  <Hero
+    variant="page"
+    image={heroIntelligence}
+    eyebrow="Intelligence"
+    live={true}
+    heading="Primary-source intelligence on LatAm data centers."
+    subheading="Three streams — technical memos, innovation radar, regulatory watch. Audited claim-by-claim before delivery."
   />
 
-  <main>
-    <section class="pt-20 pb-16 border-b border-[var(--color-rule)]">
-      <div class="max-w-[1200px] mx-auto px-6">
-        <div class="eyebrow mb-4">03 / Intelligence</div>
-        <h1 class="display-lg max-w-3xl">Published research on Latin American data center markets.</h1>
-        <p class="lede mt-6 max-w-2xl">
-          Three streams. Each grounded in primary sources. Each peer-reviewed
-          before release. No hot takes, no press-release reshuffling.
-        </p>
-      </div>
-    </section>
-
-    <Section compact>
-      <div class="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
-        <a href="/intelligence/memos" class="block py-10 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-          <div class="grid md:grid-cols-12 gap-6 items-start">
-            <div class="md:col-span-3">
-              <div class="caption mb-2">Long-form</div>
-              <div class="caption text-[var(--color-navy)] tabular-nums">{memos} published</div>
-            </div>
-            <div class="md:col-span-9">
-              <h2 class="display text-2xl mb-3">Technical Memos</h2>
-              <p class="text-[var(--color-ink)] leading-relaxed">
-                Five-page briefs on regulatory, fiscal, and market developments. Minimum three primary sources per memo, audited before publication.
-              </p>
-              <span class="inline-block mt-4 text-sm font-semibold text-[var(--color-navy)]">Browse memos →</span>
-            </div>
+  <!-- Featured memo (cream bg, 2-col grid) -->
+  <section class="featured on-cream" id="memos">
+    <div class="section-inner">
+      <div class="featured-grid">
+        <div class="featured-visual">
+          <Image
+            src={memoFeaturedImg}
+            alt="Grid intelligence visualization"
+            widths={[640, 960, 1280]}
+            sizes="(max-width: 880px) 100vw, 50vw"
+            format="webp"
+            class="featured-img"
+          />
+        </div>
+        <div class="featured-text">
+          <p class="section-eyebrow">Latest memo</p>
+          <h2>Where Brazil's 2028 grid headroom actually sits — and why Vespasiano matters more than Uberlândia.</h2>
+          <p class="featured-lede">PARPEL Cycle 2027–2031 cross-referenced with N-1 contingency analysis across four target Brazilian sites. We map the eight substations that change the math.</p>
+          <div class="featured-meta">
+            <span><strong>14 pages</strong>Primary sources</span>
+            <span><strong>May 2026</strong>Published</span>
+            <span><strong>Members only</strong>Request access</span>
           </div>
-        </a>
-
-        <a href="/intelligence/radar" class="block py-10 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-          <div class="grid md:grid-cols-12 gap-6 items-start">
-            <div class="md:col-span-3">
-              <div class="caption mb-2">Weekly</div>
-              <div class="caption text-[var(--color-navy)] tabular-nums">{radar} entries</div>
-            </div>
-            <div class="md:col-span-9">
-              <h2 class="display text-2xl mb-3">Innovation Radar</h2>
-              <p class="text-[var(--color-ink)] leading-relaxed">
-                Weekly scan of infrastructure, AI, competitive, and regulatory signals. Candidates graduate to memos, client conversations, or platform updates.
-              </p>
-              <span class="inline-block mt-4 text-sm font-semibold text-[var(--color-navy)]">Browse radar →</span>
-            </div>
-          </div>
-        </a>
-
-        <a href="/intelligence/regwatch" class="block py-10 no-underline hover:bg-[var(--color-surface)] -mx-6 px-6 transition-colors">
-          <div class="grid md:grid-cols-12 gap-6 items-start">
-            <div class="md:col-span-3">
-              <div class="caption mb-2">Monthly</div>
-              <div class="caption text-[var(--color-navy)] tabular-nums">{regwatch} digests</div>
-            </div>
-            <div class="md:col-span-9">
-              <h2 class="display text-2xl mb-3">Regulatory Watch</h2>
-              <p class="text-[var(--color-ink)] leading-relaxed">
-                Monthly digest of regulatory, legal, and fiscal changes across seven LatAm jurisdictions. Every change cites a primary source downloaded to our intelligence corpus.
-              </p>
-              <span class="inline-block mt-4 text-sm font-semibold text-[var(--color-navy)]">Browse watch →</span>
-            </div>
-          </div>
-        </a>
+          <a href="/intelligence/memos" class="btn-read">Read all memos →</a>
+        </div>
       </div>
-    </Section>
+    </div>
+  </section>
 
-    <Section eyebrow="Method" title="Chain of Truth." tone="alt" compact>
-      <div class="max-w-3xl">
-        <p class="text-[var(--color-ink)] leading-relaxed">
-          Every claim in a CMP publication traces to a primary source we
-          have downloaded and archived. Citations are enforced by an audit
-          gate that blocks publication when references don't resolve to a
-          verifiable document in our intelligence repository.
-        </p>
-        <p class="text-[var(--color-ink-muted)] leading-relaxed mt-4 text-sm">
-          This is why memos are capped at five pages: the bar is density of
-          cited fact, not word count.
-        </p>
+  <!-- Memos archive (navy bg) -->
+  <section class="memos-archive" id="archive">
+    <div class="section-inner">
+      <div class="archive-header">
+        <h2>Archive</h2>
+        <span class="archive-meta">{allMemos.length} published</span>
       </div>
-    </Section>
-  </main>
+      {memos.length === 0 ? (
+        <div class="empty-state">
+          <p>{t('common.empty-memos')}</p>
+        </div>
+      ) : (
+        <div class="memo-list">
+          {memos.map((memo, i) => (
+            <a href={`/intelligence/memos/${memo.data.slug}`} class="memo-row">
+              <span class="memo-num">{String(i + 1).padStart(3, '0')}</span>
+              <span class="memo-date">{fmtMonth(memo.data.created)}</span>
+              <span class="memo-title">{memo.data.title}</span>
+              <span class="memo-tag">{memo.data.topic}</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
 
   <SiteFooter />
+</Base>
+
+<style>
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(28px, 4vw, 64px);
+  }
+
+  /* Featured memo (cream) */
+  .featured.on-cream {
+    background: var(--color-cream-bg, var(--color-cream-0));
+    color: var(--color-navy-0);
+    padding: clamp(72px, 10vh, 120px) 0;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(48px, 6vw, 96px);
+    align-items: center;
+  }
+  .featured-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 1px solid rgba(5, 14, 29, 0.12);
+    display: block;
+  }
+  .section-eyebrow {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-blue-deep, var(--color-blue));
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+  .featured-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3.2vw, 40px);
+    line-height: 1.1;
+    font-weight: 600;
+    color: var(--color-navy-0);
+    margin: 0;
+    max-width: 600px;
+  }
+  .featured-lede {
+    margin: 24px 0 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: #4d5f7a;
+    max-width: 500px;
+  }
+  .featured-meta {
+    margin: 32px 0 24px;
+    display: flex;
+    gap: 28px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(5, 14, 29, 0.10);
+    font-family: var(--font-body, var(--font-display));
+    font-size: 12.5px;
+    color: #677793;
+    flex-wrap: wrap;
+  }
+  .featured-meta strong {
+    display: block;
+    color: var(--color-navy-0);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .btn-read {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 999px;
+    background: var(--color-blue);
+    color: var(--color-cream-0);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-read:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+
+  /* Memos archive (navy) */
+  .memos-archive {
+    background: var(--color-navy-0);
+    color: var(--color-cream-0);
+    padding: clamp(80px, 10vh, 128px) 0 clamp(96px, 14vh, 160px);
+  }
+  .archive-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 48px;
+  }
+  .archive-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1.05;
+    margin: 0;
+    color: var(--color-cream-0);
+    font-weight: 600;
+  }
+  .archive-meta {
+    font-family: var(--font-display);
+    font-size: 13px;
+    color: var(--color-cream-3, var(--color-cream-2));
+  }
+  .memo-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-line-0, rgba(250, 251, 253, 0.07));
+  }
+  .memo-row {
+    display: grid;
+    grid-template-columns: 80px 110px 1fr 180px;
+    gap: clamp(16px, 2.6vw, 36px);
+    padding: 24px 0;
+    border-bottom: 1px solid var(--color-line-0, rgba(250, 251, 253, 0.07));
+    text-decoration: none;
+    color: var(--color-cream-1);
+    align-items: baseline;
+    transition: background 0.15s, color 0.15s;
+  }
+  .memo-row:hover {
+    background: var(--color-navy-2, rgba(255, 255, 255, 0.02));
+    color: var(--color-cream-0);
+  }
+  .memo-num {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-cream-0);
+    letter-spacing: -0.01em;
+  }
+  .memo-date {
+    font-size: 13px;
+    color: var(--color-cream-2);
+  }
+  .memo-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-cream-0);
+  }
+  .memo-tag {
+    justify-self: end;
+    font-size: 12px;
+    color: var(--color-cream-2);
+    padding: 3px 7px;
+    border: 1px solid var(--color-line-1, rgba(250, 251, 253, 0.15));
+  }
+  .empty-state {
+    border: 1px dashed rgba(250, 251, 253, 0.18);
+    border-radius: 12px;
+    padding: 48px 32px;
+    text-align: center;
+    color: var(--color-cream-2);
+    font-size: 15px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 880px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+    .memo-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 20px 0;
+    }
+    .memo-tag {
+      justify-self: start;
+    }
+  }
+</style>
 </Base>
