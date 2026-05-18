@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Wave 1 page composition landed — home/advisory/development/platforms pages rebuilt per mock-26, build passes
-stopped_at: Completed 03-02-PLAN.md (Wave 1 — home, advisory, development, platforms pages)
-last_updated: "2026-05-18T00:45:00.000Z"
-last_activity: 2026-05-17 — Plan 03-02 complete (4 marketing pages rebuilt per mock-26 verbatim)
+status: Wave 1 page composition landed — home/advisory/development/platforms pages built per mock-26, build passes
+stopped_at: Completed 03-03 (contact.astro) and 03-04 (memos/radar/regwatch index pages)
+last_updated: "2026-05-18T11:35:05.422Z"
+last_activity: "2026-05-17 — Plan 03-02 complete (4 marketing pages rebuilt: home with 3-city hero + stats + capabilities + principles + insight + newsletter; advisory hero+figures+6-card+timeline+CTA; development hero+3 roles+lifecycle; platforms hero+4 alternating products)"
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 14
-  completed_plans: 11
+  completed_plans: 13
   percent: 79
 ---
 
@@ -56,6 +56,8 @@ Progress: [████████░░] 79% (overall: 11/14 plans)
 | Phase 03-pages P00 | 15min | 2 tasks | 6 files |
 | Phase 03-pages P01 | 5min  | 2 tasks | 9 files |
 | Phase 03-pages P02 | 22min | 2 tasks | 7 files |
+| Phase 03-pages P03-03 | 10 | 1 tasks | 1 files |
+| Phase 03-pages P03-04 | 10 | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -102,6 +104,8 @@ Recent decisions affecting current work:
 - [Phase 03-pages]: 03-02: Insight section hardcoded EN per ROADMAP #4 exemption (Memo 011 specific verifiable claims)
 - [Phase 03-pages]: 03-02: Role cards on development.astro use inline scoped CSS (not CapabilityCard) — distinct min-height 420px centered text pattern per RESEARCH.md
 - [Phase 03-pages]: 03-02: Platforms uses .product alternating CSS grid (not CapabilityCard) — full-width 50/50 split with order swap for photo-left even rows
+- [Phase 03-03]: contact.astro: WhatsApp via social.whatsappNumber env-safe; mailto form fallback (no backend CF Phase 3)
+- [Phase 03-04]: memos/radar/regwatch index pages: locale-filter + EN fallback + LocaleBanner; regwatch/[month] returns empty getStaticPaths (CONT-07 accepted gap)
 
 ### Pending Todos
 
@@ -115,6 +119,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-18T00:44:57.006Z
-Stopped at: Completed 03-02-PLAN.md (Wave 1 — home, advisory, development, platforms pages)
+Last session: 2026-05-18T11:34:53.858Z
+Stopped at: Completed 03-03 (contact.astro) and 03-04 (memos/radar/regwatch index pages)
 Resume file: None
