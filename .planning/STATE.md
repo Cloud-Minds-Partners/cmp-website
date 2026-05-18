@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: Wave 1 page composition landed — home/advisory/development/platforms pages built per mock-26, build passes
 stopped_at: Completed 03-05 (PT/ES locale home pages + smoke tests all green)
-last_updated: "2026-05-18T11:54:28.547Z"
+last_updated: "2026-05-18T11:55:10.539Z"
 last_activity: "2026-05-17 — Plan 03-02 complete (4 marketing pages rebuilt: home with 3-city hero + stats + capabilities + principles + insight + newsletter; advisory hero+figures+6-card+timeline+CTA; development hero+3 roles+lifecycle; platforms hero+4 alternating products)"
 progress:
   total_phases: 5

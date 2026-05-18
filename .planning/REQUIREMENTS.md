@@ -42,7 +42,7 @@
 - [x] **CONT-04**: Radar index page — preserves existing 1 entry, list view
 - [x] **CONT-05**: Radar detail page — uses `RadarLayout`
 - [x] **CONT-06**: Regwatch index page — handles empty collection same as memos
-- [ ] **CONT-07**: Regwatch detail page — uses `RegwatchLayout`
+- [x] **CONT-07**: Regwatch detail page — uses `RegwatchLayout`
 
 ### Internationalization
 
@@ -153,7 +153,7 @@
 | CONT-04 | Phase 3 | Complete |
 | CONT-05 | Phase 3 | Complete |
 | CONT-06 | Phase 3 | Complete |
-| CONT-07 | Phase 3 | Pending |
+| CONT-07 | Phase 3 | Complete |
 | I18N-03 | Phase 3 | Complete |
 | I18N-04 | Phase 3 | Complete |
 | I18N-05 | Phase 3 | Complete |
