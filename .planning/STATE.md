@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 03-00-PLAN.md (Wave 0 Phase 3 infrastructure — spec stubs + scaffolding cleanup + platforms redirect)
-last_updated: "2026-05-18T00:32:49.738Z"
-last_activity: 2026-05-17 — Plan 02-04 complete (SiteHeader, SiteFooter, /dev/components preview page — visual fidelity deferred per user approval)
+stopped_at: Completed 03-01-PLAN.md (Foundation fixes — SiteHeader active nav + LocaleBanner + layouts SEO slot + PT/ES translations + radar gate flipped)
+last_updated: "2026-05-17T21:40:00.000Z"
+last_activity: 2026-05-17 — Plan 03-01 complete (SiteHeader i18n+active state, LocaleBanner, 3 layouts SEO slot + locale-aware links, pt/es JSONs translated, 2026-W20 published)
 progress:
   total_phases: 5
   completed_phases: 2
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-05-16)
 ## Current Position
 
 Phase: 3 of 5 (Pages) — IN PROGRESS
-Plan: 1 of 6 in current phase (03-00 complete; next 03-01)
-Status: Wave 0 infrastructure landed — ready for Wave 1 EN page builds
-Last activity: 2026-05-17 — Plan 03-00 complete (3 Playwright spec stubs, image-pipeline-test.astro + newsletter.astro deleted, platforms/[slug].astro 301 redirect)
+Plan: 2 of 6 in current phase (03-01 complete; next 03-02 in parallel)
+Status: Wave 1 foundation fixes landed — SiteHeader active nav, LocaleBanner, layouts upgrade, PT/ES translations, radar gate flipped
+Last activity: 2026-05-17 — Plan 03-01 complete (SiteHeader i18n+active state, LocaleBanner, 3 layouts SEO slot + locale-aware links, pt/es JSONs translated, 2026-W20 published)
 
-Progress: [██████░░░░] 64% (overall: 9/14 plans)
+Progress: [███████░░░] 71% (overall: 10/14 plans)
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [██████░░░░] 64% (overall: 9/14 plans)
 | Phase 02-components P02-02 | 8 | 2 tasks | 4 files |
 | Phase 02-components P02-03 | 14 | 2 tasks | 21 files |
 | Phase 03-pages P00 | 15min | 2 tasks | 6 files |
+| Phase 03-pages P01 | 5min  | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -91,6 +92,11 @@ Recent decisions affecting current work:
 - 2026-05-17 — Phase 2 visual fidelity check deferred (eyeball at /dev/components not performed). Flagged for Phase 3 page composition review.
 - [Phase 03-pages]: newsletter.astro deleted (not redirected) — cleanest approach; newsletter is inline home section per CONTEXT.md
 - [Phase 03-pages]: platforms/[slug].astro 4 slugs hardcoded matching mock-26 product names — redirect-only file needs no dynamic data
+- 03-01: SiteHeader active state auto-detected from Astro.url.pathname (no per-page prop) — `active` prop dropped from layout SiteHeader calls
+- 03-01: Article JSON-LD passed via SEO's named slot=json-ld (not new SEO prop) — keeps SEO interface stable
+- 03-01: pt.json/es.json _meta.draft_keys CSV string flags 37 home keys awaiting Edgard review; en.json _meta.draft_keys empty
+- 03-01: Stat numerics (76/251/508/+18 GW) identical across all 3 locales per Rule #9 (zero data invention)
+- 03-01: Only 2026-W20 radar entry flipped to published: true — 5 older entries stay private until Edgard reviews
 
 ### Pending Todos
 
@@ -104,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-18T00:32:49.736Z
-Stopped at: Completed 03-00-PLAN.md (Wave 0 Phase 3 infrastructure — spec stubs + scaffolding cleanup + platforms redirect)
+Last session: 2026-05-17T21:40:00.000Z
+Stopped at: Completed 03-01-PLAN.md (Foundation fixes — SiteHeader active nav, LocaleBanner, layouts SEO slot, PT/ES translations, radar gate flipped)
 Resume file: None
