@@ -46,7 +46,8 @@ test.describe('Phase 3 pages @smoke', () => {
   test('PAGE-07: contact returns 200, email link present', async ({ page }) => {
     const res = await page.goto('/contact');
     expect(res?.status()).toBe(200);
-    const emailLink = page.locator('a[href*="info@cloudmindspartners.com"]');
+    // Use first() to avoid strict mode violation — email appears in both contact section and footer
+    const emailLink = page.locator('a[href*="info@cloudmindspartners.com"]').first();
     await expect(emailLink).toBeVisible();
   });
 });

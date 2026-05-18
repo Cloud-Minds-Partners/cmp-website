@@ -39,7 +39,8 @@ test.describe('Phase 3 i18n @smoke', () => {
 
   test('I18N-03: LangSwitcher on /team links to /pt/team', async ({ page }) => {
     await page.goto('/team');
-    const ptLink = page.locator('.lang-link[href="/pt/team"], a[href="/pt/team"]').first();
+    // Astro getRelativeLocaleUrl generates /pt/team/ with trailing slash
+    const ptLink = page.locator('.lang-link[href="/pt/team/"], a[href="/pt/team/"]').first();
     await expect(ptLink).toBeVisible();
   });
 
