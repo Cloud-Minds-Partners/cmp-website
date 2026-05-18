@@ -86,7 +86,8 @@ Plans:
   3. Page source includes a `<script type="application/ld+json">` Organization schema sitewide, and an Article schema on memo detail pages
   4. Mobile menu opens and closes with keyboard Escape; tab order is natural; every interactive element has a visible focus ring; a skip-to-content link appears on focus
   5. Hero images have `<link rel="preload" as="image">` in the document head; DevTools Network panel shows zero render-blocking third-party JS requests (no Google Fonts, no analytics)
-**Plans**: TBD
+**Plans**:
+- [x] 04-00-PLAN.md — Quality Gate consolidated (SEO + A11Y + PERF — 18 reqs): @astrojs/sitemap, robots.txt, 8 OG PNGs, skip-to-content, hero preload, phase4-quality.spec.ts (14 tests)
 
 ### Phase 5: Deploy
 **Goal**: GitHub Actions workflow hard-fails on missing secrets, preview channels deploy per branch for review before merge, Lighthouse CI gates enforce quality thresholds on every build, and the mock-26 design replaces v4 Crusoe on dcplatformcmp.web.app in a single coordinated deploy with a documented rollback path.
@@ -108,6 +109,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | Complete |  |
 | 2. Components | 4/4 | Complete |  |
-| 3. Pages | 0/6 | Not started | - |
-| 4. Quality Gate | 0/TBD | Not started | - |
+| 3. Pages | 6/6 | Complete | 2026-05-18 |
+| 4. Quality Gate | 1/1 | Complete | 2026-05-18 |
 | 5. Deploy | 0/TBD | Not started | - |

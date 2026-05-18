@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Wave 1 page composition landed — home/advisory/development/platforms pages built per mock-26, build passes
-stopped_at: Completed 03-05 (PT/ES locale home pages + smoke tests all green)
-last_updated: "2026-05-18T11:55:10.539Z"
-last_activity: "2026-05-17 — Plan 03-02 complete (4 marketing pages rebuilt: home with 3-city hero + stats + capabilities + principles + insight + newsletter; advisory hero+figures+6-card+timeline+CTA; development hero+3 roles+lifecycle; platforms hero+4 alternating products)"
+status: Phase 4 quality gate complete — sitemap, OG images, skip link, preload, 14 Playwright tests passing
+stopped_at: Completed 04-00 (SEO + A11Y + PERF quality gate — all 18 reqs delivered)
+last_updated: "2026-05-18T12:02:00.000Z"
+last_activity: "2026-05-18 — Plan 04-00 complete: @astrojs/sitemap, 8 OG PNGs, skip-to-content, hero LCP preload, phase4-quality.spec.ts (14 tests pass)"
 progress:
   total_phases: 5
-  completed_phases: 3
-  total_plans: 14
-  completed_plans: 14
-  percent: 79
+  completed_phases: 4
+  total_plans: 15
+  completed_plans: 15
+  percent: 100
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-05-16)
 
 ## Current Position
 
-Phase: 3 of 5 (Pages) — IN PROGRESS
-Plan: 3 of 6 in current phase (03-00/01/02 complete; next 03-03)
-Status: Wave 1 page composition landed — home/advisory/development/platforms pages built per mock-26, build passes
-Last activity: 2026-05-17 — Plan 03-02 complete (4 marketing pages rebuilt: home with 3-city hero + stats + capabilities + principles + insight + newsletter; advisory hero+figures+6-card+timeline+CTA; development hero+3 roles+lifecycle; platforms hero+4 alternating products)
+Phase: 4 of 5 (Quality Gate) — COMPLETE
+Plan: 1 of 1 in current phase (04-00 complete)
+Status: Phase 4 quality gate complete — sitemap, OG images, skip link, preload, 14 Playwright tests passing
+Last activity: 2026-05-18 — Plan 04-00 complete: @astrojs/sitemap, 8 OG PNGs, skip-to-content, hero LCP preload, phase4-quality.spec.ts (14 tests pass)
 
-Progress: [████████░░] 79% (overall: 11/14 plans)
+Progress: [██████████] 100% (overall: 15/15 plans)
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [████████░░] 79% (overall: 11/14 plans)
 | Phase 03-pages P03-03 | 10 | 1 tasks | 1 files |
 | Phase 03-pages P03-04 | 10 | 3 tasks | 3 files |
 | Phase 03-pages P05 | 372 | 3 tasks | 4 files |
+| Phase 04-quality-gate P04-00 | 321 | 4 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -109,6 +110,11 @@ Recent decisions affecting current work:
 - [Phase 03-04]: memos/radar/regwatch index pages: locale-filter + EN fallback + LocaleBanner; regwatch/[month] returns empty getStaticPaths (CONT-07 accepted gap)
 - [Phase 03-pages]: Hardcoded locale const in pt/es home pages for explicit I18N-05 guarantee
 - [Phase 03-pages]: Insight section body stays EN in all locales per ROADMAP #4 exemption (memo-specific content)
+- [Phase 04-quality-gate]: @astrojs/sitemap integration generates sitemap-index.xml + sitemap-0.xml at build time (not served by astro dev)
+- [Phase 04-quality-gate]: OG images generated via Node sharp SVG rendering (1200x630, navy/blue brand palette) — 8 files ~73-82KB
+- [Phase 04-quality-gate]: Skip link wraps full slot in div#main, visible on :focus with brand blue bg + outline
+- [Phase 04-quality-gate]: Hero preload dual-path: head slot + body preloadHref prop; preload confirmed in <head>
+- [Phase 04-quality-gate]: Lighthouse CLI gap accepted per plan — structural signals covered by 14 Playwright tests; manual score validation post-deploy
 
 ### Pending Todos
 
@@ -122,6 +128,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-18T11:54:28.545Z
-Stopped at: Completed 03-05 (PT/ES locale home pages + smoke tests all green)
+Last session: 2026-05-18T12:02:00.000Z
+Stopped at: Completed 04-00 (SEO + A11Y + PERF quality gate — all 18 reqs delivered)
 Resume file: None
