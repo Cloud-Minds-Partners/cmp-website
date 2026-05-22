@@ -24,6 +24,8 @@ jobs:
       contents: read
       id-token: write  # required for FirebaseExtended/action-hosting-deploy OIDC
       pull-requests: write  # required for preview channel PR comment
+    env:
+      HAS_KNOWLEDGE_TOKEN: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN != '' }}
 
     steps:
       # ------------------------------------------------------------------ #
@@ -50,7 +52,7 @@ jobs:
           path: cmp-website
 
       - name: Checkout cmp-knowledge (content source)
-        if: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN != '' }}
+        if: env.HAS_KNOWLEDGE_TOKEN == 'true'
         uses: actions/checkout@v4
         with:
           repository: Cloud-Minds-Partners/cmp-knowledge
@@ -58,7 +60,7 @@ jobs:
           token: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN }}
 
       - name: Warn when building without content source
-        if: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN == '' }}
+        if: env.HAS_KNOWLEDGE_TOKEN != 'true'
         run: |
           echo "::warning::CMP_KNOWLEDGE_READ_TOKEN not set — content collections will be empty."
           echo "Set the repo secret to deploy published memos/radar/regwatch/people."
@@ -69,7 +71,7 @@ jobs:
                    cmp-knowledge/people/advisors
 
       - name: Stage people photos into /public/people/photos
-        if: ${{ secrets.CMP_KNOWLEDGE_READ_TOKEN != '' }}
+        if: env.HAS_KNOWLEDGE_TOKEN == 'true'
         run: |
           mkdir -p cmp-website/public/people/photos
           if [ -d cmp-knowledge/people/photos ]; then
