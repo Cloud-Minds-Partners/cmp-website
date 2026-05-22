@@ -1,12 +1,22 @@
 ---
+// Slug routes redirect to /platforms anchor. Supports both new slugs (from data file)
+// and legacy slugs (for inbound links from older content).
 export function getStaticPaths() {
   return [
-    { params: { slug: 'site-selection' } },
+    // Current canonical slugs (match src/data/platforms.ts)
+    { params: { slug: 'site-screening-tool' } },
     { params: { slug: 'grid-intelligence' } },
+    { params: { slug: 'dc-insights' } },
+    { params: { slug: 'testfit-pro' } },
+    { params: { slug: 'dc-financial-model' } },
+    // Legacy slugs kept as redirects to avoid breaking inbound links
+    { params: { slug: 'site-selection' } },
+    { params: { slug: 'site-selection-tool' } },
     { params: { slug: 'dc-financial' } },
     { params: { slug: 'test-fit-pro' } },
+    { params: { slug: 'land-intel' } },
   ];
 }
 const { slug } = Astro.params;
-return Astro.redirect(`/platforms#platforms-${slug}`, 301);
+return Astro.redirect(`/platforms#${slug}`, 301);
 ---

@@ -1,14 +1,14 @@
 ---
-import Base from '../../layouts/Base.astro';
-import SEO from '../../components/SEO.astro';
+import Base from '../../../layouts/Base.astro';
+import SEO from '../../../components/SEO.astro';
 
 const pulses = [
-  { num: '06', date: 'May 19', dateIso: '2026-05-19', tag: 'Power', title: 'Google heads off Earth.', summary: 'Four signals that moved data center markets.', cover: '/photos/pulse-06-cover.png', featured: true },
-  { num: '05', date: 'May 12', dateIso: '2026-05-12', tag: 'Grid · Regulatory', title: 'Chile clears. Europe waits.', summary: 'AWS Atacama unlock vs Energinet pause. The geography of clearance shifted.' },
-  { num: '04', date: 'May 5',  dateIso: '2026-05-05', tag: 'Capital', title: 'From frontier to allocated.', summary: 'I Squared acquires Elea. Big Four projects US$ 725B 2026 capex. Brazil crosses 1 GW.' },
-  { num: '03', date: 'Apr 28', dateIso: '2026-04-28', tag: 'Power · Frontier', title: 'The grid is no longer the only path to power.', summary: 'Bloom Energy, Meta + Overview Energy orbital solar, Equinix SP6 in São Paulo.' },
-  { num: '02', date: 'Apr 21', dateIso: '2026-04-21', tag: 'Markets · LatAm', title: 'Tecto bets US$ 2B on LatAm.', summary: 'Brazilian-based platform pledges regional expansion through 2028. Wyoming emerges as a first-tier frontier.' },
-  { num: '01', date: 'Apr 13', dateIso: '2026-04-13', tag: 'Macro', title: 'The week in global data centers.', summary: 'PJM 15 GW emergency auction, Meta + CoreWeave US$ 21B compute deal, Blackstone DC REIT.' },
+  { num: '06', date: '19 Mai', dateIso: '2026-05-19', tag: 'Energia', title: 'Google heads off Earth.', summary: 'Quatro sinais que moveram o mercado de data centers.', cover: '/photos/pulse-06-cover.png', featured: true },
+  { num: '05', date: '12 Mai', dateIso: '2026-05-12', tag: 'Grid · Regulatório', title: 'Chile clears. Europe waits.', summary: 'Unlock AWS Atacama vs pausa Energinet. A geografia da liberação mudou.' },
+  { num: '04', date: '5 Mai',  dateIso: '2026-05-05', tag: 'Capital', title: 'From frontier to allocated.', summary: 'I Squared adquire Elea. Big Four projeta US$ 725B capex 2026. Brasil cruza 1 GW.' },
+  { num: '03', date: '28 Abr', dateIso: '2026-04-28', tag: 'Energia · Fronteira', title: 'A rede não é mais o único caminho.', summary: 'Bloom Energy, Meta + Overview Energy solar orbital, Equinix SP6 em São Paulo.' },
+  { num: '02', date: '21 Abr', dateIso: '2026-04-21', tag: 'Mercados · LatAm', title: 'Tecto aposta US$ 2B na LatAm.', summary: 'Plataforma brasileira projeta expansão regional até 2028. Wyoming emerge como nova fronteira tier-1.' },
+  { num: '01', date: '13 Abr', dateIso: '2026-04-13', tag: 'Macro', title: 'A semana em data centers globais.', summary: 'Leilão emergencial PJM 15 GW, deal Meta + CoreWeave US$ 21B, REIT DC da Blackstone.' },
 ];
 
 const featured = pulses[0];
@@ -16,11 +16,11 @@ const archive = pulses;
 const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts/';
 ---
 
-<Base lang="en">
+<Base lang="pt">
   <SEO
     slot="head"
-    title="Intelligence — Cloud Minds Partners"
-    description="DC Weekly Pulse and research streams on LatAm data center markets. Primary sources, audited claim-by-claim."
+    title="Inteligência — Cloud Minds Partners"
+    description="DC Weekly Pulse e linhas de pesquisa sobre o mercado de data centers LatAm. Fontes primárias, auditado claim a claim."
     image="/og/intelligence.png"
   />
 
@@ -38,7 +38,6 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
     .streams-badge.live { background: rgba(74,222,128,0.12); color: #4ADE80; border: 1px solid rgba(74,222,128,0.35); }
     .streams-badge.dev { background: rgba(148,163,184,0.10); color: #94a3b8; border: 1px solid rgba(148,163,184,0.30); }
 
-    /* Pulse hero */
     .pulse-section { background: var(--cream-bg); color: var(--navy-0); padding: clamp(72px, 10vh, 120px) 0; border-top: 1px solid rgba(5,14,29,0.06); }
     .pulse-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
     .pulse-featured { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 6vw, 96px); align-items: center; }
@@ -54,7 +53,6 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
     .pulse-cta { display: inline-flex; align-items: center; gap: 12px; margin-top: 28px; font-size: 14px; font-weight: 600; color: var(--blue); padding-bottom: 4px; border-bottom: 1px solid var(--blue); transition: gap var(--t-fast); }
     .pulse-cta:hover { gap: 18px; color: var(--navy-0); }
 
-    /* Archive */
     .pulse-archive { margin-top: clamp(80px, 10vh, 120px); }
     .pulse-archive-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; }
     .pulse-archive-header h2 { font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 32px); margin: 0; letter-spacing: var(--track-display); color: var(--navy-0); font-weight: 600; }
@@ -69,7 +67,6 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
     .pulse-row-tag { display: inline-block; font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--blue-deep); padding: 3px 8px; border: 1px solid rgba(45,107,228,0.25); border-radius: 999px; margin-top: 10px; background: rgba(45,107,228,0.04); }
     .pulse-row-action { text-align: right; font-family: var(--font-body); font-size: 13px; color: var(--blue); font-weight: 600; }
 
-    /* In-development streams */
     .streams-stack { background: var(--navy-0); padding: clamp(72px, 10vh, 120px) 0; }
     .stream-card { max-width: var(--max-w); margin: 0 auto clamp(32px, 4vh, 48px); padding: 0 var(--gutter); }
     .stream-card-inner { display: grid; grid-template-columns: 1fr 320px; gap: clamp(32px, 4vw, 64px); align-items: center; padding: 40px clamp(28px, 3vw, 48px); border: 1px solid var(--line-0); border-radius: 16px; background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%); }
@@ -94,12 +91,12 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
 
   <nav class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /><span class="brand-tag">The LatAm DC intelligence firm.</span></a>
-      <div class="nav-links"><a href="/advisory">Advisory</a><a href="/development">Development</a><a href="/intelligence" class="active">Intelligence</a><a href="/platforms">Platforms</a><a href="/team">Team</a><a href="/contact">Contact</a></div>
+      <a class="brand" href="/pt/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /><span class="brand-tag">A firma de inteligência DC da América Latina.</span></a>
+      <div class="nav-links"><a href="/pt/advisory">Consultoria</a><a href="/pt/development">Desenvolvimento</a><a href="/pt/intelligence" class="active">Inteligência</a><a href="/pt/platforms">Plataformas</a><a href="/pt/team">Equipe</a><a href="/pt/contact">Contato</a></div>
       <div class="nav-right"><div class="nav-lang">
-        <a href="/intelligence" class="active">EN</a><span class="sep">·</span><a href="/pt/intelligence">PT</a><span class="sep">·</span><a href="/es/intelligence">ES</a>
+        <a href="/intelligence">EN</a><span class="sep">·</span><a href="/pt/intelligence" class="active">PT</a><span class="sep">·</span><a href="/es/intelligence">ES</a>
       </div>
-      <a href="mailto:info@cloudmindspartners.com" class="nav-cta">Talk to us <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg></a></div>
+      <a href="mailto:info@cloudmindspartners.com" class="nav-cta">Fale conosco <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg></a></div>
     </div>
   </nav>
 
@@ -108,9 +105,9 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
     <div class="page-hero-overlay" aria-hidden="true"></div>
     <div class="wrap">
       <div class="page-hero-content">
-        <div class="page-eyebrow live">Intelligence</div>
-        <h1>Research on <em>LatAm</em> data center markets.</h1>
-        <p>Four streams. Primary sources. Audited claim-by-claim.</p>
+        <div class="page-eyebrow live">Inteligência</div>
+        <h1>Pesquisa sobre o mercado <em>LatAm</em> de data centers.</h1>
+        <p>Quatro streams. Fontes primárias. Auditado claim a claim.</p>
       </div>
     </div>
   </header>
@@ -118,9 +115,9 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
   <div class="streams">
     <div class="streams-inner">
       <a class="streams-tab active" href="#pulse">Weekly Pulse <span class="streams-badge live">Live</span></a>
-      <a class="streams-tab" href="#memos">Technical Memos <span class="streams-badge dev">Soon</span></a>
-      <a class="streams-tab" href="#radar">Innovation Radar <span class="streams-badge dev">Soon</span></a>
-      <a class="streams-tab" href="#regwatch">Regulatory Watch <span class="streams-badge dev">Soon</span></a>
+      <a class="streams-tab" href="#memos">Memos Técnicos <span class="streams-badge dev">Em breve</span></a>
+      <a class="streams-tab" href="#radar">Innovation Radar <span class="streams-badge dev">Em breve</span></a>
+      <a class="streams-tab" href="#regwatch">Regulatory Watch <span class="streams-badge dev">Em breve</span></a>
     </div>
   </div>
 
@@ -128,20 +125,20 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
     <div class="pulse-inner">
       <div class="pulse-featured reveal">
         <div class="pulse-cover-frame">
-          <img src={featured.cover} alt={`DC Weekly Pulse #${featured.num} cover`} loading="lazy" />
-          <span class="pulse-cover-tag">Pulse {featured.num} · This week</span>
+          <img src={featured.cover} alt={`Capa DC Weekly Pulse #${featured.num}`} loading="lazy" />
+          <span class="pulse-cover-tag">Pulse {featured.num} · Esta semana</span>
         </div>
         <div>
-          <div class="pulse-eyebrow">Latest · Weekly Pulse</div>
+          <div class="pulse-eyebrow">Última · Weekly Pulse</div>
           <h2 class="pulse-title">{featured.title}</h2>
           <p class="pulse-summary">{featured.summary}</p>
           <div class="pulse-meta">
             <span><strong>Pulse {featured.num}</strong>{featured.date}, 2026</span>
-            <span><strong>{featured.tag}</strong>Category</span>
-            <span><strong>~1 min</strong>To watch</span>
+            <span><strong>{featured.tag}</strong>Categoria</span>
+            <span><strong>~1 min</strong>Para assistir</span>
           </div>
           <a href={linkedinUrl} class="pulse-cta" target="_blank" rel="noopener">
-            Watch on LinkedIn
+            Assistir no LinkedIn
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
           </a>
         </div>
@@ -149,8 +146,8 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
 
       <div class="pulse-archive">
         <div class="pulse-archive-header">
-          <h2>Archive</h2>
-          <span class="pulse-archive-header-count">{archive.length} editions · published weekly</span>
+          <h2>Arquivo</h2>
+          <span class="pulse-archive-header-count">{archive.length} edições · publicação semanal</span>
         </div>
         <div class="pulse-archive-grid">
           {archive.map((p) => (
@@ -163,7 +160,7 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
                 <p>{p.summary}</p>
                 <span class="pulse-row-tag">{p.tag}</span>
               </div>
-              <div class="pulse-row-action">Watch on LinkedIn →</div>
+              <div class="pulse-row-action">Assistir no LinkedIn →</div>
             </a>
           ))}
         </div>
@@ -175,14 +172,14 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
     <div class="stream-card" id="memos">
       <div class="stream-card-inner reveal">
         <div>
-          <span class="stream-card-tag">In development</span>
-          <h3>Technical Memos</h3>
-          <p>Multi-page primary-source research briefs on regulatory, fiscal, and grid developments shaping LatAm data center investment. Each memo audited claim-by-claim before publication.</p>
+          <span class="stream-card-tag">Em desenvolvimento</span>
+          <h3>Memos Técnicos</h3>
+          <p>Briefings de pesquisa primária em múltiplas páginas sobre desenvolvimentos regulatórios, fiscais e de grid que moldam o investimento em data centers LatAm. Cada memo auditado claim a claim antes da publicação.</p>
         </div>
         <div class="stream-card-cta-block">
-          <div class="stream-card-cta-label">Notify me when first memo publishes</div>
-          <a href="/contact" class="stream-card-cta">
-            Stay informed
+          <div class="stream-card-cta-label">Me avise quando o primeiro memo publicar</div>
+          <a href="/pt/contact" class="stream-card-cta">
+            Quero saber
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
           </a>
         </div>
@@ -192,14 +189,14 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
     <div class="stream-card" id="radar">
       <div class="stream-card-inner reveal">
         <div>
-          <span class="stream-card-tag">In development</span>
+          <span class="stream-card-tag">Em desenvolvimento</span>
           <h3>Innovation Radar</h3>
-          <p>Weekly technology and market signals for LatAm DC professionals — infrastructure, AI, competitive moves, and regulatory shifts. Distilled to what matters.</p>
+          <p>Sinais semanais de tecnologia e mercado para profissionais de DC LatAm — infraestrutura, IA, movimentos competitivos e shifts regulatórios. Destilado para o que importa.</p>
         </div>
         <div class="stream-card-cta-block">
-          <div class="stream-card-cta-label">Get the first edition</div>
-          <a href="/contact" class="stream-card-cta">
-            Stay informed
+          <div class="stream-card-cta-label">Receba a primeira edição</div>
+          <a href="/pt/contact" class="stream-card-cta">
+            Quero saber
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
           </a>
         </div>
@@ -209,14 +206,14 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
     <div class="stream-card" id="regwatch">
       <div class="stream-card-inner reveal">
         <div>
-          <span class="stream-card-tag">In development</span>
+          <span class="stream-card-tag">Em desenvolvimento</span>
           <h3>Regulatory Watch</h3>
-          <p>Monthly digest of regulatory changes affecting LatAm data center investment — across seven jurisdictions. Permitting, tax, telecom, environmental.</p>
+          <p>Digest mensal das mudanças regulatórias que afetam investimento em data centers LatAm — em sete jurisdições. Permitting, tributário, telecom, ambiental.</p>
         </div>
         <div class="stream-card-cta-block">
-          <div class="stream-card-cta-label">Subscribe to the digest</div>
-          <a href="/contact" class="stream-card-cta">
-            Stay informed
+          <div class="stream-card-cta-label">Assinar o digest</div>
+          <a href="/pt/contact" class="stream-card-cta">
+            Quero saber
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg>
           </a>
         </div>
@@ -227,19 +224,19 @@ const linkedinUrl = 'https://www.linkedin.com/company/cloud-minds-partners/posts
   <footer>
     <div class="foot-links">
       <div class="foot-brand-cell">
-        <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
-        <p>The LatAm DC intelligence firm.</p>
-        <div class="foot-social" aria-label="Follow us">
+        <a class="brand" href="/pt/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
+        <p>A firma de inteligência DC da América Latina.</p>
+        <div class="foot-social" aria-label="Siga-nos">
           <a href="https://www.linkedin.com/company/cloud-minds-partners" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.97 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0z"/></svg></a>
           <a href="https://wa.me/5511915788796" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.5-.3zM12 22a10 10 0 0 1-5-1.3L2 22l1.3-5A10 10 0 1 1 12 22zm0-18.2A8.2 8.2 0 0 0 4.6 16l-.2.5-.8 3 3-.8.5.2c1.2.7 2.6 1.1 4 1.1 4.5 0 8.2-3.7 8.2-8.2S16.5 3.8 12 3.8z"/></svg></a>
         </div>
       </div>
-      <div><h4>Platforms</h4><ul><li><a href="/platforms">Site Screening Tool</a></li><li><a href="/platforms">Grid Intelligence</a></li><li><a href="/platforms">DC Insights</a></li><li><a href="/platforms">DC Test Fit Pro</a></li><li><a href="/platforms">DC Financial Model</a></li></ul></div>
-      <div><h4>Intelligence</h4><ul><li><a href="/intelligence#pulse">Weekly Pulse</a></li><li><a href="/intelligence#memos">Technical Memos</a></li><li><a href="/intelligence#radar">Innovation Radar</a></li><li><a href="/intelligence#regwatch">Regulatory Watch</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="/advisory">Advisory</a></li><li><a href="/development">Development</a></li><li><a href="/team">Team</a><a href="/contact">Contact</a></li></ul></div>
-      <div><h4>Contact</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Mexico City · MX</li></ul></div>
+      <div><h4>Plataformas</h4><ul><li><a href="/pt/platforms">Site Screening Tool</a></li><li><a href="/pt/platforms">Grid Intelligence</a></li><li><a href="/pt/platforms">DC Insights</a></li><li><a href="/pt/platforms">DC Test Fit Pro</a></li><li><a href="/pt/platforms">DC Financial Model</a></li></ul></div>
+      <div><h4>Inteligência</h4><ul><li><a href="/pt/intelligence#pulse">Weekly Pulse</a></li><li><a href="/pt/intelligence#memos">Memos Técnicos</a></li><li><a href="/pt/intelligence#radar">Innovation Radar</a></li><li><a href="/pt/intelligence#regwatch">Regulatory Watch</a></li></ul></div>
+      <div><h4>Empresa</h4><ul><li><a href="/pt/advisory">Consultoria</a></li><li><a href="/pt/development">Desenvolvimento</a></li><li><a href="/pt/team">Equipe</a><a href="/pt/contact">Contato</a></li></ul></div>
+      <div><h4>Contato</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Cidade do México · MX</li></ul></div>
     </div>
-    <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>All rights reserved.</span></div>
+    <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>Todos os direitos reservados.</span></div>
   </footer>
 
   <script is:inline>

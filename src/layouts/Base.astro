@@ -27,6 +27,71 @@ const { lang = "en" } = Astro.props;
       <slot />
     </div>
     <WhatsAppFab />
+
+    <script is:inline>
+      // Mobile burger menu — auto-injects from existing .nav-links
+      (function () {
+        const nav = document.querySelector('nav.nav .nav-inner');
+        if (!nav) return;
+        const navLinks = nav.querySelector('.nav-links');
+        const navRight = nav.querySelector('.nav-right');
+        const langEl = navRight ? navRight.querySelector('.nav-lang') : null;
+        const ctaEl = navRight ? navRight.querySelector('.nav-cta') : null;
+        if (!navLinks || !navRight) return;
+
+        // Build burger button
+        const burger = document.createElement('button');
+        burger.className = 'nav-burger';
+        burger.setAttribute('aria-label', 'Menu');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.innerHTML = '<span class="nav-burger-icon"><span></span><span></span><span></span></span>';
+        navRight.appendChild(burger);
+
+        // Build mobile menu drawer
+        const drawer = document.createElement('div');
+        drawer.className = 'nav-mobile';
+        const linksClone = navLinks.cloneNode(true);
+        Array.from(linksClone.children).forEach(a => drawer.appendChild(a));
+        const footer = document.createElement('div');
+        footer.className = 'nav-mobile-footer';
+        if (langEl) {
+          const langClone = langEl.cloneNode(true);
+          langClone.className = 'nav-mobile-lang';
+          // Remove dot separators
+          langClone.querySelectorAll('.sep').forEach(s => s.remove());
+          footer.appendChild(langClone);
+        }
+        if (ctaEl) {
+          const ctaClone = ctaEl.cloneNode(true);
+          ctaClone.className = 'nav-mobile-cta';
+          footer.appendChild(ctaClone);
+        }
+        drawer.appendChild(footer);
+        nav.parentNode.appendChild(drawer);
+
+        // Toggle
+        burger.addEventListener('click', function () {
+          const isOpen = burger.classList.toggle('open');
+          drawer.classList.toggle('open', isOpen);
+          document.body.classList.toggle('nav-mobile-open', isOpen);
+          burger.setAttribute('aria-expanded', String(isOpen));
+        });
+        // Close on link click
+        drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+          burger.classList.remove('open');
+          drawer.classList.remove('open');
+          document.body.classList.remove('nav-mobile-open');
+        }));
+        // Close on Escape
+        document.addEventListener('keydown', e => {
+          if (e.key === 'Escape' && drawer.classList.contains('open')) {
+            burger.classList.remove('open');
+            drawer.classList.remove('open');
+            document.body.classList.remove('nav-mobile-open');
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
 

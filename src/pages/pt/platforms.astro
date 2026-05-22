@@ -1,22 +1,21 @@
 ---
-import Base from '../layouts/Base.astro';
-import SEO from '../components/SEO.astro';
-import StatusBadge from '../components/StatusBadge.astro';
-import { livePlatforms, inDevelopmentPlatforms } from '../data/platforms';
+import Base from '../../layouts/Base.astro';
+import SEO from '../../components/SEO.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import { livePlatforms, inDevelopmentPlatforms } from '../../data/platforms';
 
 const live = livePlatforms();
 const inDev = inDevelopmentPlatforms();
 
-// Continuous alternation across both sections for the stripe pattern
 let stripeIndex = 0;
 const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
 ---
 
-<Base lang="en">
+<Base lang="pt">
   <SEO
     slot="head"
-    title="Platforms — Cloud Minds Partners"
-    description="Tools we built. In production and in development. Applied to live engagements across LatAm."
+    title="Plataformas — Cloud Minds Partners"
+    description="Ferramentas que construímos. Em produção e em desenvolvimento. Aplicadas a engajamentos ao vivo em LatAm."
     image="/og/platforms.png"
   />
 
@@ -52,54 +51,28 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
       margin: 0;
     }
 
-    .product {
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: stretch;
-      width: 100%;
-    }
+    .product { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; width: 100%; }
     .product-info {
       padding: clamp(56px, 8vh, 96px) clamp(48px, 6vw, 96px);
       display: flex; flex-direction: column; gap: 18px;
-      align-items: center; justify-content: center;
-      text-align: center;
+      align-items: center; justify-content: center; text-align: center;
     }
-    .product-meta-row {
-      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-      justify-content: center;
-    }
-    .product-info-num {
-      font-family: var(--font-body); font-size: 12.5px;
-      font-weight: 600; letter-spacing: 0;
-      color: var(--blue-bright);
-    }
+    .product-meta-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .product-info-num { font-family: var(--font-body); font-size: 12.5px; font-weight: 600; color: var(--blue-bright); }
     .product-info h3 {
       font-family: var(--font-display); font-size: clamp(28px, 3.2vw, 40px);
       line-height: 1.1; letter-spacing: var(--track-display);
-      font-weight: 600; margin: 0;
-      color: var(--cream-0);
-      max-width: 16ch;
+      font-weight: 600; margin: 0; color: var(--cream-0); max-width: 16ch;
     }
-    .product-info > p {
-      font-size: 15.5px; line-height: 1.55;
-      color: var(--cream-1); margin: 0;
-      max-width: 38ch;
-    }
-    .product-subtag {
-      font-size: 13.5px; line-height: 1.5;
-      color: var(--cream-2); font-style: italic;
-      margin: 4px 0 0; max-width: 38ch;
-    }
+    .product-info > p { font-size: 15.5px; line-height: 1.55; color: var(--cream-1); margin: 0; max-width: 38ch; }
+    .product-subtag { font-size: 13.5px; line-height: 1.5; color: var(--cream-2); font-style: italic; margin: 4px 0 0; max-width: 38ch; }
     .product-info.on-cream .product-subtag { color: #6B7B92; }
-    /* In Development cards: subtle visual cue */
     .product--soon .product-visual-bg { filter: saturate(0.5) brightness(0.85); }
     .product--soon .product-info { background-image: linear-gradient(180deg, rgba(148,163,184,0.04) 0%, transparent 100%); }
     .product-cta {
-      margin-top: 8px;
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 14px; font-weight: 600;
-      color: var(--blue-bright);
-      padding-bottom: 4px;
-      border-bottom: 1px solid var(--blue-bright);
+      margin-top: 8px; display: inline-flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 600; color: var(--blue-bright);
+      padding-bottom: 4px; border-bottom: 1px solid var(--blue-bright);
       transition: gap var(--t-fast);
     }
     .product-cta:hover { gap: 16px; color: var(--cream-0); }
@@ -135,12 +108,12 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
 
   <nav class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /><span class="brand-tag">The LatAm DC intelligence firm.</span></a>
-      <div class="nav-links"><a href="/advisory">Advisory</a><a href="/development">Development</a><a href="/intelligence">Intelligence</a><a href="/platforms" class="active">Platforms</a><a href="/team">Team</a><a href="/contact">Contact</a></div>
+      <a class="brand" href="/pt/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /><span class="brand-tag">A firma de inteligência DC da América Latina.</span></a>
+      <div class="nav-links"><a href="/pt/advisory">Consultoria</a><a href="/pt/development">Desenvolvimento</a><a href="/pt/intelligence">Inteligência</a><a href="/pt/platforms" class="active">Plataformas</a><a href="/pt/team">Equipe</a><a href="/pt/contact">Contato</a></div>
       <div class="nav-right"><div class="nav-lang">
-        <a href="/platforms" class="active">EN</a><span class="sep">·</span><a href="/pt/platforms">PT</a><span class="sep">·</span><a href="/es/platforms">ES</a>
+        <a href="/platforms">EN</a><span class="sep">·</span><a href="/pt/platforms" class="active">PT</a><span class="sep">·</span><a href="/es/platforms">ES</a>
       </div>
-      <a href="mailto:info@cloudmindspartners.com" class="nav-cta">Talk to us <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg></a></div>
+      <a href="mailto:info@cloudmindspartners.com" class="nav-cta">Fale conosco <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg></a></div>
     </div>
   </nav>
 
@@ -149,9 +122,9 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
     <div class="page-hero-overlay" aria-hidden="true"></div>
     <div class="wrap">
       <div class="page-hero-content">
-        <div class="page-eyebrow live">Platforms</div>
-        <h1>Tools we built. <em>Applied to live engagements.</em></h1>
-        <p>{live.length} in production, {inDev.length} in development. Available to clients today — public launch coming soon.</p>
+        <div class="page-eyebrow live">Plataformas</div>
+        <h1>Ferramentas que construímos. <em>Aplicadas a engajamentos ao vivo.</em></h1>
+        <p>{live.length} em produção, {inDev.length} em desenvolvimento. Disponíveis para clientes hoje — lançamento público em breve.</p>
       </div>
     </div>
   </header>
@@ -161,10 +134,10 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
     <div class="product-section-header">
       <div class="product-section-header-inner">
         <div>
-          <div class="product-section-eyebrow">In Production</div>
-          <h2 class="product-section-title">Live platforms ({live.length})</h2>
+          <div class="product-section-eyebrow">Em produção</div>
+          <h2 class="product-section-title">Plataformas ao vivo ({live.length})</h2>
         </div>
-        <p class="product-section-note">Deployed, in active use across LatAm engagements.</p>
+        <p class="product-section-note">Implantadas e em uso ativo nos engajamentos LatAm.</p>
       </div>
     </div>
 
@@ -173,15 +146,21 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
       const bg = stripeBg(idx);
       const reverse = idx % 2 === 1;
       const num = String(i + 1).padStart(2, '0');
-      const ctaHref = p.ctaHref ?? p.url ?? '/contact';
-      const ctaLabel = p.ctaLabel ?? (p.url ? 'Open platform →' : 'Talk to us →');
+      // PT labels for known CTAs; fallback to data file ctaLabel or defaults
+      const labelMap = {
+        'See demo →': 'Ver demo →',
+        'Subscribe for free →': 'Assinar grátis →',
+      };
+      const ctaHref = p.ctaHref ?? p.url ?? '/pt/contact';
+      const rawLabel = p.ctaLabel ?? (p.url ? 'Abrir plataforma →' : 'Fale conosco →');
+      const ctaLabel = labelMap[rawLabel as keyof typeof labelMap] ?? rawLabel;
       const external = ctaHref.startsWith('http');
       return (
         <article class={`product reveal ${reverse ? 'reverse' : ''}`}>
           <div class={`product-info on-${bg}`}>
             <div class="product-meta-row">
               <div class="product-info-num">{num} — {p.tag}</div>
-              <StatusBadge status={p.status} locale="en" />
+              <StatusBadge status={p.status} locale="pt" />
             </div>
             <h3>{p.name}</h3>
             <p>{p.tagline}</p>
@@ -196,10 +175,10 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
     <div class="product-section-header">
       <div class="product-section-header-inner">
         <div>
-          <div class="product-section-eyebrow">In Development</div>
-          <h2 class="product-section-title">Coming next ({inDev.length})</h2>
+          <div class="product-section-eyebrow">Em desenvolvimento</div>
+          <h2 class="product-section-title">Em breve ({inDev.length})</h2>
         </div>
-        <p class="product-section-note">Used today on engagements. Launching publicly soon.</p>
+        <p class="product-section-note">Em uso hoje em engajamentos. Lançamento público em breve.</p>
       </div>
     </div>
 
@@ -208,14 +187,14 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
       const bg = stripeBg(idx);
       const reverse = idx % 2 === 1;
       const num = String(live.length + i + 1).padStart(2, '0');
-      const ctaHref = p.ctaHref ?? '/contact';
-      const ctaLabel = p.ctaLabel ?? 'Notify me when it ships →';
+      const ctaHref = p.ctaHref ?? '/pt/contact';
+      const ctaLabel = 'Me avise quando lançar →';
       return (
         <article class={`product product--soon reveal ${reverse ? 'reverse' : ''}`}>
           <div class={`product-info on-${bg}`}>
             <div class="product-meta-row">
               <div class="product-info-num">{num} — {p.tag}</div>
-              <StatusBadge status={p.status} locale="en" />
+              <StatusBadge status={p.status} locale="pt" />
             </div>
             <h3>{p.name}</h3>
             <p>{p.tagline}</p>
@@ -232,19 +211,19 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
   <footer>
     <div class="foot-links">
       <div class="foot-brand-cell">
-        <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
-        <p>The LatAm DC intelligence firm.</p>
-        <div class="foot-social" aria-label="Follow us">
+        <a class="brand" href="/pt/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
+        <p>A firma de inteligência DC da América Latina.</p>
+        <div class="foot-social" aria-label="Siga-nos">
           <a href="https://www.linkedin.com/company/cloud-minds-partners" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.97 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0z"/></svg></a>
           <a href="https://wa.me/5511915788796" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.5-.3zM12 22a10 10 0 0 1-5-1.3L2 22l1.3-5A10 10 0 1 1 12 22zm0-18.2A8.2 8.2 0 0 0 4.6 16l-.2.5-.8 3 3-.8.5.2c1.2.7 2.6 1.1 4 1.1 4.5 0 8.2-3.7 8.2-8.2S16.5 3.8 12 3.8z"/></svg></a>
         </div>
       </div>
-      <div><h4>Platforms</h4><ul><li><a href="/platforms">Site Screening Tool</a></li><li><a href="/platforms">Grid Intelligence</a></li><li><a href="/platforms">DC Insights</a></li><li><a href="/platforms">DC Test Fit Pro</a></li><li><a href="/platforms">DC Financial Model</a></li></ul></div>
-      <div><h4>Intelligence</h4><ul><li><a href="/intelligence">Technical Memos</a></li><li><a href="/intelligence">Innovation Radar</a></li><li><a href="/intelligence">Regulatory Watch</a></li><li><a href="/intelligence">Weekly Pulse</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="/advisory">Advisory</a></li><li><a href="/development">Development</a></li><li><a href="/team">Team</a><a href="/contact">Contact</a></li></ul></div>
-      <div><h4>Contact</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Mexico City · MX</li></ul></div>
+      <div><h4>Plataformas</h4><ul><li><a href="/pt/platforms">Site Screening Tool</a></li><li><a href="/pt/platforms">Grid Intelligence</a></li><li><a href="/pt/platforms">DC Insights</a></li><li><a href="/pt/platforms">DC Test Fit Pro</a></li><li><a href="/pt/platforms">DC Financial Model</a></li></ul></div>
+      <div><h4>Inteligência</h4><ul><li><a href="/pt/intelligence">Memos Técnicos</a></li><li><a href="/pt/intelligence">Radar de Inovação</a></li><li><a href="/pt/intelligence">Vigilância Regulatória</a></li><li><a href="/pt/intelligence">Pulse Semanal</a></li></ul></div>
+      <div><h4>Empresa</h4><ul><li><a href="/pt/advisory">Consultoria</a></li><li><a href="/pt/development">Desenvolvimento</a></li><li><a href="/pt/team">Equipe</a><a href="/pt/contact">Contato</a></li></ul></div>
+      <div><h4>Contato</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Cidade do México · MX</li></ul></div>
     </div>
-    <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>All rights reserved.</span></div>
+    <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>Todos os direitos reservados.</span></div>
   </footer>
 
   <script is:inline>

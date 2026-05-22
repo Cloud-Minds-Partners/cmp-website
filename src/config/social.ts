@@ -4,10 +4,8 @@
 
 export const social = {
   linkedin: "https://www.linkedin.com/company/cloud-minds-partners",
-  // WhatsApp — sourced from PUBLIC_WHATSAPP_NUMBER env var (E.164, no + or dashes).
-  // Set in .env locally; set as build-time secret in Firebase / GitHub Actions for prod.
-  // Empty value hides FAB + skips wa.me link in SocialLinks (graceful degradation).
-  whatsappNumber: import.meta.env.PUBLIC_WHATSAPP_NUMBER ?? "",
+  // WhatsApp — E.164 format (no + or dashes). Override via PUBLIC_WHATSAPP_NUMBER env var if needed.
+  whatsappNumber: import.meta.env.PUBLIC_WHATSAPP_NUMBER ?? "5511915788796",
   whatsappDefaultMessage: "Hi, I'm reaching out about a data center project in Latin America.",
 
   emailGeneral: "info@cloudmindspartners.com",
