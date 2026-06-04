@@ -57,10 +57,10 @@ const endpoint = social.subscribeEndpoint;
         });
         const data = await res.json().catch(function() { return {}; });
 
-        if (res.ok && (data.status === 'subscribed' || data.status === 'already_subscribed')) {
-          // Success: replace form with success message
+        if (res.ok && (data.status === 'pending_confirmation' || data.status === 'subscribed' || data.status === 'already_subscribed')) {
+          // Success: replace form with success message (DOI: contact must confirm via email)
           if (wrap) {
-            wrap.innerHTML = '<p class="nl-success">✓ You\'re in. Welcome to DC Insights.</p>';
+            wrap.innerHTML = '<p class="nl-success">✓ Almost there — check your inbox and click the confirmation link.</p>';
           }
         } else {
           // API error
