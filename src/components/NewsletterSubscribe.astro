@@ -39,10 +39,24 @@ const endpoint = social.subscribeEndpoint;
 
     if (!form || !btn || !msg) return;
 
+    // Proof-of-browser: server only sends the confirmation email when the
+    // request carries sig = sha256(email:ts:salt) computed here at submit
+    // time. Blocks direct-POST bots. Salt is public by design.
+    async function formSig(email) {
+      const ts = Date.now();
+      const data = new TextEncoder().encode(email + ':' + ts + ':dci-subscribe-v2');
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      const sig = Array.from(new Uint8Array(hash))
+        .map(function(b) { return b.toString(16).padStart(2, '0'); })
+        .join('');
+      return { ts: ts, sig: sig };
+    }
+
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       const emailInput = form.querySelector('input[name="email"]');
-      const email = emailInput ? emailInput.value.trim() : '';
+      // lowercase: the server computes the sig over the lowercased address
+      const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
       if (!email) return;
 
       btn.disabled = true;
@@ -50,10 +64,11 @@ const endpoint = social.subscribeEndpoint;
       msg.hidden = true;
 
       try {
+        const proof = await formSig(email);
         const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email: email, ts: proof.ts, sig: proof.sig }),
         });
         const data = await res.json().catch(function() { return {}; });
 
