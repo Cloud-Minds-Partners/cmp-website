@@ -13,6 +13,20 @@ const { lang = "en" } = Astro.props;
 <html lang={lang}>
   <head>
     <meta charset="UTF-8" />
+    <!-- Send the Firebase default domains to the canonical site. cmp-website.web.app
+         and www.cloudmindspartners.com are the SAME hosting site, so the .web.app
+         host cannot be deleted without taking down www — it is redirected instead. -->
+    <script is:inline>
+      (function () {
+        var h = location.hostname;
+        if (h === "cmp-website.web.app" || h === "cmp-website.firebaseapp.com") {
+          location.replace(
+            "https://www.cloudmindspartners.com" +
+              location.pathname + location.search + location.hash
+          );
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#05111D" />
