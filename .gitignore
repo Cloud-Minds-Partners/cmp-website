@@ -26,3 +26,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 test-results/
+
+# Cache de deploy do Firebase (churn a cada deploy, não é código)
+.firebase/
