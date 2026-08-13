@@ -29,8 +29,15 @@
         "onlyCategories": ["performance", "accessibility", "seo"]
       }
     },
+    "//": [
+      "Sem preset. O preset lighthouse:no-pwa afirma que CADA uma das ~200",
+      "auditorias rodou e passou — inclusive as de best-practices (charset,",
+      "csp-xss, doctype, has-hsts...), que onlyCategories acima impede de rodar.",
+      "As duas linhas se contradiziam: 162 falhas eram 'auditoria não rodou',",
+      "de auditorias que a própria configuração desligou. Ficam os três limites",
+      "que a casa de fato definiu, um por categoria."
+    ],
     "assert": {
-      "preset": "lighthouse:no-pwa",
       "assertions": {
         "categories:performance": ["error", { "minScore": 0.9 }],
         "categories:accessibility": ["error", { "minScore": 0.95 }],
