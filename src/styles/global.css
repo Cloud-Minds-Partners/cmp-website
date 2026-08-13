@@ -6,7 +6,7 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @import "@fontsource-variable/space-grotesk/wght.css";
-@import "@fontsource-variable/dm-sans/wght.css";
+@import "@fontsource-variable/dm-sans/standard.css";
 
 /* -------------------------------------------------------------------
    Tailwind 4 @theme (utilities for Phase 2 components)
@@ -57,10 +57,15 @@
   --blue-bright: #4A8FE7;
   --blue-deep:   #1D4289;
   --blue-glow:   rgba(45, 107, 228, 0.22);
+  /* Fundo de botão. Levemente mais escuro que --blue porque texto creme
+     sobre --blue dava 4.30 (WCAG AA pede 4.5). Aqui dá 4.91.
+     --blue continua intocado: é usado como TEXTO em 20 lugares, e
+     escurecê-lo lá pioraria o contraste em vez de melhorar. */
+  --blue-cta:    #2A62D4;
   --cream-0:  #F5F1E8;
   --cream-1:  #C8D8F0;
   --cream-2:  #8A94A8;
-  --cream-3:  #5A6478;
+  --cream-3:  #727E92;  /* WCAG AA: 4.94 sobre navy. Era #5A6478 = 3.41 (reprovava) */
   --cream-bg:    #F5F1E8;
   --cream-bg-2:  #EDE6D5;
   --cream-bg-3:  #FAF6EC;
@@ -95,6 +100,7 @@ html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
   font-feature-settings: "ss01";
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   line-height: 1.55;
@@ -179,7 +185,7 @@ button { font: inherit; cursor: pointer; border: 0; background: transparent; col
   letter-spacing: -0.005em;
   padding: 11px 20px;
   border-radius: 999px;
-  background: var(--blue); color: var(--cream-0);
+  background: var(--blue-cta); color: var(--cream-0);
   display: inline-flex; align-items: center; gap: 8px;
   white-space: nowrap;
   transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
@@ -250,7 +256,7 @@ button { font: inherit; cursor: pointer; border: 0; background: transparent; col
 .btn-primary {
   display: inline-flex; align-items: center; gap: 12px;
   padding: 14px 22px;
-  background: var(--blue); color: var(--cream-0);
+  background: var(--blue-cta); color: var(--cream-0);
   font-family: var(--font-body);
   font-size: 14px; font-weight: 600; letter-spacing: -0.005em;
   cursor: pointer;
@@ -563,7 +569,7 @@ footer {
   color: var(--blue-deep);
   letter-spacing: 0.04em; text-transform: uppercase;
 }
-.principle h4 {
+.principle h3 {
   font-family: var(--font-display);
   font-size: 26px; font-weight: 600;
   letter-spacing: -0.018em;
