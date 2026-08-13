@@ -26,7 +26,7 @@ const ogLocaleMap: Record<string, string> = { en: 'en_US', pt: 'pt_BR', es: 'es_
 const ogLocale = ogLocaleMap[currentLocale] ?? 'en_US';
 
 const fullTitle = title.includes('Cloud Minds') ? title : `${title} — Cloud Minds Partners`;
-const site = 'https://www.cloudmindspartners.com';
+const site = 'https://dcplatformcmp.web.app';
 const canonicalUrl = canonical ?? `${site}${Astro.url.pathname}`;
 
 // Strip locale prefix for computing cross-locale hreflang URLs
