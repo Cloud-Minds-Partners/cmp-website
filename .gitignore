@@ -29,3 +29,6 @@ test-results/
 
 # Cache de deploy do Firebase (churn a cada deploy, não é código)
 .firebase/
+
+# Saída local do Lighthouse CI
+.lighthouseci/

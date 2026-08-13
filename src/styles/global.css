@@ -149,14 +149,6 @@ button { font: inherit; cursor: pointer; border: 0; background: transparent; col
   transition: opacity var(--t-fast);
 }
 .brand:hover .brand-wordmark { opacity: 1; }
-.brand-tag {
-  font-family: var(--font-display);
-  font-size: 13px; font-weight: 500;
-  letter-spacing: 0; text-transform: none;
-  color: var(--cream-1);
-  padding-left: 14px;
-  border-left: 1px solid var(--line-1);
-}
 .nav-links {
   display: flex; gap: clamp(20px, 2.2vw, 32px);
   font-family: var(--font-display);
@@ -164,9 +156,6 @@ button { font: inherit; cursor: pointer; border: 0; background: transparent; col
   letter-spacing: -0.005em;
   flex-wrap: nowrap;
   white-space: nowrap;
-}
-@media (max-width: 1280px) {
-  .brand-tag { display: none; }
 }
 @media (max-width: 1100px) {
   .nav-links { gap: 18px; font-size: 14px; }
@@ -231,26 +220,35 @@ button { font: inherit; cursor: pointer; border: 0; background: transparent; col
 .nav-right { display: inline-flex; align-items: center; gap: 0; }
 
 /* FOOTER SOCIAL */
+/* Ícones sociais: disco na cor da marca com glifo branco — mesmo tratamento do
+   .wa-fab (WhatsAppFab.astro), para o site não ter duas linguagens de ícone.
+   O contorno cinza anterior sumia no rodapé escuro. */
 .foot-social {
-  display: inline-flex; align-items: center; gap: 10px;
+  display: inline-flex; align-items: center; gap: 12px;
   margin-top: 4px;
 }
 .foot-social a {
-  width: 36px; height: 36px;
+  width: 44px; height: 44px;
   display: inline-flex; align-items: center; justify-content: center;
-  color: var(--cream-2);
-  border: 1px solid var(--line-1);
   border-radius: 999px;
-  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+  transition: transform var(--t-fast), filter var(--t-fast), box-shadow var(--t-fast);
 }
+/* A cor vai nas classes de marca, não em `.foot-social a`: `.foot-links a`
+   (mesma especificidade, declarado depois) venceria por ordem de fonte e o
+   glifo sairia creme em vez de branco. */
+.foot-social .social-linkedin { background: #0A66C2; color: #FFFFFF; }  /* azul oficial LinkedIn */
+.foot-social .social-whatsapp { background: #25D366; color: #FFFFFF; }  /* verde oficial WhatsApp */
 .foot-social a:hover {
-  color: var(--cream-0);
-  border-color: var(--blue-bright);
-  background: rgba(45,107,228,0.10);
   transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.38);
 }
 .foot-social a:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 3px; }
-.foot-social svg { width: 16px; height: 16px; fill: currentColor; }
+.foot-social svg { width: 24px; height: 24px; fill: currentColor; }
+
+@media (prefers-reduced-motion: reduce) {
+  .foot-social a:hover { transform: none; }
+}
 
 @media (max-width: 880px) {
   .nav-lang { display: none; }
@@ -861,7 +859,6 @@ body.nav-mobile-open { overflow: hidden; }
 
 @media (max-width: 880px) {
   .nav-links { display: none; }
-  .brand-tag { display: none; }
   .nav-right .nav-lang { display: none; }
   .nav-right .nav-cta { display: none; }
   .nav-burger { display: inline-flex; }
