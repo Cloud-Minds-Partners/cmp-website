@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import SocialLinks from './SocialLinks.astro';
+import LegalEntity from './LegalEntity.astro';
 import { social } from '../config/social';
 
 const currentYear = new Date().getFullYear();
@@ -44,11 +45,14 @@ const currentYear = new Date().getFullYear();
     <div class="foot-col">
       <p class="foot-heading">Contact</p>
       <a href={`mailto:${social.emailGeneral}`}>{social.emailGeneral}</a>
+      <a href={`tel:+${social.whatsappNumber}`}>+55 11 91578-8796</a>
       <span>São Paulo · BR</span>
       <span>Santiago · CL</span>
       <span>Mexico City · MX</span>
     </div>
   </div>
+
+  <div class="foot-entity-wrap"><LegalEntity /></div>
 
   <!-- Copyright row -->
   <div class="foot-bottom">

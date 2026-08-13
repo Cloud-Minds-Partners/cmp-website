@@ -1,0 +1,37 @@
+---
+// Registered-entity line for the footer.
+//
+// Why this exists: Meta business verification rejects sites without business
+// contact information, and requires the address and phone to match the CNPJ
+// registration.
+//
+// Only the address is rendered. Razão social and CNPJ stay in config/entity.ts
+// (they are what the address is verified against, and are needed when filling
+// the Meta forms) but are deliberately kept off the page — the brand name is
+// already carried by the domain and the copyright line, and the requirement is
+// contact information, not the registration itself.
+//
+// The footer markup is duplicated across 8 pages/layouts in this repo, so the
+// data lives in one place (config/entity.ts) and every footer renders this
+// component — change the registration once, it propagates everywhere.
+import { entity } from "../config/entity";
+---
+
+<div class="legal-entity">
+  <span>{entity.address}</span>
+</div>
+
+<style>
+  /* Horizontal padding matches .foot-bottom across the site
+     (clamp resolves to the same 64px at 1280px). Without it the block sits
+     flush against the viewport edge while every other footer row is inset. */
+  .legal-entity {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px clamp(32px, 5vw, 96px) 0;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.7;
+  }
+</style>
