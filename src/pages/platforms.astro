@@ -10,6 +10,7 @@ const inDev = inDevelopmentPlatforms();
 // Continuous alternation across both sections for the stripe pattern
 let stripeIndex = 0;
 const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
+import LegalEntity from "../components/LegalEntity.astro";
 ---
 
 <Base lang="en">
@@ -115,12 +116,19 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
     .product.reverse .product-info { order: 2; }
     .product.reverse .product-visual { order: 1; }
 
-    .product-visual { position: relative; min-height: 480px; overflow: hidden; }
+    .product-visual { position: relative; min-height: 480px; overflow: hidden; background: var(--navy-0); }
     .product-visual-bg {
       position: absolute; inset: 0;
       background-size: cover; background-position: center;
       animation: prodKen 22s ease-in-out infinite alternate;
       filter: saturate(1.15) contrast(1.05);
+    }
+    .product-visual-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      background: var(--navy-0);
+      display: block;
     }
     @keyframes prodKen { 0% { transform: scale(1); } 100% { transform: scale(1.07); } }
 
@@ -188,7 +196,22 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
             {p.subtagline && <p class="product-subtag">{p.subtagline}</p>}
             <a class="product-cta" href={ctaHref} {...(external ? { target: '_blank', rel: 'noopener' } : {})}>{ctaLabel}</a>
           </div>
-          <div class="product-visual"><div class="product-visual-bg" style={`background-image: url('${p.cardImage}');`}></div></div>
+          <div class="product-visual">
+            {p.videoUrl ? (
+              <video
+                id={`video-${p.slug}`}
+                class="product-visual-video"
+                src={p.videoUrl}
+                poster={p.cardImage}
+                controls
+                preload="metadata"
+                playsinline
+                data-product-video
+              ></video>
+            ) : (
+              <div class="product-visual-bg" style={`background-image: url('${p.cardImage}');`}></div>
+            )}
+          </div>
         </article>
       );
     })}
@@ -239,16 +262,29 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
           <a href="https://wa.me/5511915788796" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.5-.3zM12 22a10 10 0 0 1-5-1.3L2 22l1.3-5A10 10 0 1 1 12 22zm0-18.2A8.2 8.2 0 0 0 4.6 16l-.2.5-.8 3 3-.8.5.2c1.2.7 2.6 1.1 4 1.1 4.5 0 8.2-3.7 8.2-8.2S16.5 3.8 12 3.8z"/></svg></a>
         </div>
       </div>
-      <div><h4>Platforms</h4><ul><li><a href="/platforms">Site Screening Tool</a></li><li><a href="/platforms">Grid Intelligence</a></li><li><a href="/platforms">DC Insights</a></li><li><a href="/platforms">DC Test Fit Pro</a></li><li><a href="/platforms">DC Financial Model</a></li></ul></div>
-      <div><h4>Intelligence</h4><ul><li><a href="/intelligence">Technical Memos</a></li><li><a href="/intelligence">Innovation Radar</a></li><li><a href="/intelligence">Regulatory Watch</a></li><li><a href="/intelligence">Weekly Pulse</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="/advisory">Advisory</a></li><li><a href="/development">Development</a></li><li><a href="/team">Team</a><a href="/contact">Contact</a></li></ul></div>
-      <div><h4>Contact</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Mexico City · MX</li></ul></div>
+      <div><h3>Platforms</h3><ul><li><a href="/platforms">Site Screening Tool</a></li><li><a href="/platforms">Grid Intelligence</a></li><li><a href="/platforms">DC Insights</a></li><li><a href="/platforms">DC Test Fit Pro</a></li><li><a href="/platforms">DC Financial Model</a></li></ul></div>
+      <div><h3>Intelligence</h3><ul><li><a href="/intelligence">Technical Memos</a></li><li><a href="/intelligence">Innovation Radar</a></li><li><a href="/intelligence">Regulatory Watch</a></li><li><a href="/intelligence">Weekly Pulse</a></li></ul></div>
+      <div><h3>Company</h3><ul><li><a href="/advisory">Advisory</a></li><li><a href="/development">Development</a></li><li><a href="/team">Team</a><a href="/contact">Contact</a></li></ul></div>
+      <div><h3>Contact</h3><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li><a href="tel:+5511915788796">+55 11 91578-8796</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Mexico City · MX</li></ul></div>
     </div>
+    <LegalEntity />
     <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>All rights reserved.</span></div>
   </footer>
 
   <script is:inline>
     const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // CTA "See demo" → play inline product video instead of navigating
+    document.querySelectorAll('a.product-cta[href^="#video-"]').forEach((link) => {
+      link.addEventListener('click', (ev) => {
+        const id = link.getAttribute('href').slice(1);
+        const video = document.getElementById(id);
+        if (!video) return;
+        ev.preventDefault();
+        video.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        video.play().catch(() => { /* user gesture not granted — controls still visible */ });
+      });
+    });
   </script>
 </Base>

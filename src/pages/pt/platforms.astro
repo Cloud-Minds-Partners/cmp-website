@@ -9,6 +9,7 @@ const inDev = inDevelopmentPlatforms();
 
 let stripeIndex = 0;
 const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
+import LegalEntity from "../../components/LegalEntity.astro";
 ---
 
 <Base lang="pt">
@@ -149,6 +150,7 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
       // PT labels for known CTAs; fallback to data file ctaLabel or defaults
       const labelMap = {
         'See demo →': 'Ver demo →',
+        'Talk to us →': 'Fale conosco →',
         'Subscribe for free →': 'Assinar grátis →',
       };
       const ctaHref = p.ctaHref ?? p.url ?? '/pt/contact';
@@ -218,11 +220,12 @@ const stripeBg = (i: number) => (i % 2 === 0 ? 'navy' : 'cream');
           <a href="https://wa.me/5511915788796" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.5-.3zM12 22a10 10 0 0 1-5-1.3L2 22l1.3-5A10 10 0 1 1 12 22zm0-18.2A8.2 8.2 0 0 0 4.6 16l-.2.5-.8 3 3-.8.5.2c1.2.7 2.6 1.1 4 1.1 4.5 0 8.2-3.7 8.2-8.2S16.5 3.8 12 3.8z"/></svg></a>
         </div>
       </div>
-      <div><h4>Plataformas</h4><ul><li><a href="/pt/platforms">Site Screening Tool</a></li><li><a href="/pt/platforms">Grid Intelligence</a></li><li><a href="/pt/platforms">DC Insights</a></li><li><a href="/pt/platforms">DC Test Fit Pro</a></li><li><a href="/pt/platforms">DC Financial Model</a></li></ul></div>
-      <div><h4>Inteligência</h4><ul><li><a href="/pt/intelligence">Memos Técnicos</a></li><li><a href="/pt/intelligence">Radar de Inovação</a></li><li><a href="/pt/intelligence">Vigilância Regulatória</a></li><li><a href="/pt/intelligence">Pulse Semanal</a></li></ul></div>
-      <div><h4>Empresa</h4><ul><li><a href="/pt/advisory">Consultoria</a></li><li><a href="/pt/development">Desenvolvimento</a></li><li><a href="/pt/team">Equipe</a><a href="/pt/contact">Contato</a></li></ul></div>
-      <div><h4>Contato</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Cidade do México · MX</li></ul></div>
+      <div><h3>Plataformas</h3><ul><li><a href="/pt/platforms">Site Screening Tool</a></li><li><a href="/pt/platforms">Grid Intelligence</a></li><li><a href="/pt/platforms">DC Insights</a></li><li><a href="/pt/platforms">DC Test Fit Pro</a></li><li><a href="/pt/platforms">DC Financial Model</a></li></ul></div>
+      <div><h3>Inteligência</h3><ul><li><a href="/pt/intelligence">Memos Técnicos</a></li><li><a href="/pt/intelligence">Radar de Inovação</a></li><li><a href="/pt/intelligence">Vigilância Regulatória</a></li><li><a href="/pt/intelligence">Pulse Semanal</a></li></ul></div>
+      <div><h3>Empresa</h3><ul><li><a href="/pt/advisory">Consultoria</a></li><li><a href="/pt/development">Desenvolvimento</a></li><li><a href="/pt/team">Equipe</a><a href="/pt/contact">Contato</a></li></ul></div>
+      <div><h3>Contato</h3><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li><a href="tel:+5511915788796">+55 11 91578-8796</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Cidade do México · MX</li></ul></div>
     </div>
+    <LegalEntity />
     <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>Todos os direitos reservados.</span></div>
   </footer>
 

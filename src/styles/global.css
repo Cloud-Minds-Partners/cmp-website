@@ -62,6 +62,10 @@
      --blue continua intocado: é usado como TEXTO em 20 lugares, e
      escurecê-lo lá pioraria o contraste em vez de melhorar. */
   --blue-cta:    #2A62D4;
+  /* Azul para TEXTO sobre fundo claro (creme). --blue dá só 4.30 ali.
+     Este dá 5.64. Não dá para escurecer --blue globalmente: sobre navy
+     o efeito é o inverso — escurecer piora. Por isso dois tons por contexto. */
+  --blue-on-light: #2559C4;
   --cream-0:  #F5F1E8;
   --cream-1:  #C8D8F0;
   --cream-2:  #8A94A8;
@@ -346,7 +350,7 @@ footer {
 }
 .foot-brand-cell .brand-wordmark { height: 28px; }
 .foot-brand-cell p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--cream-2); max-width: 320px; }
-.foot-links h4 {
+.foot-links h3 {
   font-family: var(--font-display);
   font-size: 14px; letter-spacing: -0.005em; text-transform: none;
   color: var(--cream-0); font-weight: 600; margin: 0 0 22px;
@@ -761,7 +765,7 @@ footer {
   color: var(--blue-bright);
   margin-bottom: 10px;
 }
-.model-step h4 {
+.model-step h3 {
   font-family: var(--font-display);
   font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
   color: var(--cream-0);

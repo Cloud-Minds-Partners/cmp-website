@@ -73,7 +73,7 @@ import LegalEntity from "../../components/LegalEntity.astro";
     .lc-phase:last-child { border-right: 0; }
     a.lc-phase { color: inherit; text-decoration: none; }
     a.lc-phase:hover { background: rgba(74, 143, 231, 0.06); }
-    a.lc-phase:hover h4 { color: var(--blue-bright); }
+    a.lc-phase:hover h3 { color: var(--blue-bright); }
 
     .lc-phase.featured {
       position: relative;
@@ -88,12 +88,12 @@ import LegalEntity from "../../components/LegalEntity.astro";
     }
     .lc-phase.featured .lc-num { color: #F59E0B; }
     .lc-phase.featured .lc-label strong { color: #F59E0B; font-weight: 700; font-size: 14px; letter-spacing: 0.01em; }
-    .lc-phase.featured h4 { color: #fff; }
+    .lc-phase.featured h3 { color: #fff; }
     .lc-phase.featured:hover { background: linear-gradient(180deg, rgba(245,158,11,0.16) 0%, rgba(245,158,11,0.04) 100%); }
-    a.lc-phase.featured:hover h4 { color: #F59E0B; }
+    a.lc-phase.featured:hover h3 { color: #F59E0B; }
     .lc-num { font-family: var(--font-display); font-size: 56px; font-weight: 600; color: var(--blue-bright); line-height: 1; letter-spacing: var(--track-tight); }
     .lc-label { font-family: var(--font-body); font-size: 12.5px; color: var(--cream-3); }
-    .lc-phase h4 { font-family: var(--font-display); font-size: 19px; font-weight: 600; margin: 0; color: var(--cream-0); letter-spacing: -0.012em; }
+    .lc-phase h3 { font-family: var(--font-display); font-size: 19px; font-weight: 600; margin: 0; color: var(--cream-0); letter-spacing: -0.012em; }
     .lc-phase p { font-size: 14px; line-height: 1.55; color: var(--cream-1); margin: 0; max-width: 28ch; }
     .lc-role {
       margin-top: 8px;
@@ -183,35 +183,35 @@ import LegalEntity from "../../components/LegalEntity.astro";
       <a class="lc-phase featured reveal" href="/es/platforms#site-screening-tool">
         <div class="lc-num">00</div>
         <div class="lc-label">Entrega en <strong>72h</strong></div>
-        <h4>Site screening</h4>
+        <h3>Site screening</h3>
         <p>Puntúe 76+ ciudades LatAm en 8 criterios con nuestro Site Screening Tool.</p>
         <div class="lc-role tool">Usar SST →</div>
       </a>
       <div class="lc-phase reveal reveal-delay-1">
         <div class="lc-num">01</div>
         <div class="lc-label">0–6 meses</div>
-        <h4>Pre-sitio</h4>
+        <h3>Pre-sitio</h3>
         <p>Calificación, modelado de offtake, term sheet en 90 días.</p>
         <div class="lc-role direct">CMP directo</div>
       </div>
       <div class="lc-phase reveal reveal-delay-2">
         <div class="lc-num">02</div>
         <div class="lc-label">6–18 meses</div>
-        <h4>Design &amp; permisos → RTB</h4>
+        <h3>Design &amp; permisos → RTB</h3>
         <p>DD técnica, interconexión, trámites ambientales — hasta ready-to-build.</p>
         <div class="lc-role direct">CMP directo</div>
       </div>
       <div class="lc-phase reveal reveal-delay-3">
         <div class="lc-num">03</div>
         <div class="lc-label">18–36 meses</div>
-        <h4>Construcción</h4>
+        <h3>Construcción</h3>
         <p>EPC y obra ejecutados por socio.</p>
         <div class="lc-role partners">Con socios</div>
       </div>
       <div class="lc-phase reveal reveal-delay-3">
         <div class="lc-num">04</div>
         <div class="lc-label">Continuo</div>
-        <h4>Operación &amp; energía</h4>
+        <h3>Operación &amp; energía</h3>
         <p>Socio operador opera el activo. Socio de energía aporta el PPA.</p>
         <div class="lc-role partners">Con socios</div>
       </div>
@@ -228,10 +228,10 @@ import LegalEntity from "../../components/LegalEntity.astro";
           <a href="https://wa.me/5511915788796" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4 0-.1-.3-.2-.5-.3zM12 22a10 10 0 0 1-5-1.3L2 22l1.3-5A10 10 0 1 1 12 22zm0-18.2A8.2 8.2 0 0 0 4.6 16l-.2.5-.8 3 3-.8.5.2c1.2.7 2.6 1.1 4 1.1 4.5 0 8.2-3.7 8.2-8.2S16.5 3.8 12 3.8z"/></svg></a>
         </div>
       </div>
-      <div><h4>Plataformas</h4><ul><li><a href="/es/platforms">Site Screening Tool</a></li><li><a href="/es/platforms">Grid Intelligence</a></li><li><a href="/es/platforms">DC Insights</a></li><li><a href="/es/platforms">DC Test Fit Pro</a></li><li><a href="/es/platforms">DC Financial Model</a></li></ul></div>
-      <div><h4>Inteligencia</h4><ul><li><a href="/es/intelligence">Memos Técnicos</a></li><li><a href="/es/intelligence">Radar de Innovación</a></li><li><a href="/es/intelligence">Vigilancia Regulatoria</a></li><li><a href="/es/intelligence">Pulse Semanal</a></li></ul></div>
-      <div><h4>Empresa</h4><ul><li><a href="/es/advisory">Asesoría</a></li><li><a href="/es/development">Desarrollo</a></li><li><a href="/es/team">Equipo</a><a href="/es/contact">Contacto</a></li></ul></div>
-      <div><h4>Contacto</h4><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li><a href="tel:+5511915788796">+55 11 91578-8796</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Ciudad de México · MX</li></ul></div>
+      <div><h3>Plataformas</h3><ul><li><a href="/es/platforms">Site Screening Tool</a></li><li><a href="/es/platforms">Grid Intelligence</a></li><li><a href="/es/platforms">DC Insights</a></li><li><a href="/es/platforms">DC Test Fit Pro</a></li><li><a href="/es/platforms">DC Financial Model</a></li></ul></div>
+      <div><h3>Inteligencia</h3><ul><li><a href="/es/intelligence">Memos Técnicos</a></li><li><a href="/es/intelligence">Radar de Innovación</a></li><li><a href="/es/intelligence">Vigilancia Regulatoria</a></li><li><a href="/es/intelligence">Pulse Semanal</a></li></ul></div>
+      <div><h3>Empresa</h3><ul><li><a href="/es/advisory">Asesoría</a></li><li><a href="/es/development">Desarrollo</a></li><li><a href="/es/team">Equipo</a><a href="/es/contact">Contacto</a></li></ul></div>
+      <div><h3>Contacto</h3><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li><a href="tel:+5511915788796">+55 11 91578-8796</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Ciudad de México · MX</li></ul></div>
     </div>
     <LegalEntity />
     <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>Todos los derechos reservados.</span></div>
