@@ -115,6 +115,25 @@ jobs:
         working-directory: cmp-website
 
       # ------------------------------------------------------------------ #
+      # STRIP DEV-ONLY ROUTES                                                #
+      # src/pages/dev/ is an internal component gallery. It already carries  #
+      # a PROD guard that renders a meta-refresh to /404, so it was never    #
+      # meant to be reachable in production — but it still shipped in dist/, #
+      # and Lighthouse (which globs every .html under dist/) followed the    #
+      # redirect and failed the whole run with a 404, blocking the deploy.   #
+      # Dropping it here keeps the visitor-facing result identical (404)     #
+      # and stops an internal page from gating production.                   #
+      # ------------------------------------------------------------------ #
+      - name: Strip dev-only routes from dist
+        run: |
+          if [ -d cmp-website/dist/dev ]; then
+            rm -rf cmp-website/dist/dev
+            echo "removed dist/dev (internal component gallery)"
+          else
+            echo "no dist/dev present — nothing to strip"
+          fi
+
+      # ------------------------------------------------------------------ #
       # POST-BUILD ARTIFACT VALIDATION                                       #
       # Hard-fail if critical routes are missing from dist/                 #
       # ------------------------------------------------------------------ #

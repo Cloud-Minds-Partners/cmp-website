@@ -1,8 +1,29 @@
 {
+  "//": [
+    "Lighthouse roda contra o dist/ estático. Sem uma lista explícita, o LHCI",
+    "varre TODO .html do dist — inclusive as 14 páginas que são apenas",
+    "redirecionamento (dev/components, intelligence/memos|radar|regwatch e as",
+    "10 rotas de platforms/). Essas páginas apontam para URL limpa (/404,",
+    "/intelligence#memos), que o Firebase resolve por cleanUrls mas o servidor",
+    "estático do LHCI não — o teste recebia 404 e derrubava o run inteiro,",
+    "bloqueando o deploy. Não era defeito do site: era artefato do teste.",
+    "Por isso a lista abaixo tem só páginas reais, uma por seção e idioma."
+  ],
   "ci": {
     "collect": {
       "staticDistDir": "./dist",
       "numberOfRuns": 1,
+      "url": [
+        "http://localhost/index.html",
+        "http://localhost/advisory/index.html",
+        "http://localhost/development/index.html",
+        "http://localhost/platforms/index.html",
+        "http://localhost/intelligence/index.html",
+        "http://localhost/team/index.html",
+        "http://localhost/contact/index.html",
+        "http://localhost/pt/index.html",
+        "http://localhost/es/index.html"
+      ],
       "settings": {
         "preset": "desktop",
         "onlyCategories": ["performance", "accessibility", "seo"]
