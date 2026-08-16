@@ -1,0 +1,225 @@
+---
+// Privacy policy for the WhatsApp Business Platform application.
+//
+// Why this exists: Meta App Review requires a public privacy policy URL for the
+// app. Scope is deliberately narrow — this covers the WhatsApp Assistant only,
+// not the website or advisory engagements. A company-wide LGPD policy is a
+// separate legal artefact and is not what Meta asks for here.
+//
+// Every processor named in section 5 must stay true to what the system actually
+// does. If the agent stops routing content through a provider, or starts routing
+// it through a new one, this page changes in the same commit.
+import Base from '../layouts/Base.astro';
+import SEO from '../components/SEO.astro';
+import LegalEntity from '../components/LegalEntity.astro';
+import { entity } from '../config/entity';
+
+const effective = '16 August 2026';
+---
+
+<Base lang="en">
+  <SEO
+    slot="head"
+    title="Privacy Policy — CMP WhatsApp Assistant"
+    description="How Cloud Minds Partners handles data in its WhatsApp Business Platform application: what is processed, which providers are involved, how long it is kept, and your rights under the LGPD."
+    lang="en"
+  />
+
+  <style slot="head" is:global>
+    .legal-hero {
+      background: var(--navy-0);
+      color: var(--cream-0);
+      padding: clamp(120px, 16vh, 180px) 0 clamp(48px, 7vh, 80px);
+    }
+    .legal-hero .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(28px, 4vw, 64px); }
+    .legal-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.5vw, 52px);
+      font-weight: 600; line-height: 1.08;
+      margin: 0 0 14px; text-wrap: balance;
+    }
+    .legal-hero p { font-size: 16px; color: var(--cream-2); margin: 0; max-width: 62ch; }
+    .legal-meta {
+      margin-top: 22px; font-size: 13px; color: var(--cream-2);
+      letter-spacing: 0.02em;
+    }
+
+    .legal-body {
+      background: var(--cream-bg); color: var(--navy-0);
+      padding: clamp(64px, 9vh, 104px) 0 clamp(80px, 12vh, 140px);
+    }
+    .legal-body .section-inner {
+      max-width: 760px; margin: 0 auto;
+      padding: 0 clamp(28px, 4vw, 64px);
+    }
+    .legal-body h2 {
+      font-family: var(--font-display);
+      font-size: 21px; font-weight: 600;
+      margin: 44px 0 12px; color: var(--navy-0);
+    }
+    .legal-body h2:first-of-type { margin-top: 0; }
+    .legal-body p, .legal-body li {
+      font-size: 15.5px; line-height: 1.72; color: #3c4c63; margin: 0 0 14px;
+    }
+    .legal-body ul { padding-left: 22px; margin: 0 0 14px; }
+    .legal-body a { color: var(--blue-on-light); text-decoration: underline; text-underline-offset: 3px; }
+    .legal-body strong { color: var(--navy-0); font-weight: 600; }
+
+    .legal-table-wrap { overflow-x: auto; margin: 18px 0 22px; }
+    .legal-table { border-collapse: collapse; width: 100%; min-width: 460px; font-size: 15px; }
+    .legal-table th, .legal-table td {
+      text-align: left; padding: 11px 14px;
+      border-bottom: 1px solid rgba(60, 76, 99, 0.16);
+      vertical-align: top; color: #3c4c63;
+    }
+    .legal-table thead th {
+      font-family: var(--font-display); font-size: 12px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--navy-0); font-weight: 600;
+      border-bottom: 1px solid rgba(60, 76, 99, 0.32);
+    }
+    .legal-table tbody tr:last-child td { border-bottom: none; }
+
+    .legal-callout {
+      background: rgba(74, 143, 231, 0.07);
+      border: 1px solid rgba(74, 143, 231, 0.26);
+      border-radius: 10px; padding: 18px 22px; margin: 24px 0;
+    }
+    .legal-callout p:last-child { margin-bottom: 0; }
+  </style>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
+      <div class="nav-links"><a href="/advisory">Advisory</a><a href="/development">Development</a><a href="/intelligence">Intelligence</a><a href="/platforms">Platforms</a><a href="/team">Team</a><a href="/contact">Contact</a></div>
+      <div class="nav-right">
+        <a href="mailto:info@cloudmindspartners.com" class="nav-cta">Talk to us <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M7 1l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="legal-hero">
+    <div class="wrap">
+      <div class="page-eyebrow">Legal</div>
+      <h1>Privacy Policy</h1>
+      <p>How we handle data in the Cloud Minds Partners assistant on WhatsApp.</p>
+      <div class="legal-meta">Effective {effective}</div>
+    </div>
+  </header>
+
+  <section class="legal-body">
+    <div class="section-inner">
+
+      <h2>1. Who we are</h2>
+      <p>
+        This policy is issued by <strong>{entity.legalName}</strong>, CNPJ {entity.cnpj},
+        {entity.address}. We are the data controller for the processing described here.
+      </p>
+
+      <h2>2. What this policy covers</h2>
+      <p>
+        This policy covers <strong>only</strong> the WhatsApp Business Platform application
+        operated by Cloud Minds Partners (the "Assistant"). It does not cover this website,
+        our advisory engagements, or any other service.
+      </p>
+
+      <h2>3. What we process</h2>
+      <p>When you message the Assistant, we process:</p>
+      <ul>
+        <li>your phone number;</li>
+        <li>the content of your messages;</li>
+        <li>any files, images or documents you send;</li>
+        <li>timestamps, and the delivery and read status returned by WhatsApp.</li>
+      </ul>
+      <p>
+        We do not request or require sensitive personal data. Please do not send it.
+      </p>
+
+      <h2>4. Why we process it</h2>
+      <p>
+        To operate the Assistant: to answer your questions, to file documents you send into
+        our internal document repository, to search our internal records at your request,
+        and to read availability and create events in calendars whose owners have authorised
+        that access.
+      </p>
+      <p>
+        We do <strong>not</strong> use your data for advertising, we do <strong>not</strong> sell
+        it, and we do <strong>not</strong> use it to build profiles about you.
+      </p>
+
+      <h2>5. Who processes it with us</h2>
+      <p>Operating the Assistant requires these providers:</p>
+      <div class="legal-table-wrap">
+        <table class="legal-table">
+          <thead><tr><th>Provider</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td>Meta Platforms</td><td>Message transport, through the WhatsApp Business Platform</td></tr>
+            <tr><td>Anthropic</td><td>The Assistant's reasoning — message content is processed to generate replies</td></tr>
+            <tr><td>Google</td><td>Storage of filed documents (Google Drive) and calendar access (Google Calendar)</td></tr>
+            <tr><td>Cloud Minds Partners</td><td>Our own infrastructure, which orchestrates the above</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legal-callout">
+        <p>
+          Message content is transmitted to Anthropic and to Google as described above. If you do
+          not want your message content processed by these providers, do not use the Assistant.
+        </p>
+      </div>
+
+      <h2>6. Where it is stored</h2>
+      <p>
+        Documents you send are stored in our Google Workspace shared drive. Conversation records
+        are stored on infrastructure operated by Cloud Minds Partners.
+      </p>
+
+      <h2>7. How long we keep it</h2>
+      <p>
+        Documents filed by the Assistant are retained for the duration of the project or
+        engagement they belong to, in line with how we retain the rest of that project's records.
+        Conversation records are retained for <strong>12 months</strong> and then deleted.
+      </p>
+
+      <h2>8. Business customers</h2>
+      <p>
+        Where Cloud Minds Partners acts as a technology provider for another business, that
+        business is the controller of its own end-customer data and we act as its processor,
+        under the agreement between us.
+      </p>
+
+      <h2>9. Your rights</h2>
+      <p>
+        Under Brazilian law (LGPD, Law 13.709/2018) you may request access to, correction of,
+        portability of, or deletion of your personal data, and you may withdraw consent. Write to
+        <a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a> and we will
+        respond within the statutory period.
+      </p>
+
+      <h2>10. Changes to this policy</h2>
+      <p>
+        We will post any change to this policy on this page and update the effective date shown
+        above.
+      </p>
+
+      <h2>11. Contact</h2>
+      <p>
+        <a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a> ·
+        <a href={`tel:+${entity.phoneE164}`}>{entity.phoneDisplay}</a>
+      </p>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-links">
+      <div class="foot-brand-cell">
+        <a class="brand" href="/"><img class="brand-wordmark" src="/logo/cmp-wordmark.png" alt="Cloud Minds Partners" /></a>
+        <p>Data center intelligence for Latin America.</p>
+      </div>
+      <div><h3>Company</h3><ul><li><a href="/advisory">Advisory</a></li><li><a href="/development">Development</a></li><li><a href="/team">Team</a></li><li><a href="/contact">Contact</a></li></ul></div>
+      <div><h3>Contact</h3><ul><li><a href="mailto:info@cloudmindspartners.com">info@cloudmindspartners.com</a></li><li><a href={`tel:+${entity.phoneE164}`}>{entity.phoneDisplay}</a></li><li>São Paulo · BR</li><li>Santiago · CL</li><li>Mexico City · MX</li></ul></div>
+    </div>
+    <LegalEntity />
+    <div class="foot-bottom"><span>© 2026 Cloud Minds Partners</span><span>All rights reserved.</span></div>
+  </footer>
+</Base>
