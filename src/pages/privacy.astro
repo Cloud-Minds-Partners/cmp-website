@@ -9,6 +9,11 @@
 // Every processor named in section 5 must stay true to what the system actually
 // does. If the agent stops routing content through a provider, or starts routing
 // it through a new one, this page changes in the same commit.
+//
+// Deliberately unlinked and noindex. The page exists so Meta can fetch it, not
+// as a site-wide policy — section 2 says it does not cover this website, so a
+// footer link on every page would claim the opposite. When the Assistant is
+// offered to clients, link it from that entry point, not from the global footer.
 import Base from '../layouts/Base.astro';
 import SEO from '../components/SEO.astro';
 import LegalEntity from '../components/LegalEntity.astro';
@@ -23,6 +28,7 @@ const effective = '16 August 2026';
     title="Privacy Policy — CMP WhatsApp Assistant"
     description="How Cloud Minds Partners handles data in its WhatsApp Business Platform application: what is processed, which providers are involved, how long it is kept, and your rights under the LGPD."
     lang="en"
+    noindex={true}
   />
 
   <style slot="head" is:global>

@@ -6,7 +6,9 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://dcplatformcmp.web.app',
-  integrations: [react(), sitemap()],
+  // /privacy is noindex — it exists so Meta App Review can fetch it, not as a
+  // site-wide policy. Listing a noindex page in the sitemap contradicts itself.
+  integrations: [react(), sitemap({ filter: (page) => !page.includes('/privacy') })],
   vite: {
     plugins: [tailwindcss()],
   },
