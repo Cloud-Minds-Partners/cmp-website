@@ -7,12 +7,16 @@
     "/intelligence#memos), que o Firebase resolve por cleanUrls mas o servidor",
     "estático do LHCI não — o teste recebia 404 e derrubava o run inteiro,",
     "bloqueando o deploy. Não era defeito do site: era artefato do teste.",
-    "Por isso a lista abaixo tem só páginas reais, uma por seção e idioma."
+    "Por isso a lista abaixo tem só páginas reais, uma por seção e idioma.",
+    "Três medições por página: com uma só, a nota de desempenho oscilava no",
+    "runner do CI — em 12/09/2026 a home e /platforms caíram para 0,83–0,88",
+    "em execuções seguidas, páginas diferentes a cada vez, sem nenhuma mudança",
+    "nelas. O assert usa a melhor das três (agregação padrão do LHCI)."
   ],
   "ci": {
     "collect": {
       "staticDistDir": "./dist",
-      "numberOfRuns": 1,
+      "numberOfRuns": 3,
       "url": [
         "http://localhost/index.html",
         "http://localhost/advisory/index.html",
