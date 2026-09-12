@@ -19,7 +19,7 @@ import SEO from '../components/SEO.astro';
 import LegalEntity from '../components/LegalEntity.astro';
 import { entity } from '../config/entity';
 
-const effective = '16 August 2026';
+const effective = '12 September 2026';
 ---
 
 <Base lang="en">
@@ -143,10 +143,9 @@ const effective = '16 August 2026';
 
       <h2>4. Why we process it</h2>
       <p>
-        To operate the Assistant: to answer your questions, to file documents you send into
-        our internal document repository, to search our internal records at your request,
-        and to read availability and create events in calendars whose owners have authorised
-        that access.
+        To operate the Assistant: to answer your questions by searching and reading our internal
+        document repository. Filing the documents you send and calendar features are not active;
+        this policy will be updated before they are.
       </p>
       <p>
         We do <strong>not</strong> use your data for advertising, we do <strong>not</strong> sell
@@ -160,31 +159,31 @@ const effective = '16 August 2026';
           <thead><tr><th>Provider</th><th>Role</th></tr></thead>
           <tbody>
             <tr><td>Meta Platforms</td><td>Message transport, through the WhatsApp Business Platform</td></tr>
-            <tr><td>Anthropic</td><td>The Assistant's reasoning — message content is processed to generate replies</td></tr>
-            <tr><td>Google</td><td>Storage of filed documents (Google Drive) and calendar access (Google Calendar)</td></tr>
-            <tr><td>Cloud Minds Partners</td><td>Our own infrastructure, which orchestrates the above</td></tr>
+            <tr><td>Google Cloud</td><td>The Assistant's reasoning — message content, and excerpts of our internal documents, are processed by Gemini on Vertex AI to generate replies; hosting of the Assistant and storage of conversation records</td></tr>
+            <tr><td>Google Workspace</td><td>Our internal document repository (Google Drive), which the Assistant searches and reads</td></tr>
           </tbody>
         </table>
       </div>
       <div class="legal-callout">
         <p>
-          Message content is transmitted to Anthropic and to Google as described above. If you do
-          not want your message content processed by these providers, do not use the Assistant.
+          Message content is transmitted to Meta and to Google as described above. If you do not
+          want your message content processed by these providers, do not use the Assistant.
         </p>
       </div>
 
       <h2>6. Where it is stored</h2>
       <p>
-        Documents you send are stored in our Google Workspace shared drive. Conversation records
-        are stored on infrastructure operated by Cloud Minds Partners.
+        Conversation records, message metadata and delivery statuses are stored in Google Cloud
+        (Firestore, United States multi-region). The Assistant does not currently store the files
+        you send; it records only their name and type.
       </p>
 
       <h2>7. How long we keep it</h2>
       <p>
-        Documents filed by the Assistant are retained for the duration of the project or
-        engagement they belong to, in line with how we retain the rest of that project's records.
-        Conversation records are retained while the Assistant is in use for the purposes described
-        above, and are deleted on request.
+        Your messages and the Assistant's replies are deleted automatically 180 days after they are
+        answered. Delivery and read statuses are deleted after 90 days. The recent conversation the
+        Assistant uses as context is deleted 180 days after your last exchange. You may request
+        earlier deletion at any time.
       </p>
 
       <h2>8. Business customers</h2>
