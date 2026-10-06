@@ -2,25 +2,45 @@
   "hosting": {
     "target": "cmp-website",
     "public": "dist",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "cleanUrls": true,
     "trailingSlash": false,
     "headers": [
       {
         "source": "**",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=0, must-revalidate"
+          }
         ]
       },
       {
         "source": "**/*.@(js|css|woff2|woff|ttf|svg|png|jpg|jpeg|webp|avif)",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
         ]
       }
     ],
+    "redirects": [
+      {
+        "source": "/connectivity",
+        "destination": "/platforms#video-connectivity-intelligence",
+        "type": 302
+      }
+    ],
     "rewrites": [
-      { "source": "**", "destination": "/404.html" }
+      {
+        "source": "**",
+        "destination": "/404.html"
+      }
     ]
   }
 }
