@@ -38,6 +38,9 @@ jobs:
           MISSING=""
           [ -z "${{ secrets.WIF_PROVIDER }}" ] && MISSING="$MISSING WIF_PROVIDER"
           [ -z "${{ secrets.WIF_SERVICE_ACCOUNT }}" ] && MISSING="$MISSING WIF_SERVICE_ACCOUNT"
+          if [ "${{ github.ref }}" != refs/heads/main ] || [ "${{ github.event_name }}" = pull_request ]; then
+            [ -z "${{ vars.WIF_SA_PREVIEW }}" ] && MISSING="$MISSING vars.WIF_SA_PREVIEW(identidade de preview, E2)"
+          fi
           if [ -n "$MISSING" ]; then
             echo "::error::Missing repo secret(s):$MISSING"
             echo "Deploy authenticates by Workload Identity Federation — there is no service"
@@ -66,7 +69,9 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+          # e2-wif: identidade de deploy de produção SÓ em push/dispatch na main; PR e outras branches usam a identidade
+          # mínima de preview (só Hosting). Etapa 2, rodada final 07/10 (E2-D13/E2-D15).
+          service_account: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && secrets.WIF_SERVICE_ACCOUNT || vars.WIF_SA_PREVIEW }}
 
       - name: Checkout cmp-knowledge (content source)
         if: env.HAS_KNOWLEDGE_TOKEN == 'true'
@@ -202,7 +207,7 @@ jobs:
       # DEPLOY — Live channel (main only)                                   #
       # ------------------------------------------------------------------ #
       - name: Deploy live
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         working-directory: cmp-website
         run: |
           npm install -g firebase-tools@15.22.2
