@@ -66,7 +66,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+          service_account: ${{ github.event_name == 'pull_request' && vars.WIF_SA_PREVIEW || secrets.WIF_SERVICE_ACCOUNT }}   # E2: PR usa a identidade mínima de preview
 
       - name: Checkout cmp-knowledge (content source)
         if: env.HAS_KNOWLEDGE_TOKEN == 'true'
