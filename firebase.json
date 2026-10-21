@@ -29,7 +29,7 @@
         ]
       },
       {
-        "source": "/@(pt/apresentacao|es/presentacion|presentation|apresentacao-assets)/**",
+        "source": "/pt/apresentacao",
         "headers": [
           {
             "key": "X-Robots-Tag",
@@ -38,7 +38,25 @@
         ]
       },
       {
-        "source": "/@(pt/apresentacao|es/presentacion|presentation)",
+        "source": "/es/presentacion",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow, noarchive"
+          }
+        ]
+      },
+      {
+        "source": "/presentation",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow, noarchive"
+          }
+        ]
+      },
+      {
+        "source": "/apresentacao-assets/**",
         "headers": [
           {
             "key": "X-Robots-Tag",
