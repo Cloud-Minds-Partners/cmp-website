@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # ubuntu-latest moved to 26.04 (27/10/2026), so the deploy only changes image in a PR
     permissions:
       contents: read
       id-token: write  # required to mint the OIDC token for Workload Identity Federation
